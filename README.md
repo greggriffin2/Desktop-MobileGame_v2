@@ -1,4 +1,5 @@
 # CSC 450 - Team Project
 ## Team Members
-#Reed Farrow
-#Greg Griffin
+- Reed Farrow
+- Greg Griffin
+- Tom Sanford
