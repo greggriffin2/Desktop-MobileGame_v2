@@ -30,10 +30,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label3" type="Label" parent="VBoxContainer"]
+[node name="KTBLabel3" type="Label" parent="VBoxContainer"]
 margin_top = 36.0
 margin_right = 1023.0
 margin_bottom = 50.0
+text = "Kole Bostic"
 align = 1
 valign = 1
 __meta__ = {
