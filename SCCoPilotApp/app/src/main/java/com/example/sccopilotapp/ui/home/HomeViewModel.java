@@ -16,6 +16,7 @@ public class HomeViewModel extends ViewModel {
                 + "Greg Griffin" + "\n"
                 + "Reed Farrow" + "\n"
                 + "Kole Bostic" + "\n"
+                + "Tom Sanford" + "\n"
         );
     }
 
