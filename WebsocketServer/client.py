@@ -31,9 +31,16 @@ def build_push_message(game): # app does this
 async def main():
 	async with websockets.connect("ws://localhost:8001") as websocket:
 		await websocket.send(build_init_session_message())
-		x = await websocket.recv() # get back stuff (session ID/game code ID ?)
-		print(x)
-		game = "0123456" # test value of some example game-join-code we got back
+		message = await websocket.recv() # get back stuff (session ID/game code ID ?)
+		print(message)
+		try:
+			received = json.loads(message)
+		except JSONDecodeError:
+			print("Error receiving JSON data from connection {}".format(websocket))
+			return
+
+#		game = "0123456" # test value of some example game-join-code we got back
+		game = received["code"]
 
 		while (True):
 			try:
