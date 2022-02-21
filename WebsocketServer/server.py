@@ -6,7 +6,8 @@ async def handler(websocket):
 		try:
 			message = await websocket.recv()
 		except websockets.exceptions.ConnectionClosedOK:
-			return # connection was closed, everything is happy
+			print("Connection closed remotely.")
+			return
 		print(message)
 		await websocket.send(message) # echo
 
