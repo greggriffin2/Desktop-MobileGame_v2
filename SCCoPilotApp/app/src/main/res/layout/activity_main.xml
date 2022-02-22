@@ -32,6 +32,7 @@
 <!--            app:navGraph="@navigation/mobile_navigation"-->
 <!--    />-->
         <EditText
+            android:id="@+id/enterCode"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
