@@ -1,9 +1,17 @@
 package com.example.sccopilotapp.gamesync;
 
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 enum PowerUpStatus {
     None
+}
+
+enum ConnectionStatus {
+    CONNECTED,
+    DISCONNECTED,
+    UNKNOWN
 }
 
 public class SynchronizationFacade {
@@ -72,6 +80,26 @@ public class SynchronizationFacade {
      */
     void fireButtonPressed(int ButtonPress) {
 
+    }
+
+    /**
+     * Returns the current network connection status
+     *
+     * @return Connection Status
+     */
+    public static ConnectionStatus getConnectionStatus() {
+        return ConnectionStatus.UNKNOWN;
+    }
+
+    /**
+     * Returns a range of record scores
+     *
+     * @param startRange nth place to start getting leaderboard scores from. Starts from 1 and goes down
+     * @param stopRange  last score to retrieve
+     * @return a list of scores in order from highest score to lowest
+     */
+    public static List<LeaderboardScore> getScores(int startRange, int stopRange) {
+        return new ArrayList<LeaderboardScore>();
     }
 
 
