@@ -31,9 +31,19 @@ public class SettingsActivity extends AppCompatActivity {
      *
      * preconditions: SettingsActivity page is loaded by the user
      * postconditions: ToggleButton's checkStatus is changed
-     * class invariants: Everything other than the checkStatus is the same
+     * class invariants: View is the same
      * @param view
      */
-    public void onToggleClick(View view){ }
+    public void onToggleClick(View view) {}
+
+    /**
+     * Change the in-app ship color, determined by a boolean passed from onToggleClick()
+     * (only white and black supported at the moment)
+     *
+     * preconditions: onToggleClick() must be called for this method to be called
+     * postconditions: ship color attribute in UserClass is changed
+     * class invariants: View is the same
+     */
+    public void changeShipColor(boolean color) {}
 
 }
