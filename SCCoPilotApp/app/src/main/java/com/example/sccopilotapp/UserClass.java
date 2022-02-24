@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class UserClass {
     private int level;
-    private ArrayList<Integer> perks;
+    private final ArrayList<Integer> perks;
     private boolean shipColor;
 
     UserClass(int level, ArrayList<Integer> perks, boolean shipColor) {
