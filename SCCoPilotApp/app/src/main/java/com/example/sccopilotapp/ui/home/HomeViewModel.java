@@ -13,10 +13,10 @@ public class HomeViewModel extends ViewModel {
         mText.setValue(
                 "Created By..." + "\n" +
                         "Z Noah Hounshel" + "\n"
-                + "Greg Griffin" + "\n"
-                + "Reed Farrow" + "\n"
-                + "Kole Bostic" + "\n"
-                + "Tom Sanford" + "\n"
+                        + "Greg Griffin" + "\n"
+                        + "Reed Farrow" + "\n"
+                        + "Kole Bostic" + "\n"
+                        + "Tom Sanford" + "\n"
         );
     }
 

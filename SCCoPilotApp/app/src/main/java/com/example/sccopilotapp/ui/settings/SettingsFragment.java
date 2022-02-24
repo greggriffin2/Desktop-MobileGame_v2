@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sccopilotapp.databinding.FragmentDashboardBinding;
-import com.example.sccopilotapp.ui.settings.SettingsViewModel;
 
 public class SettingsFragment extends Fragment {
 
