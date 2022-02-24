@@ -77,8 +77,6 @@ Handle a websocket request, parsing its JSON contents and either calling
 an appropriate subhandler depending on the value of the 'type' key in the JSON data,
 or echoing the data back to the client.
 
-Add client's UUID to the active connections, and send an 'OK_INIT' response.
-
 Args:
 	websocket (obj): Websocket object automatically passed from prior websockets.serve call. 
 """
