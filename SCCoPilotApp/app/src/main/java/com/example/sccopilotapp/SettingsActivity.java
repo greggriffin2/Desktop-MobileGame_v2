@@ -2,6 +2,7 @@ package com.example.sccopilotapp;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -19,6 +20,10 @@ public class SettingsActivity extends AppCompatActivity {
         settingsText = findViewById(R.id.settingsText);
         toggleButton = findViewById(R.id.toggleButton);
         titleText = findViewById(R.id.titleText);
+
+        // this might not work, implement onToggleClick code
+        toggleButton.setOnClickListener(view -> onToggleClick(toggleButton));
+
     }
     public void onStart(){
         super.onStart();
@@ -45,5 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
      * class invariants: View is the same
      */
     public void changeShipColor(boolean color) {}
+
+
 
 }

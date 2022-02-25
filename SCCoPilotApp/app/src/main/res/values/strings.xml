@@ -10,4 +10,7 @@
     <string name="white">White</string>
     <string name="settings_Title">SETTINGS</string>
     <string name="ship_color">Ship Color</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="player_1">Player 1</string>
+    <string name="player_1score">player_1Score</string>
 </resources>

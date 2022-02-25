@@ -25,10 +25,6 @@ public class UserClass {
         this.shipColor = color;
     }
 
-    public void setPerks(boolean color){
-        this.shipColor = color;
-    }
-
     public ArrayList<Integer> getPerks(){
         return this.perks;
     }
