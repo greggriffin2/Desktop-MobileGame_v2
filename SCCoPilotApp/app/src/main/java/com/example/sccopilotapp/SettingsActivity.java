@@ -1,6 +1,9 @@
 package com.example.sccopilotapp;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,7 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ToggleButton toggleButton;
     private TextView settingsText;
     private TextView titleText;
-
+    private ActionBar actionBar = getActionBar();
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -20,6 +23,8 @@ public class SettingsActivity extends AppCompatActivity {
         settingsText = findViewById(R.id.settingsText);
         toggleButton = findViewById(R.id.toggleButton);
         titleText = findViewById(R.id.titleText);
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // this might not work, implement onToggleClick code
         toggleButton.setOnClickListener(view -> onToggleClick(toggleButton));
@@ -54,7 +59,11 @@ public class SettingsActivity extends AppCompatActivity {
     /**
      * On click, sends user back to page where they were
      */
-    public void back(){ }
+    public boolean onOptionsItemSelected(MenuItem item){
+        Intent myIntent = new Intent(getApplicationContext(), MainGameActivity.class);
+        startActivityForResult(myIntent, 0);
+        return true;
+    }
 
 
 
