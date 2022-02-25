@@ -51,6 +51,11 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public void changeShipColor(boolean color) {}
 
+    /**
+     * On click, sends user back to page where they were
+     */
+    public void back(){ }
+
 
 
 }
