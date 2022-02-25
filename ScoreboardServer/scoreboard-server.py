@@ -3,6 +3,29 @@ import json
 
 app = Flask(__name__)
 
+@app.route('/', methods=['POST', 'GET'])
+def post_endpoint():
+    """ Respond to POST data.
+    
+    Receive POST data and respond based on the value of the 'type' field in the data.
+    Data is expected to be JSON format. 
+    ---
+    
+    responses:
+      200:
+        description: A JSON string containing response data.
+    """
+    if request.method == 'POST':
+        post_data = request.get_json()
+        if post_data is None:
+            print("Bad JSON data in POST body!")
+            return
+        if 'type' in post_data and isinstance(post_data, dict):
+            print("POST DATA IS DICT AND HAS A TYPE! TYPE IS:  {}".format(post_data['type']))
+        else:
+            print("!!! POST DATA INCORRECT FORMAT")
+        print("POST ENDPOINT ACCESSED: {}".format(post_data))
+        return "POST ENDPOINT ACCESSED"
 
 @app.route('/retrieve/')
 def retrieve():
@@ -11,16 +34,8 @@ def retrieve():
     Retrieves leaderboard as a JSON object. Communicates with remote database to
     get remote score data, then assembles into a JSON object to reply to the
     client.
+    ---
 
-    parameters:
-      - in: path
-        name: username
-        required: false ???
-        description: Username to retrieve
-      - in: path
-        name: score
-        required: false ???
-        description: Game highscore to store into remote database.
     responses:
       200:
         description: A JSON string containing highscore data.
