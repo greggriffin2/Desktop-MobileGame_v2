@@ -7,7 +7,7 @@
 [ext_resource path="res://scripts/bgScroll.gd" type="Script" id=5]
 [ext_resource path="res://assets/PNG/Meteors/meteorBrown_small1.png" type="Texture" id=6]
 [ext_resource path="res://assets/PNG/Meteors/meteorBrown_big2.png" type="Texture" id=7]
-[ext_resource path="res://Pause.gd" type="Script" id=8]
+[ext_resource path="res://scripts/Pause.gd" type="Script" id=8]
 [ext_resource path="res://ships/enemies/enemySpawner.gd" type="Script" id=9]
 
 [node name="gameStage" type="Node2D"]
