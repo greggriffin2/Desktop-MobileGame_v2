@@ -12,8 +12,8 @@ var hitPoints = 100
 
 ## Handles player movement using physics and user input.
 func _physics_process(delta):
-	input_vector.x = Input.get_action_strength("moveRight") - Input.get_action_strength("moveLeft")
-	input_vector.y = Input.get_action_strength("moveDown") - Input.get_action_strength("moveUp")
+	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 
 	global_position += input_vector * speed * delta
 

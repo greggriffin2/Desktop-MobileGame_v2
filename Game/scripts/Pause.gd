@@ -13,7 +13,7 @@ var unPaused = true
 ## This method is meant to separate pausing the game from stopping this particular process,
 ## while layering on top of and stopping all other processes.
 func _process(delta):
-	if Input.is_action_just_pressed("gamePause"):
+	if Input.is_action_just_pressed("ui_cancel"):
 		if unPaused:
 			get_tree().paused = true
 			unPaused = false
