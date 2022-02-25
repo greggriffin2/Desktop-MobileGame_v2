@@ -6,17 +6,17 @@ import androidx.lifecycle.ViewModel;
 
 public class HomeViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private final MutableLiveData<String> mText;
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue(
                 "Created By..." + "\n" +
                         "Z Noah Hounshel" + "\n"
-                + "Greg Griffin" + "\n"
-                + "Reed Farrow" + "\n"
-                + "Kole Bostic" + "\n"
-                + "Tom Sanford" + "\n"
+                        + "Greg Griffin" + "\n"
+                        + "Reed Farrow" + "\n"
+                        + "Kole Bostic" + "\n"
+                        + "Tom Sanford" + "\n"
         );
     }
 

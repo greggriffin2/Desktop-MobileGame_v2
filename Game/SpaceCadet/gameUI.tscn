@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Theme" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = 80.0
+margin_top = 2764.0
+margin_right = 1790.0
+margin_bottom = 3084.0
+theme = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
