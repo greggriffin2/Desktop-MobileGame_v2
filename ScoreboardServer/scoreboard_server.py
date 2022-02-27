@@ -2,12 +2,25 @@ import json
 import boto3
 from flask import Flask, request
 app = Flask(__name__)
-DB_STR = 'dynamodb' # AWS service name
-DB_ENDPOINT_URL = "http://localhost:8003"
-DB = boto3.resource(DB_STR, endpoint_url=DB_ENDPOINT_URL, region_name='us-east-1')
+DB = boto3.resource('dynamodb', endpoint_url="http://dynamodb.us-east-1.amazonaws.com", region_name='us-east-1')
 
-@app.route('/test')
-def test():
+@app.route('/test/delete')
+def test_delete():
+    result = "START.\n"
+
+    table = DB.Table('TestTable')
+
+    result += str(table)
+    result += "\n"
+
+    table.delete()
+    result += "Table deleted.\n"
+
+    result += "DONE.\n"
+    return result
+
+@app.route('/test/create')
+def test_create():
     result = "START.\n"
 
     new_table = DB.create_table(
@@ -37,11 +50,8 @@ def test():
                         'WriteCapacityUnits': 10
                     })
 
-    result += new_table
+    result += str(new_table)
     result += "\n"
-
-    new_table.delete()
-    result += "Table deleted.\n"
 
     result += "DONE.\n"
     return result
