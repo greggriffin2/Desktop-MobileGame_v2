@@ -6,6 +6,9 @@ from flask import Flask, request
 app = Flask(__name__)
 DB = boto3.resource('dynamodb', endpoint_url="http://dynamodb.us-east-1.amazonaws.com", region_name='us-east-1')
 
+def datetime_generate():
+    return int(time.mktime(datetime.datetime.now().timetuple()))
+
 @app.route('/test/create')
 def test_create():
     result = "START.\n"
@@ -44,32 +47,39 @@ def test_create():
     return result
 
 
-@app.route('/', methods=['POST', 'GET'])
-def post_endpoint():
-    """ Respond to POST data.
+@app.route('/add', methods=['POST', 'GET'])
+def post_add():
+    """ Add a Score to database based on POST data.
 
-    Receive POST data and respond based on the value of the 'type' field in the data.
-    Data is expected to be JSON format.
+    Receive POST score data and add to remote database.
+    Data is expected to be JSON format with mandatory
+    'username' and 'info' keys, 'username' corresponding
+    to a string value and 'info' to a dict/object value.
     ---
 
     responses:
       200:
         description: A JSON string containing response data.
     """
+    table = DB.Table('Scores')
+    result = ""
 
     if request.method == 'POST':
         post_data = request.get_json()
         if post_data is None:
-            print("Bad JSON data in POST body!")
-            return ""
-        if 'type' in post_data and isinstance(post_data, dict):
-            print("POST DATA IS DICT AND HAS A TYPE! TYPE IS:  {}".format(post_data['type']))
+            result = "Bad JSON data in POST body!"
+            return result
+        if isinstance(post_data, dict):
+            if 'username' in post_data and 'info' in post_data:
+                post_data['datetime'] = datetime_generate()
+                result = "POST DATA GOOD FORMAT {}".format(str(post_data))
+                print(result)
+                table.put_item(Item=post_data)
         else:
-            print("!!! POST DATA INCORRECT FORMAT")
-        print("POST ENDPOINT ACCESSED: {}".format(post_data))
-        return "POST ENDPOINT ACCESSED"
+            result = "!!! POST DATA INCORRECT JSON FORMAT"
+            print(result)
 
-    return ""
+    return result
 
 @app.route('/retrieve/')
 def retrieve():
@@ -122,7 +132,7 @@ def add(username, score):
         response = table.put_item(
             Item={
                 'username': username,
-                'datetime': int(time.mktime(datetime.datetime.now().timetuple())),
+                'datetime': datetime_generate(),
                 'info': {
                     'highscore': int(score)
                 }
