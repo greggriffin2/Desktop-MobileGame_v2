@@ -2,9 +2,16 @@ import datetime
 import time
 import json
 import boto3
+import decimal
 from flask import Flask, request
 app = Flask(__name__)
 DB = boto3.resource('dynamodb', endpoint_url="http://dynamodb.us-east-1.amazonaws.com", region_name='us-east-1')
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            return int(o)
+        return super(DecimalEncoder, self).default(o)
 
 def datetime_generate():
     return int(time.mktime(datetime.datetime.now().timetuple()))
@@ -98,7 +105,11 @@ def retrieve():
     result = ""
 
     if request.method == 'GET':
-        result = str(table.scan())
+        scan = table.scan()
+        if 'Items' in scan:
+            print("GOOD ")
+            items = json.dumps(scan['Items'], cls=DecimalEncoder)
+            result += items
         print(result)
 
     return result
