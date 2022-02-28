@@ -1,47 +1,34 @@
+import datetime
+import time
 import json
 import boto3
 from flask import Flask, request
 app = Flask(__name__)
 DB = boto3.resource('dynamodb', endpoint_url="http://dynamodb.us-east-1.amazonaws.com", region_name='us-east-1')
 
-@app.route('/test/delete')
-def test_delete():
-    result = "START.\n"
-
-    table = DB.Table('TestTable')
-
-    result += str(table)
-    result += "\n"
-
-    table.delete()
-    result += "Table deleted.\n"
-
-    result += "DONE.\n"
-    return result
-
 @app.route('/test/create')
 def test_create():
     result = "START.\n"
 
     new_table = DB.create_table(
-                    TableName='TestTable',
+                    TableName='Scores',
                     KeySchema=[
                         {
-                            'AttributeName': 'test_id',
+                            'AttributeName': 'username',
                             'KeyType': 'HASH' # partition AKA primary key
                         },
                         {
-                            'AttributeName': 'test_count',
+                            'AttributeName': 'datetime',
                             'KeyType': 'RANGE' # sort AKA partial key
-                        }
+                        },
                     ],
                     AttributeDefinitions=[
                         {
-                            'AttributeName': 'test_id',
+                            'AttributeName': 'username',
                             'AttributeType': 'S' # string
                         },
                         {
-                            'AttributeName': 'test_count',
+                            'AttributeName': 'datetime',
                             'AttributeType': 'N' # number (?)
                         }
                     ],
@@ -97,11 +84,14 @@ def retrieve():
       200:
         description: A JSON string containing highscore data.
     """
-    if request.method == 'GET':
-        print("RETRIEVE ATTEMPTED")
-        return "RETRIEVE ATTEMPTED"
+    table = DB.Table('Scores')
+    result = ""
 
-    return ""
+    if request.method == 'GET':
+        result = str(table.scan())
+        print(result)
+
+    return result
 
 
 @app.route('/add/<username>/<score>/')
@@ -123,11 +113,24 @@ def add(username, score):
       201:
         description: Successful
     """
+
+    table = DB.Table('Scores')
+    result = ""
+
     if request.method == 'GET':
         print("ADD {} {} ATTEMPTED".format(username, score))
-        return "ADD ATTEMPTED"
-
-    return ""
+        response = table.put_item(
+            Item={
+                'username': username,
+                'datetime': int(time.mktime(datetime.datetime.now().timetuple())),
+                'info': {
+                    'highscore': int(score)
+                }
+            }
+        )
+        result = str(response)
+        print(result)
+    return result
 
 if __name__ == '__main__':
     app.run(threaded=False, port=8002)
