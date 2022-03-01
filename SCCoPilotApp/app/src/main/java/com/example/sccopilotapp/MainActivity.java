@@ -2,10 +2,12 @@ package com.example.sccopilotapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +20,12 @@ import com.example.sccopilotapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainGameActivity";
     private EditText codeText;
     private Button playButton;
 
-//    private ActivityMainBinding binding;
+
+    //    private ActivityMainBinding binding;
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -45,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         codeText = findViewById(R.id.inputCode);
         playButton = findViewById(R.id.playButton);
-        String validatedCode = codeText.toString();
     }
 
     public void onStart(){
@@ -58,8 +61,13 @@ public class MainActivity extends AppCompatActivity {
      * @param validationCode
      * Return: True or False
      */
-    public void validateConnectionCode(String validationCode){
-
+    public boolean validateConnectionCode(String validationCode){
+        String correctCode = "ABCD";
+        if (validationCode.equals(correctCode)) {
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**This methods purpose is to react to the play button
@@ -67,7 +75,15 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickPlay(View view){
-        Intent intent = new Intent(this, MainGameActivity.class);
-        startActivity(intent);
+        String validatedCode = codeText.getText().toString();
+        if (validateConnectionCode(validatedCode)) {
+            Log.d(TAG, "matched:success");
+            Intent intent = new Intent(this, MainGameActivity.class);
+            startActivity(intent);
+        }else {
+            Log.d(TAG,"matched:failure");
+            Toast.makeText(MainActivity.this, "Connection Failed: code incorrect",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
