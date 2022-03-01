@@ -5,21 +5,21 @@ extends Control
 ##		hit points, special meter,
 
 
-## will store current score from the Player class and display on the UI within a container
+## display's player's current score on the UI
 func keep_score(currentScore):
 	pass
 
 
-## will store current hit points from the Player class and display on the UI within healthBar.
+## displays player's current health on the UI
 func track_health(currentHealth):
 	pass
 
 
-## will store current special points from the Player class and display on the UI within specialBar.
+## displays player's current special meter on the UI
 func track_special(currentSpecial):
 	pass
 
 
-## will accept current weapon from the Player class and display on the UI within TabContainer
+## displays player's current weapon on the UI
 func display_weapon(currentWep):
 	pass
