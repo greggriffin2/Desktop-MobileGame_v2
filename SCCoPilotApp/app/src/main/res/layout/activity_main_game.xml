@@ -10,13 +10,14 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:textAlignment="center"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:text="CLICK!"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="onClickShip"/>
+        android:onClick="onClickShip"
+        tools:ignore="UsingOnClickInXml" />
     <Button
         android:id="@+id/upgradesButton"
         android:layout_width="100dp"
@@ -28,7 +29,8 @@
         app:layout_constraintTop_toBottomOf="@id/shipButton"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="150dp"
-        android:onClick="onClickUpgrades"/>
+        android:onClick="onClickUpgrades"
+        tools:ignore="UsingOnClickInXml" />
     <Button
         android:id="@+id/leaderboardButton"
         android:layout_width="100dp"
@@ -40,7 +42,8 @@
         app:layout_constraintTop_toBottomOf="@id/shipButton"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="150dp"
-        android:onClick="onClickLeaderboard"/>
+        android:onClick="onClickLeaderboard"
+        tools:ignore="UsingOnClickInXml" />
     <Button
         android:id="@+id/exitButton"
         android:layout_width="100dp"
@@ -52,6 +55,19 @@
         app:layout_constraintTop_toBottomOf="@id/shipButton"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="150dp"
-        android:onClick="onClickExit"/>
+        android:onClick="onClickExit"
+        tools:ignore="UsingOnClickInXml" />
+    <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="10dp"
+        android:onClick="onClickSettings"
+        tools:ignore="UsingOnClickInXml" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

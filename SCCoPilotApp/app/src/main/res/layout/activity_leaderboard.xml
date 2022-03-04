@@ -46,6 +46,38 @@
                 android:singleLine="true"
                 android:text="@string/player_1score"/>
         </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/player2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/player_2_"
+                android:layout_gravity="start"/>
+            <TextView
+                android:id="@+id/player_2Score"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="50dp"
+                android:singleLine="true"
+                android:text="@string/player_2score_"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/player3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/player_3"
+                android:layout_gravity="start"/>
+            <TextView
+                android:id="@+id/player_3Score"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="50dp"
+                android:singleLine="true"
+                android:text="@string/player_3score"/>
+        </TableRow>
 
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

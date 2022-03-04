@@ -13,6 +13,7 @@ public class MainGameActivity extends AppCompatActivity {
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;
+    Button settingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class MainGameActivity extends AppCompatActivity {
         upgradesButton = findViewById(R.id.upgradesButton);
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
+        settingsButton = findViewById(R.id.settingsButton);
     }
 
     /**This method will listen for the clicks on the ship and add
@@ -58,6 +60,16 @@ public class MainGameActivity extends AppCompatActivity {
      */
     public void onClickExit(View view){
 
+    }
+
+    /**
+     * This method will wait for the user to click the button and once clicked, will open
+     * the settings menu
+     * @param view
+     */
+    public void onClickSettings(View view){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -15,7 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ToggleButton toggleButton;
     private TextView settingsText;
     private TextView titleText;
-    private ActionBar actionBar = getActionBar();
+    //private ActionBar actionBar = getActionBar();
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
         toggleButton = findViewById(R.id.toggleButton);
         titleText = findViewById(R.id.titleText);
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        //actionBar.setDisplayHomeAsUpEnabled(true);
 
         // this might not work, implement onToggleClick code
         toggleButton.setOnClickListener(view -> onToggleClick(toggleButton));
@@ -59,11 +59,11 @@ public class SettingsActivity extends AppCompatActivity {
     /**
      * On click, sends user back to page where they were
      */
-    public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainGameActivity.class);
-        startActivityForResult(myIntent, 0);
-        return true;
-    }
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        Intent myIntent = new Intent(getApplicationContext(), MainGameActivity.class);
+//        startActivityForResult(myIntent, 0);
+//        return true;
+//    }
 
 
 
