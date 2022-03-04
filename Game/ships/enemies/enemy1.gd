@@ -8,8 +8,8 @@ extends Area2D
 ##	Each enemy will also have a unique projectile and tactical pattern.
 
 var speed = 200
-var pointValue = 15
-var hitPoints = 1
+var point_value = 15
+var hit_points = 1
 
 
 ##	_physics_process handles enemy ship movement and potential tactical patterns.
@@ -29,5 +29,5 @@ func projectile():
 
 
 ##	onDeath handles any and all events that may occur when an enemy ship reaches zero hit points.
-func onDeath():
+func on_death():
 	pass
