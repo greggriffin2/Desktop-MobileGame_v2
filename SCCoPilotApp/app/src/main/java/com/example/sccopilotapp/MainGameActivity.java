@@ -2,6 +2,7 @@ package com.example.sccopilotapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,7 +38,8 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickUpgrades(View view){
-
+        Intent intent = new Intent(this, UpgradesActivity.class);
+        startActivity(intent);
     }
 
     /**This method will wait for the user to click the button and once
@@ -46,7 +48,8 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickLeaderboard(View view){
-
+        Intent intent = new Intent(this, LeaderboardActivity.class);
+        startActivity(intent);
     }
 
     /**This method will wait for the user to click the button and once clicked,
