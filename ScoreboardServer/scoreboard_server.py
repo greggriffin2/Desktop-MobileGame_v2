@@ -3,9 +3,13 @@ import time
 import json
 import boto3
 import decimal
-from flask import Flask, request
+from http import HTTPStatus
+from flask import Flask, request, Response
 app = Flask(__name__)
 DB = boto3.resource('dynamodb', endpoint_url="http://dynamodb.us-east-1.amazonaws.com", region_name='us-east-1')
+
+def datetime_generate():
+    return int(time.mktime(datetime.datetime.now().timetuple()))
 
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
@@ -13,8 +17,30 @@ class DecimalEncoder(json.JSONEncoder):
             return int(o)
         return super(DecimalEncoder, self).default(o)
 
-def datetime_generate():
-    return int(time.mktime(datetime.datetime.now().timetuple()))
+class UserScore:
+    def __init__(self, username, score, datetime=None):
+        self.username = username
+        self.score = score
+        if datetime is None:
+            self.datetime = datetime_generate()
+        else:
+            self.datetime = datetime
+        log(f"NEW USER SCORE CREATED: {username} {score}")
+
+    def to_json(self):
+        result = {}
+        result["username"] = self.username
+        result["datetime"] = self.datetime
+        result["info"] = {}
+        result["info"]["highscore"] = self.score
+        return json.dumps(result)
+
+def response_build(data, response_status):
+    return Response(str(data), status=response_status, mimetype='application/json')
+
+def log(data):
+    log_time = datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")
+    print(f"LOG  -  [{log_time}]  {str(data)}\n")
 
 @app.route('/test/create')
 def test_create():
@@ -74,17 +100,17 @@ def post_add():
     if request.method == 'POST':
         post_data = request.get_json()
         if post_data is None:
-            result = "Bad JSON data in POST body!"
+            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
             return result
         if isinstance(post_data, dict):
             if 'username' in post_data and 'info' in post_data:
                 post_data['datetime'] = datetime_generate()
-                result = "POST DATA GOOD FORMAT {}".format(str(post_data))
-                print(result)
+                result = response_build(f"POST DATA GOOD FORMAT {str(post_data)}", HTTPStatus.OK)
+                log(result.get_data())
                 table.put_item(Item=post_data)
         else:
-            result = "!!! POST DATA INCORRECT JSON FORMAT"
-            print(result)
+            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
+            log(result)
 
     return result
 
@@ -102,16 +128,17 @@ def retrieve():
         description: A JSON string containing highscore data.
     """
     table = DB.Table('Scores')
-    result = ""
+    result_data = ""
 
     if request.method == 'GET':
         scan = table.scan()
         if 'Items' in scan:
-            print("GOOD ")
+            log("GOOD ")
             items = json.dumps(scan['Items'], cls=DecimalEncoder)
-            result += items
-        print(result)
+            result_data += items
+        log(result_data)
 
+    result = response_build(result_data, HTTPStatus.OK)
     return result
 
 
@@ -137,20 +164,24 @@ def add(username, score):
 
     table = DB.Table('Scores')
     result = ""
+    time_made = datetime_generate()
 
     if request.method == 'GET':
-        print("ADD {} {} ATTEMPTED".format(username, score))
+        log(f"ADD {username} {score} ATTEMPTED")
         response = table.put_item(
             Item={
                 'username': username,
-                'datetime': datetime_generate(),
+                'datetime': time_made,
                 'info': {
                     'highscore': int(score)
                 }
             }
         )
-        result = str(response)
-        print(result)
+        log(response)
+
+    user_score = UserScore(username, score, time_made)
+    result = response_build(user_score.to_json(), HTTPStatus.OK)
+
     return result
 
 if __name__ == '__main__':
