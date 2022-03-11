@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.sccopilotapp.gamesync.LeaderboardScore;
+import com.example.sccopilotapp.gamesync.SynchronizationFacade;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class LeaderboardActivity extends AppCompatActivity {
     private TextView boardTitle;
@@ -33,6 +37,8 @@ public class LeaderboardActivity extends AppCompatActivity {
      * Calls to the facade and gets arrays of the players and their scores,
      * then populates the local arrays to those values
      */
-    public void getLeaderboard(){}
+    public List<LeaderboardScore> getLeaderboard(){
+        return SynchronizationFacade.getScores(0,5);
+    }
 
 }
