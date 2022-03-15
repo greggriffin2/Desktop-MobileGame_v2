@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
      * Return: True or False
      */
     public boolean validateConnectionCode(String validationCode){
-        String correctCode = "ABCD";
+        String correctCode = "a";
         if (validationCode.equals(correctCode)) {
             return true;
         }else {
