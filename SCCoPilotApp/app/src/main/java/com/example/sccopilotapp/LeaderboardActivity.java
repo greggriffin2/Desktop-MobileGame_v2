@@ -20,6 +20,11 @@ public class LeaderboardActivity extends AppCompatActivity {
     private TextView player2Score;
     private TextView player3;
     private TextView player3Score;
+    private TextView player4;
+    private TextView player4Score;
+    private TextView player5;
+    private TextView player5Score;
+
     private ArrayList<TextView> players = new ArrayList<>(5);
     private ArrayList<TextView> scores = new ArrayList<>(5);
 
@@ -35,6 +40,10 @@ public class LeaderboardActivity extends AppCompatActivity {
         player2Score = findViewById(R.id.player_2Score);
         player3 = findViewById(R.id.player3);
         player3Score = findViewById(R.id.player_3Score);
+        player4 = findViewById(R.id.player4);
+        player4Score = findViewById(R.id.player_4Score);
+        player5 = findViewById(R.id.player5);
+        player5Score = findViewById(R.id.player_5Score);
         populateScores();
     }
 
@@ -46,7 +55,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         //return SynchronizationFacade.getScores(0,5);
 
         // Test code
-
         ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
         for(int i = 0; i < 5; i++){
             testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2 ));
@@ -55,15 +63,20 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
     protected void populateScores(){
 
-        this.players.add(player1);
-        this.scores.add(player1Score);
-        this.players.add(player2);
-        this.scores.add(player2Score);
-        this.players.add(player3);
-        this.scores.add(player3Score);
+        // populates local lists players and scores, pointing to the TextView elements
+        players.add(player1);
+        scores.add(player1Score);
+        players.add(player2);
+        scores.add(player2Score);
+        players.add(player3);
+        scores.add(player3Score);
+        players.add(player4);
+        scores.add(player4Score);
+        players.add(player5);
+        scores.add(player5Score);
         ArrayList<LeaderboardScore> LB = this.getLeaderboard();
 
-        for(int i = 0; i < players.size(); i++){
+        for(int i = 0; i < LB.size(); i++){
             players.get(i).setText((CharSequence) LB.get(i).name);
             scores.get(i).setText((CharSequence) Integer.toString(LB.get(i).score));
         }

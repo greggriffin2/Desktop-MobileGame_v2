@@ -19,4 +19,8 @@
     <string name="player_2_">Player 2</string>
     <string name="player_3score">player_3Score</string>
     <string name="player_3">Player 3</string>
+    <string name="player_4">Player 4</string>
+    <string name="player_4score">player_4Score</string>
+    <string name="player_5">Player 5</string>
+    <string name="player_5score">player_5Score</string>
 </resources>
