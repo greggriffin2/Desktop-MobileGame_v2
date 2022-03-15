@@ -48,8 +48,8 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     /**
-     * Calls to the facade and gets arrays of the players and their scores,
-     * then populates the local arrays to those values
+     * Calls to the facade and gets array of the players and their scores,
+     * helper function to populateScores()
      */
     public ArrayList<LeaderboardScore> getLeaderboard(){
         //return SynchronizationFacade.getScores(0,5);
@@ -61,7 +61,16 @@ public class LeaderboardActivity extends AppCompatActivity {
         }
         return testLeaderboard;
     }
-    protected void populateScores(){
+
+    /**
+     * Sets local players and scores Arrays to point to the TextView elements that will be updated,
+     * then gets the Leaderboard from the websocket, then populates the screen (TextViews) with
+     * that data.
+     * preconditions: There must be a valid Object returned from SynchronizationFacade.getScores()
+     * postconditions: Screen will have scores updated
+     * class invariants: Nothing except for the TextView elements will be changed
+     */
+    public void populateScores(){
 
         // populates local lists players and scores, pointing to the TextView elements
         players.add(player1);
