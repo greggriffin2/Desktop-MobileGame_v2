@@ -34,6 +34,8 @@ public class SettingsActivity extends AppCompatActivity {
         super.onStart();
     }
 
+
+
     /**
      * Upon a click listener's call, changes the checkStatus of the
      * ToggleButton, and sends the required settings status change
