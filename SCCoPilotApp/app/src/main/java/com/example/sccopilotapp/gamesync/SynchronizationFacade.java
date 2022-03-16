@@ -99,7 +99,11 @@ public class SynchronizationFacade {
      * @return a list of scores in order from highest score to lowest
      */
     public static List<LeaderboardScore> getScores(int startRange, int stopRange) {
-        return new ArrayList<LeaderboardScore>();
+        ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
+        for (int i = 0; i < 5; i++) {
+            testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2));
+        }
+        return testLeaderboard;
     }
 
 
