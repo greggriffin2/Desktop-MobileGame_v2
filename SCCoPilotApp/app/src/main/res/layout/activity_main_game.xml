@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainGameActivity">
+
     <Button
         android:id="@+id/shipButton"
         android:layout_width="250dp"
@@ -18,6 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:onClick="onClickShip"
         tools:ignore="UsingOnClickInXml" />
+
     <Button
         android:id="@+id/upgradesButton"
         android:layout_width="100dp"
@@ -31,6 +33,7 @@
         android:layout_marginTop="150dp"
         android:onClick="onClickUpgrades"
         tools:ignore="UsingOnClickInXml" />
+
     <Button
         android:id="@+id/leaderboardButton"
         android:layout_width="100dp"
@@ -44,6 +47,7 @@
         android:layout_marginTop="150dp"
         android:onClick="onClickLeaderboard"
         tools:ignore="UsingOnClickInXml" />
+
     <Button
         android:id="@+id/exitButton"
         android:layout_width="100dp"
@@ -57,6 +61,7 @@
         android:layout_marginTop="150dp"
         android:onClick="onClickExit"
         tools:ignore="UsingOnClickInXml" />
+
     <Button
         android:id="@+id/settingsButton"
         android:layout_width="110dp"

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LeaderboardActivity">
+
     <TextView
         android:id="@+id/boardTitle"
         android:layout_width="120dp"
@@ -36,7 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/player_1"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start" />
+
             <TextView
                 android:id="@+id/player_1Score"
                 android:layout_height="wrap_content"
@@ -44,15 +46,18 @@
                 android:layout_gravity="end"
                 android:layout_marginStart="50dp"
                 android:singleLine="true"
-                android:text="@string/player_1score"/>
+                android:text="@string/player_1score" />
         </TableRow>
+
         <TableRow>
+
             <TextView
                 android:id="@+id/player2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/player_2_"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start" />
+
             <TextView
                 android:id="@+id/player_2Score"
                 android:layout_height="wrap_content"
@@ -60,15 +65,18 @@
                 android:layout_gravity="end"
                 android:layout_marginStart="50dp"
                 android:singleLine="true"
-                android:text="@string/player_2score_"/>
+                android:text="@string/player_2score_" />
         </TableRow>
+
         <TableRow>
+
             <TextView
                 android:id="@+id/player3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/player_3"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start" />
+
             <TextView
                 android:id="@+id/player_3Score"
                 android:layout_height="wrap_content"
@@ -76,15 +84,18 @@
                 android:layout_gravity="end"
                 android:layout_marginStart="50dp"
                 android:singleLine="true"
-                android:text="@string/player_3score"/>
+                android:text="@string/player_3score" />
         </TableRow>
+
         <TableRow>
+
             <TextView
                 android:id="@+id/player4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/player_4"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start" />
+
             <TextView
                 android:id="@+id/player_4Score"
                 android:layout_height="wrap_content"
@@ -92,15 +103,18 @@
                 android:layout_gravity="end"
                 android:layout_marginStart="50dp"
                 android:singleLine="true"
-                android:text="@string/player_4score"/>
+                android:text="@string/player_4score" />
         </TableRow>
+
         <TableRow>
+
             <TextView
                 android:id="@+id/player5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/player_5"
-                android:layout_gravity="start"/>
+                android:layout_gravity="start" />
+
             <TextView
                 android:id="@+id/player_5Score"
                 android:layout_height="wrap_content"
@@ -108,7 +122,7 @@
                 android:layout_gravity="end"
                 android:layout_marginStart="50dp"
                 android:singleLine="true"
-                android:text="@string/player_5score"/>
+                android:text="@string/player_5score" />
         </TableRow>
 
     </TableLayout>

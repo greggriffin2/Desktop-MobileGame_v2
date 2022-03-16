@@ -51,13 +51,13 @@ public class LeaderboardActivity extends AppCompatActivity {
      * Calls to the facade and gets array of the players and their scores,
      * helper function to populateScores()
      */
-    public ArrayList<LeaderboardScore> getLeaderboard(){
+    public ArrayList<LeaderboardScore> getLeaderboard() {
         //return SynchronizationFacade.getScores(0,5);
 
         // Test code
         ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
-        for(int i = 0; i < 5; i++){
-            testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2 ));
+        for (int i = 0; i < 5; i++) {
+            testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2));
         }
         return testLeaderboard;
     }
@@ -70,7 +70,7 @@ public class LeaderboardActivity extends AppCompatActivity {
      * postconditions: Screen will have scores updated
      * class invariants: Nothing except for the TextView elements will be changed
      */
-    public void populateScores(){
+    public void populateScores() {
 
         // populates local lists players and scores, pointing to the TextView elements
         players.add(player1);
@@ -85,7 +85,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         scores.add(player5Score);
         ArrayList<LeaderboardScore> LB = this.getLeaderboard();
 
-        for(int i = 0; i < LB.size(); i++){
+        for (int i = 0; i < LB.size(); i++) {
             players.get(i).setText((CharSequence) LB.get(i).name);
             scores.get(i).setText((CharSequence) Integer.toString(LB.get(i).score));
         }
