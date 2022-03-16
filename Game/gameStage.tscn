@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/Backgrounds/blue.png" type="Texture" id=1]
 [ext_resource path="res://ships/player/Player.tscn" type="PackedScene" id=2]
@@ -8,10 +8,12 @@
 [ext_resource path="res://assets/PNG/Meteors/meteorBrown_small1.png" type="Texture" id=6]
 [ext_resource path="res://assets/PNG/Meteors/meteorBrown_big2.png" type="Texture" id=7]
 [ext_resource path="res://Scenes/Pause.tscn" type="PackedScene" id=8]
-[ext_resource path="res://ships/enemies/enemySpawner.gd" type="Script" id=9]
+[ext_resource path="res://Scenes/enemySpawner.tscn" type="PackedScene" id=9]
+[ext_resource path="res://gameStage.gd" type="Script" id=10]
 
 [node name="gameStage" type="Node2D"]
 pause_mode = 1
+script = ExtResource( 10 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 script = ExtResource( 5 )
@@ -42,29 +44,42 @@ position = Vector2( 502, 486 )
 scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 3 )
 
-[node name="enemy1" parent="." instance=ExtResource( 4 )]
-position = Vector2( 506, 2 )
-scale = Vector2( 0.35, 0.35 )
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 69
 
 [node name="Pause" parent="CanvasLayer" instance=ExtResource( 8 )]
 
-[node name="enemySpawner" type="Node2D" parent="."]
-script = ExtResource( 9 )
+[node name="enemySpawner" parent="." instance=ExtResource( 9 )]
 
-[node name="spawnPositions" type="Node2D" parent="enemySpawner"]
+[node name="enemy1" parent="enemySpawner" instance=ExtResource( 4 )]
+position = Vector2( 297, -72 )
 
-[node name="spawnPos1" type="Position2D" parent="enemySpawner/spawnPositions"]
-position = Vector2( 200, 0 )
+[node name="enemy2" parent="enemySpawner" instance=ExtResource( 4 )]
+position = Vector2( 346, -319 )
 
-[node name="spawnPos2" type="Position2D" parent="enemySpawner/spawnPositions"]
-position = Vector2( 500, 0 )
+[node name="enemy3" parent="enemySpawner" instance=ExtResource( 4 )]
+position = Vector2( 667, -170 )
 
-[node name="spawnPos3" type="Position2D" parent="enemySpawner/spawnPositions"]
-position = Vector2( 800, 0 )
+[node name="Score" type="Label" parent="."]
+margin_left = 6.0
+margin_top = 540.0
+margin_right = 156.0
+margin_bottom = 594.0
+text = "SCORE: 0"
+align = 1
 
-[node name="spawnTimer" type="Timer" parent="enemySpawner"]
-wait_time = 2.0
-autostart = true
+[node name="Health" type="Label" parent="."]
+margin_left = -4.0
+margin_top = 559.0
+margin_right = 164.0
+margin_bottom = 577.0
+text = "HEALTH: 100"
+align = 1
+
+[connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]
+[connection signal="minus_health" from="Player" to="." method="health"]
+[connection signal="spawn_player_laser" from="Player" to="." method="_on_Player_spawn_player_laser"]
+[connection signal="add_score" from="enemySpawner" to="." method="score"]
+[connection signal="spawn_enemy_laser" from="enemySpawner/enemy1" to="." method="_on_enemy1_spawn_enemy_laser"]
+[connection signal="spawn_enemy_laser" from="enemySpawner/enemy2" to="." method="_on_enemy1_spawn_enemy_laser"]
+[connection signal="spawn_enemy_laser" from="enemySpawner/enemy3" to="." method="_on_enemy1_spawn_enemy_laser"]

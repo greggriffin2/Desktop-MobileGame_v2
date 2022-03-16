@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="continueButton" type="Button"]
+margin_left = 2.0
+margin_top = 41.0
+margin_right = 80.0
+margin_bottom = 61.0
+
+[node name="continueLabel" type="Label" parent="."]
+margin_right = 78.0
+margin_bottom = 20.0
+text = "Continue"
+align = 1
+valign = 1

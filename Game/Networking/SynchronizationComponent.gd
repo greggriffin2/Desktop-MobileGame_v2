@@ -2,6 +2,8 @@
 class_name SynchronizationSingleton
 extends Node
 
+signal add_score
+
 
 var peer = WebRTCMultiplayer.new()
 var serverConnection = WebSocketClient.new()
@@ -11,8 +13,8 @@ func _ready():
 	# TODO: Implement setting up connection with server
 	pass
 
-
-
+func player_score_update(current_score: int):
+	emit_signal("add_score")
 
 # Health update called when the health of the player updates
 func player_health_update(current_health: float, max_health: float):
