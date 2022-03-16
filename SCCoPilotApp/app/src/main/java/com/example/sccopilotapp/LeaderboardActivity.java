@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.sccopilotapp.gamesync.LeaderboardScore;
+import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -51,15 +52,8 @@ public class LeaderboardActivity extends AppCompatActivity {
      * Calls to the facade and gets array of the players and their scores,
      * helper function to populateScores()
      */
-    public ArrayList<LeaderboardScore> getLeaderboard() {
-        //return SynchronizationFacade.getScores(0,5);
-
-        // Test code
-        ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
-        for (int i = 0; i < 5; i++) {
-            testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2));
-        }
-        return testLeaderboard;
+    public List<LeaderboardScore> getLeaderboard() {
+        return SynchronizationFacade.getScores(0, 5);
     }
 
     /**
@@ -83,7 +77,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         scores.add(player4Score);
         players.add(player5);
         scores.add(player5Score);
-        ArrayList<LeaderboardScore> LB = this.getLeaderboard();
+        List<LeaderboardScore> LB = this.getLeaderboard();
 
         for (int i = 0; i < LB.size(); i++) {
             players.get(i).setText((CharSequence) LB.get(i).name);
