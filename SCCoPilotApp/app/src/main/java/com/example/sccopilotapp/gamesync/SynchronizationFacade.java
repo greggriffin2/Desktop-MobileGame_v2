@@ -18,7 +18,7 @@ public class SynchronizationFacade {
 
     private static GameSyncSingleton sync;
 
-    SynchronizationFacade(String remoteAddress, int remotePort) {
+    public SynchronizationFacade(String remoteAddress, int remotePort) {
         if (sync != null) {
             if (!sync.getRemoteAddress().equals(remoteAddress) || sync.getRemotePort() != remotePort) {
 

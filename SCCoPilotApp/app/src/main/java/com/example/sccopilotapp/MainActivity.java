@@ -1,5 +1,6 @@
 package com.example.sccopilotapp;
 
+import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sccopilotapp.gamesync.GameSyncSingleton;
+import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickPlay(View view) {
+        Log.d(TAG, "onClickPlay: Creating sync singleton");
+        GameSyncSingleton syncFacade = new GameSyncSingleton(getApplicationContext());
         String validatedCode = codeText.getText().toString();
         if (validateConnectionCode(validatedCode)) {
             Log.d(TAG, "matched:success");
