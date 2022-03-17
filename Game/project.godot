@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="SCCP"
-run/main_scene="res://gameStage.tscn"
+run/main_scene="res://GameStage/gameStage.tscn"
 config/icon="res://icon.png"
 
 [autoload]
