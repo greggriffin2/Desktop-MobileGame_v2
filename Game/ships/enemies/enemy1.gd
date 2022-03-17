@@ -36,6 +36,7 @@ func take_damage(damage):
 		queue_free()
 		emit_signal("enemy_died")
 
+
 ## projectile spawns enemy lasers from the muzzle of the enemy ship.
 func projectile():
 	emit_signal("spawn_enemy_laser", muzzle.global_position)
@@ -45,12 +46,14 @@ func projectile():
 func on_death():
 	pass
 
+
 ## _on_enemy1_area_entered is a signal method.
 ## The parameter accepted is the object type that enters the enemy's collision area.
 ## Currently, the player ship will take 50 damage when an enemy ship makes contact.
 func _on_enemy1_area_entered(area):
 	if area is Player:
 		area.take_damage(50)
+
 
 ## on_FireTimer_timeout is a signal method.
 ## This function calls projectile to fire lasers every 1 second from enemy ships.

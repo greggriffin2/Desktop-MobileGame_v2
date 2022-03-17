@@ -16,11 +16,13 @@ var spawn_positions = null
 signal add_score
 signal spawn_enemy_laser(location)
 
+
 ## ready covers all events that happen on start.
 ## In this case, _ready calls randomize() and creates an object from all of the spawn nodes.
 func _ready():
 	randomize()
 	spawn_positions = $spawnPositions.get_children()
+
 
 ## spawn_enemy grabs an index using the remainder of a random integer divided by the size of the spawn node list.
 ## It then creates an object from our preloaded Enemy class and assigns it to a spawn position.
@@ -32,6 +34,7 @@ func spawn_enemy():
 	enemy.connect("enemy_died", self, "enemy_died")
 	add_child(enemy)
 
+
 ## _on_spawnTimer_timeout calls spawn_enemy when the spawnTimer reaches zero.
 ## Once the ship count has been incremented a certain amount, enemy ships
 ## will begin to vary as well as spawn faster.
@@ -41,8 +44,7 @@ func _on_spawnTimer_timeout():
 	if ship_count >= 5:
 		pass
 
+
 ## enemy_died is a signal method connected to the score method from the gameStage script.
 func enemy_died():
 	emit_signal("add_score")
-
-

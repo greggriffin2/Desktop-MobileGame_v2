@@ -2,10 +2,12 @@ extends Area2D
 
 var speed = 1000
 
+
 ## _physics_process handles laser movement.
 ## The enemy laser will travel to the bottom of the screen from the enemy ship.
 func _physics_process(delta):
 	global_position.y += speed * delta
+
 
 ## _on_EnemyLaser_area_entered is a signal method.
 ## The parameter accepted represents the collision area of the object.

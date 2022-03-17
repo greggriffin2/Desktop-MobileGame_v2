@@ -17,13 +17,14 @@ var speed = 400
 var input_vector = Vector2.ZERO
 var hit_points = 100
 
+
 ## Handles player movement using physics and user input.
 func _physics_process(delta):
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	input_vector.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 
 	global_position += input_vector * speed * delta
-	
+
 	if Input.is_action_just_pressed("fire_weapon"):
 		fire_weapon()
 
@@ -35,16 +36,19 @@ func take_damage(damage):
 		queue_free()
 		emit_signal("player_died")
 
-## Handles firing the player's main weapon by 
+
+## Handles firing the player's main weapon by
 ## emitting the player laser signal at the player ship's muzzle.
 func fire_weapon():
 	emit_signal("spawn_player_laser", muzzle.global_position)
-	
+
+
 ## Handles any changes that may occur when an object enters the player's collision area.
 ## Currently, an enemy ship will take 3 damage upon colliding with the player ship.
 func _on_Player_area_entered(area):
 	if area.is_in_group("enemies"):
 		area.take_damage(3)
+
 
 ## Handles switching the player's main weapon.
 func switch_weapon():
