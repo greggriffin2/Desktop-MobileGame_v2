@@ -7,7 +7,7 @@
 [ext_resource path="res://scripts/bgScroll.gd" type="Script" id=5]
 [ext_resource path="res://assets/PNG/Meteors/meteorBrown_small1.png" type="Texture" id=6]
 [ext_resource path="res://assets/PNG/Meteors/meteorBrown_big2.png" type="Texture" id=7]
-[ext_resource path="res://scripts/Pause.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/Pause.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ships/enemies/enemySpawner.gd" type="Script" id=9]
 
 [node name="gameStage" type="Node2D"]
@@ -27,7 +27,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 1600, 900 )
 
 [node name="meteor1" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2( 1185, 137 )
+position = Vector2( 767, 105 )
 texture = ExtResource( 6 )
 
 [node name="meteor2" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
@@ -38,96 +38,18 @@ texture = ExtResource( 7 )
 format = 1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 800, 700 )
-scale = Vector2( 0.75, 0.75 )
+position = Vector2( 502, 486 )
+scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 3 )
 
 [node name="enemy1" parent="." instance=ExtResource( 4 )]
-position = Vector2( 800, 0 )
-scale = Vector2( 0.6, 0.6 )
+position = Vector2( 506, 2 )
+scale = Vector2( 0.35, 0.35 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 69
 
-[node name="Pause" type="Control" parent="CanvasLayer"]
-pause_mode = 2
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="BlackOverlay" type="ColorRect" parent="CanvasLayer/Pause"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.27451 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="pauseMenu" type="Panel" parent="CanvasLayer/Pause"]
-margin_left = 694.0
-margin_top = 245.0
-margin_right = 897.0
-margin_bottom = 498.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="pauseLabel" type="Label" parent="CanvasLayer/Pause/pauseMenu"]
-margin_left = 61.0
-margin_top = 31.0
-margin_right = 145.0
-margin_bottom = 45.0
-text = "PAUSE MENU"
-
-[node name="continueButton" type="Button" parent="CanvasLayer/Pause/pauseMenu/pauseLabel"]
-margin_left = 2.0
-margin_top = 41.0
-margin_right = 80.0
-margin_bottom = 61.0
-
-[node name="continueLabel" type="Label" parent="CanvasLayer/Pause/pauseMenu/pauseLabel/continueButton"]
-margin_right = 78.0
-margin_bottom = 20.0
-text = "Continue"
-align = 1
-valign = 1
-
-[node name="restartButton" type="Button" parent="CanvasLayer/Pause/pauseMenu/pauseLabel"]
-margin_left = -4.0
-margin_top = 86.0
-margin_right = 86.0
-margin_bottom = 106.0
-
-[node name="restartLabel" type="Label" parent="CanvasLayer/Pause/pauseMenu/pauseLabel/restartButton"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 91.0
-margin_bottom = 21.0
-text = "Restart Level"
-align = 1
-valign = 1
-
-[node name="menuButton" type="Button" parent="CanvasLayer/Pause/pauseMenu/pauseLabel"]
-margin_left = 2.0
-margin_top = 131.0
-margin_right = 80.0
-margin_bottom = 151.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="menuLabel" type="Label" parent="CanvasLayer/Pause/pauseMenu/pauseLabel/menuButton"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 79.0
-margin_bottom = 21.0
-text = "Main Menu"
-align = 1
-valign = 1
+[node name="Pause" parent="CanvasLayer" instance=ExtResource( 8 )]
 
 [node name="enemySpawner" type="Node2D" parent="."]
 script = ExtResource( 9 )
@@ -142,12 +64,6 @@ position = Vector2( 500, 0 )
 
 [node name="spawnPos3" type="Position2D" parent="enemySpawner/spawnPositions"]
 position = Vector2( 800, 0 )
-
-[node name="spawnPos4" type="Position2D" parent="enemySpawner/spawnPositions"]
-position = Vector2( 1100, 0 )
-
-[node name="spawnPos5" type="Position2D" parent="enemySpawner/spawnPositions"]
-position = Vector2( 1400, 0 )
 
 [node name="spawnTimer" type="Timer" parent="enemySpawner"]
 wait_time = 2.0

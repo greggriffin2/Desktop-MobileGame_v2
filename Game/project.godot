@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "SynchronizationSingleton",
+"language": "GDScript",
+"path": "res://Networking/SynchronizationComponent.gd"
+} ]
+_global_script_class_icons={
+"SynchronizationSingleton": ""
+}
+
 [application]
 
 config/name="SCCP"

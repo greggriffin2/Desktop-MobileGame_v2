@@ -1,4 +1,5 @@
 package com.example.sccopilotapp;
+
 import java.util.ArrayList;
 
 public class UserClass {
@@ -12,7 +13,7 @@ public class UserClass {
         this.shipColor = true;
     }
 
-    public boolean getShipColor(){
+    public boolean getShipColor() {
         return this.shipColor;
     }
 
@@ -21,11 +22,11 @@ public class UserClass {
      *
      * @param color
      */
-    public void setShipColor(boolean color){
+    public void setShipColor(boolean color) {
         this.shipColor = color;
     }
 
-    public ArrayList<Integer> getPerks(){
+    public ArrayList<Integer> getPerks() {
         return this.perks;
     }
 
@@ -35,16 +36,16 @@ public class UserClass {
      * @param newPerk
      * @return
      */
-    public void setPerks(int newPerk){
+    public void setPerks(int newPerk) {
         this.perks.remove(this.perks.size() - 1);
         this.perks.add(newPerk);
     }
 
-    public void setLevel(int level){
+    public void setLevel(int level) {
         this.level = level;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return this.level;
     }
 }
