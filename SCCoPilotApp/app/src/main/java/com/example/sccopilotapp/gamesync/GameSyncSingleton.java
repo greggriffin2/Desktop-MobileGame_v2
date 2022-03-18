@@ -28,11 +28,12 @@ import okio.ByteString;
 
 public class GameSyncSingleton {
     static private String remoteAddress;
-    static private int remotePort;
+    static private String remotePort;
     static private PropertyChangeSupport eventHelper;
     static private PeerConnectionFactory peerFactory;
     static private DataChannel channel;
     static private WebSocket ws;
+    static private OkHttpClient client;
 
     public GameSyncSingleton(Context context) {
 
@@ -42,49 +43,8 @@ public class GameSyncSingleton {
                 .builder(context)
                 .createInitializationOptions();
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("ws://10.0.2.2:8080").build();
-        client.newWebSocket(request, new WebSocketListener() {
-            @Override
-            public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-                Log.d(TAG, "onClosed: Code:" + code + " Reason: " + reason);
-                super.onClosed(webSocket, code, reason);
-            }
+        client = new OkHttpClient();
 
-            @Override
-            public void onClosing(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
-                Log.d(TAG, "onClosing: Code :" + code + " Reason: " + reason);
-                super.onClosing(webSocket, code, reason);
-            }
-
-            @Override
-            public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable Response response) {
-                Log.d(TAG, "onFailure: Failure " + t.toString());
-                if (response != null) {
-                    Log.d(TAG, "onFailure: Failure " + response.toString());
-                }
-                super.onFailure(webSocket, t, response);
-            }
-
-            @Override
-            public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
-                Log.d(TAG, "onMessage: Text: " + text);
-                super.onMessage(webSocket, text);
-            }
-
-            @Override
-            public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
-                Log.d(TAG, "onMessage: Bytes: " + bytes.toString());
-                super.onMessage(webSocket, bytes);
-            }
-
-            @Override
-            public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
-                Log.d(TAG, "onOpen: Response: " + response.toString());
-                webSocket.send("{\"JoinRoom\":"+"\""+"driven"+"\"}");
-                super.onOpen(webSocket, response);
-            }
-        });
         // TODO: This shouldn't be a single server, nor should it really be nextcloud's server.
         PeerConnection.IceServer ice = PeerConnection.IceServer.builder("stun.nextcloud.com:443").createIceServer();
         List<PeerConnection.IceServer> iceServerList = new ArrayList<>();
@@ -145,15 +105,78 @@ public class GameSyncSingleton {
         });
     }
 
+    public static void connectSignaling(String joinCode) {
+        Request request = new Request.Builder().url("ws://" + remoteAddress + ":" + remotePort).build();
+
+        ws = client.newWebSocket(request, new WebSocketListener() {
+            @Override
+            public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+                Log.d(TAG, "onClosed: Code:" + code + " Reason: " + reason);
+                super.onClosed(webSocket, code, reason);
+            }
+
+            @Override
+            public void onClosing(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
+                Log.d(TAG, "onClosing: Code :" + code + " Reason: " + reason);
+                super.onClosing(webSocket, code, reason);
+            }
+
+            @Override
+            public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable Response response) {
+                Log.d(TAG, "onFailure: Failure " + t.toString());
+                if (response != null) {
+                    Log.d(TAG, "onFailure: Failure " + response.toString());
+                }
+                super.onFailure(webSocket, t, response);
+            }
+
+            @Override
+            public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
+                Log.d(TAG, "onMessage: Text: " + text);
+                super.onMessage(webSocket, text);
+            }
+
+            @Override
+            public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
+                Log.d(TAG, "onMessage: Bytes: " + bytes.toString());
+                super.onMessage(webSocket, bytes);
+            }
+
+            @Override
+            public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
+                Log.d(TAG, "onOpen: Response: " + response.toString());
+                webSocket.send("{\"JoinRoom\":" + "\"" + joinCode + "\"}");
+                super.onOpen(webSocket, response);
+            }
+        });
+    }
+
     public static String getRemoteAddress() {
         return remoteAddress;
     }
 
-    public static int getRemotePort() {
+    public static String getRemotePort() {
         return remotePort;
     }
 
     private static void addListener(String eventName, PropertyChangeListener eventListener) {
         eventHelper.addPropertyChangeListener(eventName, eventListener);
+    }
+
+
+    @Deprecated
+    // TODO: This shouldn't be used externally but is done for testing
+    public static void pushWS(String string) {
+        ws.send(string);
+    }
+
+    public static void setRemotePort(String remotePort) {
+        // TODO: Reinitialize connection if remote changes while a connection is active
+        GameSyncSingleton.remotePort = remotePort;
+    }
+
+    public static void setRemoteAddress(String remoteAddress) {
+        // TODO: Reinitialize connection if remote changes while a connection is active
+        GameSyncSingleton.remoteAddress = remoteAddress;
     }
 }
