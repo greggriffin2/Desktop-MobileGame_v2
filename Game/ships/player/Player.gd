@@ -1,13 +1,21 @@
 extends Area2D
+class_name Player
 
 ##@Desc:
 ##	This class stores and distributes all data and methods related to the Player.
 ##	Player speed, initial input state, and player hit points are some initial variables.
-##	The player can also move, shoot, collide
+##	The player can also move, shoot, and collision is detected.
+
+## Signals are added in the script to communicate with other classes.
+signal spawn_player_laser(location)
+signal minus_health
+
+## muzzle creates an object from the PMuzzle node.
+onready var muzzle = $PMuzzle
 
 var speed = 400
 var input_vector = Vector2.ZERO
-var hitPoints = 100
+var hit_points = 100
 
 
 ## Handles player movement using physics and user input.
@@ -17,37 +25,46 @@ func _physics_process(delta):
 
 	global_position += input_vector * speed * delta
 
+	if Input.is_action_just_pressed("fire_weapon"):
+		fire_weapon()
+
 
 ## Handles any health deductions or events that may occur from the player's ship taking damage.
-func take_damage(dmg):
-	pass
+func take_damage(damage):
+	hit_points -= damage
+	if hit_points <= 0:
+		queue_free()
+		emit_signal("player_died")
 
 
-## Handles any changes that may occur when a player enters a passed area, or scene.
-func _on_player_area_entered(area):
-	pass
+## Handles firing the player's main weapon by
+## emitting the player laser signal at the player ship's muzzle.
+func fire_weapon():
+	emit_signal("spawn_player_laser", muzzle.global_position)
 
 
-## Handles firing the player's main weapon.
-func fire_Weapon():
-	pass
+## Handles any changes that may occur when an object enters the player's collision area.
+## Currently, an enemy ship will take 3 damage upon colliding with the player ship.
+func _on_Player_area_entered(area):
+	if area.is_in_group("enemies"):
+		area.take_damage(3)
 
 
 ## Handles switching the player's main weapon.
-func switch_Weapon():
+func switch_weapon():
 	pass
 
 
 ## Handles deploying the player's fully-charged special move.
-func fire_Special():
+func fire_special():
 	pass
 
 
 ## Handles collision with a passed object (i.e. enemy ships, meteors).
-func onCollision(object):
+func on_collision(object):
 	pass
 
 
 ## Handles all events occurring at player death (particle switch, menu prompts).
-func onDeath():
+func on_death():
 	pass
