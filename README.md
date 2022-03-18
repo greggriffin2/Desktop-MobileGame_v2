@@ -18,3 +18,14 @@
   * Go to Project -> Export -> Select your desired target system
   * Press "Export Project" and then "Save" on the next screen
   * Generated builds will be wherever you saved it.
+
+#### Required Linting Tools
+
+* Godot
+  * [Godot GDScript Toolkit](https://github.com/Scony/godot-gdscript-toolkit/issues) provides a set of style guides and checks for Godot projects using GDScript
+* Android Studio
+  * Use the provided linting and code formatting tools.
+  * To autoformat code right click on the project -> Reformat code
+* Python Project
+  * Use pep8 in PyCharm or similar.
+* 
