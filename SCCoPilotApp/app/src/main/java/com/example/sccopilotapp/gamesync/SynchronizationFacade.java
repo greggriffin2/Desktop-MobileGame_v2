@@ -1,5 +1,13 @@
 package com.example.sccopilotapp.gamesync;
 
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +26,21 @@ public class SynchronizationFacade {
 
     private static GameSyncSingleton sync;
 
-    public SynchronizationFacade(String remoteAddress, int remotePort) {
+    public SynchronizationFacade(String remoteAddress, String remotePort, Context context) {
         if (sync != null) {
-            if (!sync.getRemoteAddress().equals(remoteAddress) || sync.getRemotePort() != remotePort) {
-
-            }
+        } else {
+            sync = new GameSyncSingleton(context);
+            GameSyncSingleton.setRemoteAddress(remoteAddress);
+            GameSyncSingleton.setRemotePort(remotePort);
         }
+        if (!GameSyncSingleton.getRemoteAddress().equals(remoteAddress)) {
+            GameSyncSingleton.setRemoteAddress(remoteAddress);
+        }
+
+        if (!GameSyncSingleton.getRemotePort().equals(remotePort)) {
+            GameSyncSingleton.setRemotePort(remotePort);
+        }
+
     }
 
     /**
@@ -41,8 +58,8 @@ public class SynchronizationFacade {
      *
      * @param pairingCode that pairs to a particular (currently running) game
      */
-    void connect(String pairingCode) {
-
+    public static void connect(String pairingCode) {
+        GameSyncSingleton.connectSignaling(pairingCode);
     }
 
 
@@ -51,7 +68,7 @@ public class SynchronizationFacade {
      *
      * @param listener to be fired
      */
-    void addPowerUpEvent(PropertyChangeListener listener) {
+    public void addPowerUpEvent(PropertyChangeListener listener) {
 
     }
 
@@ -60,7 +77,7 @@ public class SynchronizationFacade {
      *
      * @param listener to be fired
      */
-    void addPausedEvent(PropertyChangeListener listener) {
+    public void addPausedEvent(PropertyChangeListener listener) {
 
     }
 
@@ -69,7 +86,7 @@ public class SynchronizationFacade {
      *
      * @param listener
      */
-    void addUnpausedEvent(PropertyChangeListener listener) {
+    public void addUnpausedEvent(PropertyChangeListener listener) {
 
     }
 
@@ -78,8 +95,16 @@ public class SynchronizationFacade {
      *
      * @param ButtonPress
      */
-    void fireButtonPressed(int ButtonPress) {
-
+    public static void fireButtonPressed(int ButtonPress) {
+        // TODO: This is a super dumb implementation to get this thing running
+        JSONObject json_buttonEvent = new JSONObject();
+        try {
+            json_buttonEvent.put("ButtonPressed", ButtonPress);
+        } catch (JSONException e) {
+            // TODO: What.
+            Log.d(TAG, "fireButtonPressed: How the heck did this happe? Failed to create Json object");
+        }
+        GameSyncSingleton.pushWS(json_buttonEvent.toString());
     }
 
     /**
