@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.sccopilotapp.gamesync.GameSyncSingleton;
+import com.example.sccopilotapp.gamesync.SynchronizationFacade;
+
 public class MainGameActivity extends AppCompatActivity {
 
     Button shipButton;
@@ -34,7 +37,7 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickShip(View view) {
-
+        SynchronizationFacade.fireButtonPressed(1);
     }
 
     /**

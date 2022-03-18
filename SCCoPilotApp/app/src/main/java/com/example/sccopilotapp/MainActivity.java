@@ -1,6 +1,7 @@
 package com.example.sccopilotapp;
 
 import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SynchronizationFacade syncFacade = new SynchronizationFacade("10.0.2.2", "8080", getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         codeText = findViewById(R.id.inputCode);
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         if (validationCode.equals(correctCode)) {
             return true;
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickPlay(View view) {
         Log.d(TAG, "onClickPlay: Creating sync singleton");
-        GameSyncSingleton syncFacade = new GameSyncSingleton(getApplicationContext());
+        SynchronizationFacade.connect(codeText.getText().toString());
         String validatedCode = codeText.getText().toString();
         if (validateConnectionCode(validatedCode)) {
             Log.d(TAG, "matched:success");
