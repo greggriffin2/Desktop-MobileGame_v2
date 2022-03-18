@@ -10,7 +10,7 @@
   * Generated builds are located in `SCCoPilotApp/build/outputs/apk/`
 * Server
   * Scoreboard Server:
-    * Run `python scoreboard-server.py` from the `ScoreBoardServer` directory
+    * Run `python scoreboard_server.py` from the `ScoreBoardServer` directory
   * Websocket/Relay Server:
     * Run `python SignalingServer.py`
 * Game
