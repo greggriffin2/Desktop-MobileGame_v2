@@ -4,19 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.sccopilotapp.gamesync.GameSyncSingleton;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 public class MainGameActivity extends AppCompatActivity {
 
+    String TAG = "MainGameActivity";
     Button shipButton;
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;
     Button settingsButton;
+    int powerMax = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,16 @@ public class MainGameActivity extends AppCompatActivity {
      */
     public void onClickShip(View view) {
         SynchronizationFacade.fireButtonPressed(1);
+        Log.d(TAG, "Click");
+        if (powerMax < 10){
+            powerMax += 1;
+        } else{
+            //Send info to game
+            Toast.makeText(MainGameActivity.this, "Fully Powered!",
+                    Toast.LENGTH_SHORT).show();
+            powerMax = 0;
+        }
+
     }
 
     /**
