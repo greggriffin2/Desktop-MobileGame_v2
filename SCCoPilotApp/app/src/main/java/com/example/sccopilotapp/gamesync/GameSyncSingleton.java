@@ -106,7 +106,7 @@ public class GameSyncSingleton {
     }
 
     public static void connectSignaling(String joinCode) {
-        Request request = new Request.Builder().url("ws://" + remoteAddress + ":" + remotePort).build();
+        Request request = new Request.Builder().url("wss://" + remoteAddress + ":" + remotePort).build();
 
         ws = client.newWebSocket(request, new WebSocketListener() {
             @Override

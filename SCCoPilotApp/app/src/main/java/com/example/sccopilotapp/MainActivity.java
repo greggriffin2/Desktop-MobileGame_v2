@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SynchronizationFacade syncFacade = new SynchronizationFacade("10.0.2.2", "8080", getApplicationContext());
+        SynchronizationFacade syncFacade = new SynchronizationFacade("wss://pedanticmonkey.space/rooms", getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         codeText = findViewById(R.id.inputCode);

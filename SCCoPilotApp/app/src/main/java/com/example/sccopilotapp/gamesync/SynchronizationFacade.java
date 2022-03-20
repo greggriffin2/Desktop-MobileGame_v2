@@ -26,21 +26,15 @@ public class SynchronizationFacade {
 
     private static GameSyncSingleton sync;
 
-    public SynchronizationFacade(String remoteAddress, String remotePort, Context context) {
+    public SynchronizationFacade(String remoteAddress, Context context) {
         if (sync != null) {
         } else {
             sync = new GameSyncSingleton(context);
             GameSyncSingleton.setRemoteAddress(remoteAddress);
-            GameSyncSingleton.setRemotePort(remotePort);
         }
         if (!GameSyncSingleton.getRemoteAddress().equals(remoteAddress)) {
             GameSyncSingleton.setRemoteAddress(remoteAddress);
         }
-
-        if (!GameSyncSingleton.getRemotePort().equals(remotePort)) {
-            GameSyncSingleton.setRemotePort(remotePort);
-        }
-
     }
 
     /**
