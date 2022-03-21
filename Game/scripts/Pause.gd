@@ -3,10 +3,10 @@ extends Control
 ##@Desc:
 ##	This class is specifically for pausing and unpausing the game.
 ##	The variable "visible" is present in regards to the pause menu.
-##	While unPaused is true, visible is false, and vise versa.
+##	While unpaused is true, visible is false, and vise versa.
 ##	This class will also call events that may occur in the pause menu's buttons.
 
-var un_paused = true
+var unpaused = true
 
 
 ## _process accepts delta (real time variable) and processes get_tree().paused based on the boolean of un_paused.
@@ -14,29 +14,32 @@ var un_paused = true
 ## while layering on top of and stopping all other processes.
 func _process(delta):
 	if Input.is_action_just_pressed("ui_cancel"):
-		if un_paused:
+		if unpaused:
 			get_tree().paused = true
-			un_paused = false
+			unpaused = false
 			visible = true
 		else:
 			get_tree().paused = false
-			un_paused = true
+			unpaused = true
 			visible = false
 
 
 ## Each of these buttons will perform the desired action.
+	
+## on_continueButton_pressed resumes the game.
+func _on_continueButton_pressed():
+	get_tree().paused = false
+	unpaused = true
+	visible = false
 
-
-## on_continue resumes the game.
-func on_continue():
-	pass
-
-
-## on_restart restarts the current level.
-func on_restart():
-	pass
-
-
+## on_restartButton_pressed restarts the current level.
+func _on_restartButton_pressed():
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+	
 ## on_menu returns the user to the main menu.
-func on_menu():
+func _on_menu():
 	pass
+
+
+
