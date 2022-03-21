@@ -41,9 +41,8 @@ public class SynchronizationFacade {
      * Updates the Signaling and Scoreboard server address
      *
      * @param remoteAddress
-     * @param remotePort
      */
-    public static void updateAddress(String remoteAddress, int remotePort) {
+    public static void updateAddress(String remoteAddress) {
 
     }
 

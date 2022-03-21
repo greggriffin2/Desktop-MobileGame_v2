@@ -28,7 +28,6 @@ import okio.ByteString;
 
 public class GameSyncSingleton {
     static private String remoteAddress;
-    static private String remotePort;
     static private PropertyChangeSupport eventHelper;
     static private PeerConnectionFactory peerFactory;
     static private DataChannel channel;
@@ -106,7 +105,7 @@ public class GameSyncSingleton {
     }
 
     public static void connectSignaling(String joinCode) {
-        Request request = new Request.Builder().url("wss://" + remoteAddress + ":" + remotePort).build();
+        Request request = new Request.Builder().url(remoteAddress).build();
 
         ws = client.newWebSocket(request, new WebSocketListener() {
             @Override
@@ -155,10 +154,6 @@ public class GameSyncSingleton {
         return remoteAddress;
     }
 
-    public static String getRemotePort() {
-        return remotePort;
-    }
-
     private static void addListener(String eventName, PropertyChangeListener eventListener) {
         eventHelper.addPropertyChangeListener(eventName, eventListener);
     }
@@ -168,11 +163,6 @@ public class GameSyncSingleton {
     // TODO: This shouldn't be used externally but is done for testing
     public static void pushWS(String string) {
         ws.send(string);
-    }
-
-    public static void setRemotePort(String remotePort) {
-        // TODO: Reinitialize connection if remote changes while a connection is active
-        GameSyncSingleton.remotePort = remotePort;
     }
 
     public static void setRemoteAddress(String remoteAddress) {
