@@ -44,9 +44,10 @@ func init_webrtc_server():
 	pass
 
 
+# Updates the game code for any events listening for the signal
 func set_gamecode(code: String):
 	game_code = code
-	emit_signal("_on_gamecode_update", game_code)
+	emit_signal("on_gamecode_update", game_code)
 
 func _on_closed(was_clean = false):
 	# was_clean will tell you if the disconnection was correctly notified
@@ -68,6 +69,7 @@ func _on_data():
 	var data = signaling_connection.get_peer(1).get_packet()
 	print("Data recieved: ", data)
 	if !initialized:
+		initialized = true
 		print("Dumb initialization in progress")
 		var json_parse = JSON.parse(data.get_string_from_utf8())
 		if json_parse.error != OK:
@@ -80,6 +82,7 @@ func _on_data():
 func reload_connection():
 	print("Reloading connection...")
 	signaling_connection.disconnect_from_host(1000, "User reloaded")
+	initialized = false
 	var err = signaling_connection.connect_to_url(websocket_url)
 	if err != OK:
 		print_debug("Could not connect to websocket server, Error: ", err)
