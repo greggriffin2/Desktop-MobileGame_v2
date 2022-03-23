@@ -1,10 +1,13 @@
 package com.example.sccopilotapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -31,8 +34,18 @@ public class MainGameActivity extends AppCompatActivity {
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
         settingsButton = findViewById(R.id.settingsButton);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     /**
      * This method will listen for the clicks on the ship and add
      * to a running total that will eventually be sent to the game
@@ -43,7 +56,7 @@ public class MainGameActivity extends AppCompatActivity {
     public void onClickShip(View view) {
         SynchronizationFacade.fireButtonPressed(1);
         Log.d(TAG, "Click");
-        if (powerMax < 10){
+        if (powerMax < 100){
             powerMax += 1;
         } else{
             //Send info to game

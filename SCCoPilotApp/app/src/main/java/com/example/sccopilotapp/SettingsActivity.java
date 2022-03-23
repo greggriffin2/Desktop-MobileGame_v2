@@ -1,6 +1,5 @@
 package com.example.sccopilotapp;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -23,14 +24,21 @@ public class SettingsActivity extends AppCompatActivity {
         settingsText = findViewById(R.id.settingsText);
         toggleButton = findViewById(R.id.toggleButton);
         titleText = findViewById(R.id.titleText);
-
-        //actionBar.setDisplayHomeAsUpEnabled(true);
-
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
         // this might not work, implement onToggleClick code
         toggleButton.setOnClickListener(view -> onToggleClick(toggleButton));
 
     }
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     public void onStart() {
         super.onStart();
     }
