@@ -10,6 +10,7 @@
         android:id="@+id/shipButton"
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:layout_marginTop="-50dp"
         android:textAlignment="center"
         android:textSize="25sp"
         android:backgroundTint="@color/shipRed"
@@ -66,18 +67,6 @@
         android:onClick="onClickExit"
         tools:ignore="UsingOnClickInXml" />
 
-    <Button
-        android:id="@+id/settingsButton"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/shipRed"
-        android:text="Settings"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="10dp"
-        android:onClick="onClickSettings"
-        tools:ignore="UsingOnClickInXml" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
