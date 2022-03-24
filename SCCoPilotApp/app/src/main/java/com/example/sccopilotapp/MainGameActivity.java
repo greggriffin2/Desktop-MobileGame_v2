@@ -5,14 +5,20 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.sccopilotapp.gamesync.GameSyncSingleton;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
@@ -25,6 +31,9 @@ public class MainGameActivity extends AppCompatActivity {
     Button exitButton;
     Button settingsButton;
     int powerMax = 0;
+    ImageView backgroundGIF;
+    int selectedBackground;
+    private static int gifNum = 0;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
@@ -38,6 +47,19 @@ public class MainGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
+        backgroundGIF = findViewById(R.id.background);
+
+        if(gifNum == 0){
+            selectedBackground = R.drawable.space_background1;
+        } else {
+            selectedBackground = R.drawable.space_background2;
+        }
+        // Loads background GIF
+        Glide.with(this)
+                .load(selectedBackground)
+                .centerCrop()
+                .into(backgroundGIF);
+
         shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
         leaderboardButton = findViewById(R.id.leaderboardButton);
@@ -121,4 +143,11 @@ public class MainGameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static void setGifNum(int num) {
+        gifNum = num;
+    }
+
+    public static int getGifNum(){
+        return gifNum;
+    }
 }

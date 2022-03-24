@@ -23,4 +23,5 @@
     <string name="player_4score">player_4Score</string>
     <string name="player_5">Player 5</string>
     <string name="player_5score">player_5Score</string>
+    <string name="background">backgroundGIF</string>
 </resources>

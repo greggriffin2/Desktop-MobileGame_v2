@@ -1,10 +1,8 @@
 package com.example.sccopilotapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -16,6 +14,7 @@ public class SettingsActivity extends AppCompatActivity {
     private ToggleButton toggleButton;
     private TextView settingsText;
     private TextView titleText;
+    private int gifNumber = 0;
     //private ActionBar actionBar = getActionBar();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
      * @param view
      */
     public void onToggleClick(View view) {
-        changeShipColor();
+        changeBackgroundColor();
     }
 
     /**
@@ -66,7 +65,13 @@ public class SettingsActivity extends AppCompatActivity {
      * postconditions: ship color attribute in UserClass is changed
      * class invariants: View is the same
      */
-    public void changeShipColor() {
+    public void changeBackgroundColor() {
+        if(MainGameActivity.getGifNum() == 0){
+            MainGameActivity.setGifNum(1);
+        }
+        else {
+            MainGameActivity.setGifNum(0);
+        }
     }
 
     /**
