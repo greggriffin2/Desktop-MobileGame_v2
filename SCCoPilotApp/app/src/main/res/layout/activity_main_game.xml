@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".MainGameActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/background"
+        android:contentDescription="@string/background"
+        />
+
     <Button
         android:id="@+id/shipButton"
         android:layout_width="250dp"
