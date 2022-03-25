@@ -52,6 +52,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -61,6 +62,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     /**
      * Calls to the facade and gets array of the players and their scores,
      * helper function to populateScores()

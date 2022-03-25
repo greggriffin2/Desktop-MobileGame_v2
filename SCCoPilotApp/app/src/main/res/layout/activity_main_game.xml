@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/background"
-        android:contentDescription="@string/background"
-        />
+        android:contentDescription="@string/background" />
 
     <Button
         android:id="@+id/shipButton"
@@ -73,7 +72,6 @@
         android:layout_marginTop="100dp"
         android:onClick="onClickExit"
         tools:ignore="UsingOnClickInXml" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
         toggleButton.setOnClickListener(view -> onToggleClick(toggleButton));
 
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -38,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void onStart() {
         super.onStart();
     }
@@ -66,10 +68,9 @@ public class SettingsActivity extends AppCompatActivity {
      * class invariants: View is the same
      */
     public void changeBackgroundColor() {
-        if(MainGameActivity.getGifNum() == 0){
+        if (MainGameActivity.getGifNum() == 0) {
             MainGameActivity.setGifNum(1);
-        }
-        else {
+        } else {
             MainGameActivity.setGifNum(0);
         }
     }

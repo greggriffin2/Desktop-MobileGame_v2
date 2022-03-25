@@ -1,12 +1,6 @@
 package com.example.sccopilotapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,10 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestBuilder;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.sccopilotapp.gamesync.GameSyncSingleton;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 public class MainGameActivity extends AppCompatActivity {
@@ -29,11 +23,11 @@ public class MainGameActivity extends AppCompatActivity {
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;
-    Button settingsButton;
     int powerMax = 0;
     ImageView backgroundGIF;
     int selectedBackground;
     private static int gifNum = 0;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
@@ -49,7 +43,7 @@ public class MainGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
 
-        if(gifNum == 0){
+        if (gifNum == 0) {
             selectedBackground = R.drawable.space_background1;
         } else {
             selectedBackground = R.drawable.space_background2;
@@ -68,6 +62,7 @@ public class MainGameActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         // handle button activities
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -88,9 +83,9 @@ public class MainGameActivity extends AppCompatActivity {
     public void onClickShip(View view) {
         SynchronizationFacade.fireButtonPressed(1);
         Log.d(TAG, "Click");
-        if (powerMax < 100){
+        if (powerMax < 100) {
             powerMax += 1;
-        } else{
+        } else {
             //Send info to game
             Toast.makeText(MainGameActivity.this, "Fully Powered!",
                     Toast.LENGTH_SHORT).show();
@@ -147,7 +142,7 @@ public class MainGameActivity extends AppCompatActivity {
         gifNum = num;
     }
 
-    public static int getGifNum(){
+    public static int getGifNum() {
         return gifNum;
     }
 }

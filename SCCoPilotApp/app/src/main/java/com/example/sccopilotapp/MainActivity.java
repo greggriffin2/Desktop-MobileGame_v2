@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         codeText = findViewById(R.id.inputCode);
         playButton = findViewById(R.id.playButton);
         /**
-        * Make Home Action Bar Red (shipRed in colors.xml)
-        */
+         * Make Home Action Bar Red (shipRed in colors.xml)
+         */
         ActionBar actionBar;
         actionBar = getSupportActionBar();
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#BF2B16"));

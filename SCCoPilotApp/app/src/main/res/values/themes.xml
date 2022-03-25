@@ -15,6 +15,7 @@
         <item name="android:windowBackground">@color/lampBlack</item>
         <item name="android:textColor">@color/darkGray</item>
     </style>
+
     <style name="MyTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
     </style>
