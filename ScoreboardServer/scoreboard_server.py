@@ -114,29 +114,58 @@ def post_add():
 
     return result
 
-@app.route('/retrieve/')
-def retrieve():
+@app.route('/retrieve/', defaults={'count': -1})
+@app.route('/retrieve/<count>')
+def retrieve(count):
     """ Retrieves leaderboard.
 
     Retrieves leaderboard as a JSON object. Communicates with remote database to
     get remote score data, then assembles into a JSON object to reply to the
-    client.
+    client. Results are sorted by highscore. Optionally, a count can be provided
+    to limit the number of scores returned. If no count is provided, all records
+    are returned.
     ---
-
+    parameters:
+      - name: count (int)
+          in: path
+          required: false
+          description: Amount of scores to return in result JSON data.
     responses:
       200:
         description: A JSON string containing highscore data.
     """
     table = DB.Table('Scores')
     result_data = ""
+    score_list = None
+    count = int(count)
 
     if request.method == 'GET':
         scan = table.scan()
         if 'Items' in scan:
-            log("GOOD ")
-            items = json.dumps(scan['Items'], cls=DecimalEncoder)
-            result_data += items
-        log(result_data)
+            score_list = scan['Items']
+
+    sorted_scores = []
+    found_lower = False
+    if score_list and len(score_list) > 0:
+        sorted_scores.append(score_list[0])
+        for cur_item in score_list:
+            cur_score = cur_item["info"]["highscore"]
+            for i in range(len(sorted_scores)):
+                found_lower = False
+                score = sorted_scores[i]["info"]["highscore"]
+                if score < cur_score:
+                    sorted_scores.insert(i, cur_item)
+                    found_lower = True
+                    break
+            if not found_lower:
+                sorted_scores.append(cur_item)
+
+    if count > -1:
+        sorted_scores = sorted_scores[:count]
+
+    result_scores = json.dumps(sorted_scores, cls=DecimalEncoder)
+    result_data += result_scores
+    log(result_data)
 
     result = response_build(result_data, HTTPStatus.OK)
     return result
@@ -158,7 +187,7 @@ def add(username, score):
           required: true
           description: Game highscore to store into remote database.
     responses:
-      201:
+      200:
         description: Successful
     """
 
