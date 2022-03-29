@@ -88,7 +88,7 @@ public class MainGameActivity extends AppCompatActivity {
     public void onClickShip(View view) {
         SynchronizationFacade.fireButtonPressed(1);
         Log.d(TAG, "Click");
-        if (powerMax < 100) {
+        if (powerMax < 10) {
             powerMax += 1;
         } else {
             //Send info to game
@@ -129,17 +129,7 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickExit(View view) {
-
-    }
-
-    /**
-     * This method will wait for the user to click the button and once clicked, will open
-     * the settings menu
-     *
-     * @param view
-     */
-    public void onClickSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
