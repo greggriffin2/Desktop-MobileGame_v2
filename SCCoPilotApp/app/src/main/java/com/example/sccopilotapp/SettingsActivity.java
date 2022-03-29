@@ -64,14 +64,14 @@ public class SettingsActivity extends AppCompatActivity {
      * Change the in-app ship color
      * <p>
      * preconditions: onToggleClick() must be called for this method to be called
-     * postconditions: ship color attribute in UserClass is changed
+     * postconditions: background color attribute in MainGameActivity is changed
      * class invariants: View is the same
      */
     public void changeBackgroundColor() {
-        if (MainGameActivity.getGifNum() == 0) {
-            MainGameActivity.setGifNum(1);
+        if (MainGameActivity.getGifNum() == MainGameActivity.BACKGROUND_WHIRL) {
+            MainGameActivity.setGifNum(MainGameActivity.BACKGROUND_WARP);
         } else {
-            MainGameActivity.setGifNum(0);
+            MainGameActivity.setGifNum(MainGameActivity.BACKGROUND_WHIRL);
         }
     }
 

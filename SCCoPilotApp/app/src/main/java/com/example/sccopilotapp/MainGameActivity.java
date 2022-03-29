@@ -26,6 +26,8 @@ public class MainGameActivity extends AppCompatActivity {
     int powerMax = 0;
     ImageView backgroundGIF;
     int selectedBackground;
+    static final int BACKGROUND_WHIRL = 0;
+    static final int BACKGROUND_WARP = 1;
     private static int gifNum = 0;
 
     @Override
@@ -42,8 +44,19 @@ public class MainGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
+        loadBackground();
 
-        if (gifNum == 0) {
+        shipButton = findViewById(R.id.shipButton);
+        upgradesButton = findViewById(R.id.upgradesButton);
+        leaderboardButton = findViewById(R.id.leaderboardButton);
+        exitButton = findViewById(R.id.exitButton);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        // handle button activities
+    }
+
+    public void loadBackground(){
+        if (gifNum == BACKGROUND_WHIRL) {
             selectedBackground = R.drawable.space_background1;
         } else {
             selectedBackground = R.drawable.space_background2;
@@ -53,14 +66,6 @@ public class MainGameActivity extends AppCompatActivity {
                 .load(selectedBackground)
                 .centerCrop()
                 .into(backgroundGIF);
-
-        shipButton = findViewById(R.id.shipButton);
-        upgradesButton = findViewById(R.id.upgradesButton);
-        leaderboardButton = findViewById(R.id.leaderboardButton);
-        exitButton = findViewById(R.id.exitButton);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        // handle button activities
     }
 
     @Override
@@ -144,5 +149,10 @@ public class MainGameActivity extends AppCompatActivity {
 
     public static int getGifNum() {
         return gifNum;
+    }
+
+    public void onResume() {
+        super.onResume();
+        loadBackground();
     }
 }
