@@ -16,8 +16,23 @@ position = Vector2( 500, 0 )
 [node name="spawnPos3" type="Position2D" parent="spawnPositions"]
 position = Vector2( 800, 0 )
 
+[node name="spawnPos4" type="Position2D" parent="spawnPositions"]
+position = Vector2( 700, 0 )
+
+[node name="spawnPos5" type="Position2D" parent="spawnPositions"]
+position = Vector2( 600, 0 )
+
+[node name="spawnPos6" type="Position2D" parent="spawnPositions"]
+position = Vector2( 400, 0 )
+
+[node name="spawnPos7" type="Position2D" parent="spawnPositions"]
+position = Vector2( 300, 0 )
+
 [node name="spawnTimer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
 
+[node name="shootTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="spawnTimer" to="." method="_on_spawnTimer_timeout"]
+[connection signal="timeout" from="shootTimer" to="." method="_on_shootTimer_timeout"]

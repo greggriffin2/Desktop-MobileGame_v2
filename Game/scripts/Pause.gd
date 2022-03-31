@@ -1,4 +1,5 @@
 extends Control
+class_name Pause
 
 ##@Desc:
 ##	This class is specifically for pausing and unpausing the game.
@@ -7,7 +8,6 @@ extends Control
 ##	This class will also call events that may occur in the pause menu's buttons.
 
 var unpaused = true
-
 
 ## _process accepts delta (real time variable) and processes get_tree().paused based on the boolean of un_paused.
 ## This method is meant to separate pausing the game from stopping this particular process,
