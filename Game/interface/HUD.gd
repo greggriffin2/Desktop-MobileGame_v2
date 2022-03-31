@@ -23,7 +23,6 @@ var score: int = 0
 ## Signals and function calls loaded at the start of the scene.
 func _ready():
 	clear_lives()
-	
 	Signals.connect("on_player_life_change", self, "_on_player_life_change")
 	Signals.connect("on_score_increment", self, "_on_score_increment")
 	Signals.connect("on_speed_change", self, "_on_speed_change")

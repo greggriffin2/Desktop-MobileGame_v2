@@ -18,7 +18,7 @@ export var slow_fire_delay: float = 0.15
 export var speed: float = 400
 export var hit_points: int = 100
 
-## Creating objects for various children of Player.
+## Declaring variables for various children of Player.
 onready var sprite := $Sprite
 onready var firing_positions := $FiringPositions
 onready var slow_fire_timer := $SlowAutoFireTimer

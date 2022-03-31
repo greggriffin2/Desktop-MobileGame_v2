@@ -12,7 +12,7 @@ var Enemies := [
 ## Creating a preload for the meteor.
 var preload_meteor := preload("res://Meteor/Meteor.tscn")
 
-## Creating an object from the spawn timer and establishing an initial time set.
+## Declaring a variable from the spawn timer and establishing an initial time set.
 onready var spawn_timer := $spawnTimer
 var next_spawn_time := 3.0
 
