@@ -55,7 +55,7 @@ public class MainGameActivity extends AppCompatActivity {
         // handle button activities
     }
 
-    public void loadBackground(){
+    public void loadBackground() {
         if (gifNum == BACKGROUND_WHIRL) {
             selectedBackground = R.drawable.space_background1;
         } else {
