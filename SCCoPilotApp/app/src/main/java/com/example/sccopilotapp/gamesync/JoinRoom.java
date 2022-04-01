@@ -12,14 +12,6 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 public class JoinRoom extends DataObject {
     String roomName;
 
-    // Empty constructor for serialization
-    public JoinRoom() {
-    }
-
-    public JoinRoom(String roomName) {
-        this.roomName = roomName;
-    }
-
     @JsonProperty("JoinRoom")
     public String getRoomName() {
         return roomName;
@@ -29,4 +21,13 @@ public class JoinRoom extends DataObject {
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
+
+    // Empty constructor for serialization
+    public JoinRoom() {
+    }
+
+    public JoinRoom(String roomName) {
+        this.roomName = roomName;
+    }
+
 }
