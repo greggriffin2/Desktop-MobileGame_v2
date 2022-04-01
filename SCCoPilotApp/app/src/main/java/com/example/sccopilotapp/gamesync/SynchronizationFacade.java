@@ -85,15 +85,8 @@ public class SynchronizationFacade {
      * @param ButtonPress
      */
     public static void fireButtonPressed(int ButtonPress) {
-        // TODO: This is a super dumb implementation to get this thing running
-        JSONObject json_buttonEvent = new JSONObject();
-        try {
-            json_buttonEvent.put("ButtonPressed", ButtonPress);
-        } catch (JSONException e) {
-            // TODO: What.
-            Log.d(TAG, "fireButtonPressed: How the heck did this happe? Failed to create Json object");
-        }
-        GameSyncSingleton.pushWS(json_buttonEvent.toString());
+        ButtonPressed p = new ButtonPressed(1);
+        GameSyncSingleton.sendEvent(p);
     }
 
     /**
