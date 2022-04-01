@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/cardview_dark_background"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@color/cardview_dark_background">
 
     <TextView
         android:id="@+id/titleText"
@@ -24,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/settings1"
-        android:text="@string/ship_color"
+        android:text="@string/background_button_title"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/toggleButton"
@@ -38,8 +37,9 @@
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textOff="@string/black"
-        android:textOn="@string/white"
+        android:textOn="@string/toggleButtonText"
+        android:textOff="@string/toggleButtonText"
+        android:textColor="@color/backgroundGray"
         app:layout_constraintStart_toEndOf="@id/settingsText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleText"

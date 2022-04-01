@@ -1,11 +1,11 @@
 package com.example.sccopilotapp;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 public class UpgradesActivity extends AppCompatActivity {
 

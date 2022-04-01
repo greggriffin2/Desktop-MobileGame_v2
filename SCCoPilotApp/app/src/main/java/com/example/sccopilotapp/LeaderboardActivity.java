@@ -1,18 +1,16 @@
 package com.example.sccopilotapp;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-
 import com.example.sccopilotapp.gamesync.LeaderboardScore;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

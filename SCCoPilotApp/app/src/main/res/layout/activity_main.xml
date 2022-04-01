@@ -17,7 +17,7 @@
         android:textColor="@color/darkGray"
         android:maxLength="20"
         android:textColorHint="@color/darkGray"
-        android:hint="WXYZ"
+        android:hint="Enter code"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         app:layout_constraintStart_toStartOf="parent"

@@ -24,4 +24,9 @@
     <string name="player_5">Player 5</string>
     <string name="player_5score">player_5Score</string>
     <string name="background">backgroundGIF</string>
+    <string name="background_button_title">Background</string>
+    <string name="whirl">Whirl</string>
+    <string name="warp">Warp</string>
+    <string name="toggleOFFTEST">Toggle is OFF</string>
+    <string name="toggleButtonText">Change</string>
 </resources>

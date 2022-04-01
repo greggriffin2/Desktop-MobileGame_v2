@@ -25,8 +25,9 @@ public class MainGameActivity extends AppCompatActivity {
     Button exitButton;
     int powerMax = 0;
     ImageView backgroundGIF;
-    int selectedBackground;
-    private static int gifNum = 0;
+    static int background_1 = R.drawable.space_background1;
+    static int background_2 = R.drawable.space_background2;
+    static int selectedBackground = background_1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -42,17 +43,7 @@ public class MainGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
-
-        if (gifNum == 0) {
-            selectedBackground = R.drawable.space_background1;
-        } else {
-            selectedBackground = R.drawable.space_background2;
-        }
-        // Loads background GIF
-        Glide.with(this)
-                .load(selectedBackground)
-                .centerCrop()
-                .into(backgroundGIF);
+        loadBackground();
 
         shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
@@ -61,6 +52,14 @@ public class MainGameActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         // handle button activities
+    }
+
+    public void loadBackground() {
+        // Loads background GIF
+        Glide.with(this)
+                .load(selectedBackground)
+                .centerCrop()
+                .into(backgroundGIF);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class MainGameActivity extends AppCompatActivity {
     public void onClickShip(View view) {
         SynchronizationFacade.fireButtonPressed(1);
         Log.d(TAG, "Click");
-        if (powerMax < 100) {
+        if (powerMax < 10) {
             powerMax += 1;
         } else {
             //Send info to game
@@ -124,25 +123,20 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickExit(View view) {
-
-    }
-
-    /**
-     * This method will wait for the user to click the button and once clicked, will open
-     * the settings menu
-     *
-     * @param view
-     */
-    public void onClickSettings(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public static void setGifNum(int num) {
-        gifNum = num;
+    public static void changeBackground() {
+        if (selectedBackground == background_1) {
+            selectedBackground = background_2;
+        } else {
+            selectedBackground = background_1;
+        }
     }
 
-    public static int getGifNum() {
-        return gifNum;
+    public void onResume() {
+        super.onResume();
+        loadBackground();
     }
 }
