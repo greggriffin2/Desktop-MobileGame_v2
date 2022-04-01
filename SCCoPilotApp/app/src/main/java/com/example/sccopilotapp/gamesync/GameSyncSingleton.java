@@ -8,6 +8,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -27,6 +31,7 @@ import okhttp3.WebSocketListener;
 import okio.ByteString;
 
 public class GameSyncSingleton {
+    static private ObjectMapper objectMapper;
     static private String remoteAddress;
     static private PropertyChangeSupport eventHelper;
     static private PeerConnectionFactory peerFactory;
@@ -35,7 +40,8 @@ public class GameSyncSingleton {
     static private OkHttpClient client;
 
     public GameSyncSingleton(Context context) {
-
+        objectMapper = new ObjectMapper();
+        eventHelper = new PropertyChangeSupport(this);
         // Apparently we need to initialize the PeerConnectionFactory with context about the android app its running in
         PeerConnectionFactory.InitializationOptions initializationOptions = PeerConnectionFactory
                 .InitializationOptions
@@ -139,6 +145,13 @@ public class GameSyncSingleton {
             @Override
             public void onMessage(@NonNull WebSocket webSocket, @NonNull String text) {
                 Log.d(TAG, "onMessage: Text: " + text);
+                DataObject d = null;
+                try {
+                    d = objectMapper.readValue(text, DataObject.class);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+                messageHandler(d);
                 super.onMessage(webSocket, text);
             }
 
@@ -151,10 +164,30 @@ public class GameSyncSingleton {
             @Override
             public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
                 Log.d(TAG, "onOpen: Response: " + response.toString());
-                webSocket.send("{\"JoinRoom\":" + "\"" + joinCode + "\"}");
+                JoinRoom room = new JoinRoom(joinCode);
+                try {
+                    String msg = objectMapper.writeValueAsString(room);
+                    Log.d(TAG, "onOpen: SendingMessage:" + msg);
+                    webSocket.send(msg);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
                 super.onOpen(webSocket, response);
             }
         });
+    }
+
+    private static void messageHandler(DataObject o) {
+        Log.d(TAG, "messageHandler: Handling object" + o);
+        if (o instanceof ButtonPressed) {
+            Log.d(TAG, "messageHandler: found " + (o.toString()));
+            eventHelper.firePropertyChange("ButtonEvent", null, o);
+        } else if (o instanceof PowerUpStatus) {
+            Log.d(TAG, "messageHandler: found " + (o.toString()));
+            eventHelper.firePropertyChange("PowerUpStatus", null, o);
+        } else if (o instanceof JoinRoom) {
+
+        }
     }
 
     /**
@@ -191,5 +224,21 @@ public class GameSyncSingleton {
     public static void setRemoteAddress(String remoteAddress) {
         // TODO: Reinitialize connection if remote changes while a connection is active
         GameSyncSingleton.remoteAddress = remoteAddress;
+    }
+
+    /**
+     * pushes an event
+     *
+     * @param e
+     */
+    public static void sendEvent(DataObject e) {
+        String msg = null;
+        try {
+            msg = objectMapper.writeValueAsString(e);
+        } catch (JsonProcessingException jsonProcessingException) {
+            jsonProcessingException.printStackTrace();
+        }
+        Log.d(TAG, "sendEvent: sending message " + msg);
+        ws.send(msg);
     }
 }
