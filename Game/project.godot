@@ -14,15 +14,14 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://projectiles/EnemyLaser.gd"
 }, {
-"base": "PlayerLaserEffect",
-"class": "EnemyLaserEffect",
-"language": "GDScript",
-"path": "res://projectiles/EnemyLaserEffect.gd"
-}, {
 "base": "Control",
 "class": "HUD",
 "language": "GDScript",
 "path": "res://interface/HUD.gd"
+}, {
+"class": "LaserEffect",
+"language": "GDScript",
+"path": "res://projectiles/PlayerLaserEffect.gd"
 }, {
 "base": "PowerUp",
 "class": "LaserPowerUp",
@@ -74,11 +73,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://projectiles/PlayerLaser.gd"
 }, {
-"base": "Sprite",
-"class": "PlayerLaserEffect",
-"language": "GDScript",
-"path": "res://projectiles/PlayerLaserEffect.gd"
-}, {
 "base": "Area2D",
 "class": "PowerUp",
 "language": "GDScript",
@@ -106,8 +100,8 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "EnemyLaser": "",
-"EnemyLaserEffect": "",
 "HUD": "",
+"LaserEffect": "",
 "LaserPowerUp": "",
 "Meteor": "",
 "MeteorEffect": "",
@@ -118,7 +112,6 @@ _global_script_class_icons={
 "Pause": "",
 "Player": "",
 "PlayerLaser": "",
-"PlayerLaserEffect": "",
 "PowerUp": "",
 "SpeedPowerUp": "",
 "SynchronizationSingleton": "",
