@@ -231,10 +231,10 @@ def add(username, score):
     Adds a username and score to a remote database as a single new entry in the table.
     ---
     parameters:
-      - name: username - Username to store into remote database.
+      - name: username
         in: path
         required: true
-        description: The username
+        description: Username to store into remote database.
       - name: score
         in: path
         required: true
