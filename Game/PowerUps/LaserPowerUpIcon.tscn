@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/PNG/Power-ups/pill_blue.png" type="Texture" id=1]
+
+[node name="LaserPowerUpIcon" type="TextureRect"]
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 1 )
+flip_v = true

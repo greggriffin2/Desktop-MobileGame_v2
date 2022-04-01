@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=1]
 [ext_resource path="res://PauseMenu/restartButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://PauseMenu/continueButton.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scenes/restartButton.gd" type="Script" id=4]
 
 [node name="Pause" type="Control"]
 pause_mode = 2
@@ -24,10 +23,10 @@ __meta__ = {
 }
 
 [node name="pauseMenu" type="Panel" parent="."]
-margin_left = 694.0
-margin_top = 245.0
-margin_right = 897.0
-margin_bottom = 498.0
+margin_left = 400.0
+margin_top = 150.0
+margin_right = 603.0
+margin_bottom = 403.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -42,7 +41,6 @@ text = "PAUSE MENU"
 [node name="continueButton" parent="pauseMenu/pauseLabel" instance=ExtResource( 3 )]
 
 [node name="restartButton" parent="pauseMenu/pauseLabel" instance=ExtResource( 2 )]
-script = ExtResource( 4 )
 
 [node name="menuButton" type="Button" parent="pauseMenu/pauseLabel"]
 margin_left = 2.0
