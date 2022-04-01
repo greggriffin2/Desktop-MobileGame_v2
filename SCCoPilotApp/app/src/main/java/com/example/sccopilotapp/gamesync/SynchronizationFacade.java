@@ -12,10 +12,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-enum PowerUpStatus {
-    None
-}
-
 enum ConnectionStatus {
     CONNECTED,
     DISCONNECTED,
@@ -26,30 +22,23 @@ public class SynchronizationFacade {
 
     private static GameSyncSingleton sync;
 
-    public SynchronizationFacade(String remoteAddress, String remotePort, Context context) {
+    public SynchronizationFacade(String remoteAddress, Context context) {
         if (sync != null) {
         } else {
             sync = new GameSyncSingleton(context);
             GameSyncSingleton.setRemoteAddress(remoteAddress);
-            GameSyncSingleton.setRemotePort(remotePort);
         }
         if (!GameSyncSingleton.getRemoteAddress().equals(remoteAddress)) {
             GameSyncSingleton.setRemoteAddress(remoteAddress);
         }
-
-        if (!GameSyncSingleton.getRemotePort().equals(remotePort)) {
-            GameSyncSingleton.setRemotePort(remotePort);
-        }
-
     }
 
     /**
      * Updates the Signaling and Scoreboard server address
      *
      * @param remoteAddress
-     * @param remotePort
      */
-    public static void updateAddress(String remoteAddress, int remotePort) {
+    public static void updateAddress(String remoteAddress) {
 
     }
 
@@ -96,15 +85,8 @@ public class SynchronizationFacade {
      * @param ButtonPress
      */
     public static void fireButtonPressed(int ButtonPress) {
-        // TODO: This is a super dumb implementation to get this thing running
-        JSONObject json_buttonEvent = new JSONObject();
-        try {
-            json_buttonEvent.put("ButtonPressed", ButtonPress);
-        } catch (JSONException e) {
-            // TODO: What.
-            Log.d(TAG, "fireButtonPressed: How the heck did this happe? Failed to create Json object");
-        }
-        GameSyncSingleton.pushWS(json_buttonEvent.toString());
+        ButtonPressed p = new ButtonPressed(1);
+        GameSyncSingleton.sendEvent(p);
     }
 
     /**

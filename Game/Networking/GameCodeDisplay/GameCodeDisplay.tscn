@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Networking/GameCodeDisplay/GameCodeView.gd" type="Script" id=1]
+[ext_resource path="res://assets/Vector/ReloadTestImage.svg" type="Texture" id=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 82.0
+margin_bottom = 43.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+margin_right = 211.0
+margin_bottom = 15.0
+text = "Game Code:"
+fit_content_height = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 19.0
+margin_right = 211.0
+margin_bottom = 145.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="GameCodeLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer"]
+margin_right = 75.0
+margin_bottom = 126.0
+rect_min_size = Vector2( 75, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Uninitialized"
+
+[node name="Reload" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 79.0
+margin_right = 211.0
+margin_bottom = 126.0
+size_flags_horizontal = 5
+size_flags_vertical = 5
+icon = ExtResource( 2 )
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Reload" to="." method="_on_Reload_pressed"]
