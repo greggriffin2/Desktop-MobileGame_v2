@@ -12,10 +12,6 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-enum PowerUpStatus {
-    None
-}
-
 enum ConnectionStatus {
     CONNECTED,
     DISCONNECTED,
