@@ -25,10 +25,9 @@ public class MainGameActivity extends AppCompatActivity {
     Button exitButton;
     int powerMax = 0;
     ImageView backgroundGIF;
-    int selectedBackground;
-    static final int BACKGROUND_WHIRL = 0;
-    static final int BACKGROUND_WARP = 1;
-    private static int gifNum = 0;
+    static int background_1 = R.drawable.space_background1;
+    static int background_2 = R.drawable.space_background2;
+    static int selectedBackground = background_1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -56,11 +55,6 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     public void loadBackground() {
-        if (gifNum == BACKGROUND_WHIRL) {
-            selectedBackground = R.drawable.space_background1;
-        } else {
-            selectedBackground = R.drawable.space_background2;
-        }
         // Loads background GIF
         Glide.with(this)
                 .load(selectedBackground)
@@ -133,12 +127,12 @@ public class MainGameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static void setGifNum(int num) {
-        gifNum = num;
-    }
-
-    public static int getGifNum() {
-        return gifNum;
+    public static void changeBackground(){
+        if (selectedBackground == background_1){
+            selectedBackground = background_2;
+        } else {
+            selectedBackground = background_1;
+        }
     }
 
     public void onResume() {
