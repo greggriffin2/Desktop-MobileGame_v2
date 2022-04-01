@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("PowerUpStatus")
 class PowerUpStatus extends DataObject {
+    PowerUpStatusEnum status;
+    int duration;
+
     public PowerUpStatusEnum getStatus() {
         return status;
     }
@@ -21,8 +24,6 @@ class PowerUpStatus extends DataObject {
         this.duration = duration;
     }
 
-    PowerUpStatusEnum status;
-    int duration;
 
     enum PowerUpStatusEnum {
         None,
@@ -30,9 +31,11 @@ class PowerUpStatus extends DataObject {
         LaserBoost
     }
 
+    // Empty constructor for serialization
     public PowerUpStatus() {
 
     }
+
     PowerUpStatus(PowerUpStatusEnum status, int duration) {
         this.status = status;
         this.duration = duration;
