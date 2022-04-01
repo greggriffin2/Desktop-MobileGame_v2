@@ -102,11 +102,18 @@ public class GameSyncSingleton {
                 Log.d(TAG, "onRenegotiationNeeded: Arg");
             }
         });
+
+
     }
 
+    /**
+     * Connects to the signaling server via a remote relay
+     *
+     * @param joinCode the passcode/secret to join a specific room
+     */
     public static void connectSignaling(String joinCode) {
         Request request = new Request.Builder().url(remoteAddress).build();
-
+        // TODO: Figure out what exceptions this needs to be throwing
         ws = client.newWebSocket(request, new WebSocketListener() {
             @Override
             public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
@@ -150,10 +157,21 @@ public class GameSyncSingleton {
         });
     }
 
+    /**
+     * Returns the current remote address
+     *
+     * @return remote address
+     */
     public static String getRemoteAddress() {
         return remoteAddress;
     }
 
+    /**
+     * Adds a generic event listener for sync events
+     *
+     * @param eventName     to be listened to
+     * @param eventListener that fires when the eventName is called
+     */
     private static void addListener(String eventName, PropertyChangeListener eventListener) {
         eventHelper.addPropertyChangeListener(eventName, eventListener);
     }
@@ -165,6 +183,11 @@ public class GameSyncSingleton {
         ws.send(string);
     }
 
+    /**
+     * Sets the remote address
+     *
+     * @param remoteAddress
+     */
     public static void setRemoteAddress(String remoteAddress) {
         // TODO: Reinitialize connection if remote changes while a connection is active
         GameSyncSingleton.remoteAddress = remoteAddress;
