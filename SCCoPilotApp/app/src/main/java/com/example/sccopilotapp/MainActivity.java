@@ -1,7 +1,5 @@
 package com.example.sccopilotapp;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,22 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.sccopilotapp.gamesync.GameSyncSingleton;
-import com.example.sccopilotapp.gamesync.SynchronizationFacade;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import com.example.sccopilotapp.databinding.ActivityMainBinding;
+import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 public class MainActivity extends AppCompatActivity {
 

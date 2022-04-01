@@ -127,8 +127,8 @@ public class MainGameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static void changeBackground(){
-        if (selectedBackground == background_1){
+    public static void changeBackground() {
+        if (selectedBackground == background_1) {
             selectedBackground = background_2;
         } else {
             selectedBackground = background_1;
