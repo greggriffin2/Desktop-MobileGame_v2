@@ -7,4 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="Red">#FF0000</color>
+    <color name="darkGray">#A9A9A9</color>
+    <color name="darkGray2">#A9A9B9</color>
+    <color name="lampBlack">#231F20</color>
+
+    <color name="shipRed">#BF2B16</color>
+    <color name="backgroundGray">#2A2D33</color>
+    <color name="lightBrown">#997055</color>
+    <color name="darkBrown">#836049</color>
+    <color name="accentGray">#3D414A</color>
+    <color name="shipWhite">#69DAD5</color>
 </resources>

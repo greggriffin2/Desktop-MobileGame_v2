@@ -1,32 +1,76 @@
 package com.example.sccopilotapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.example.sccopilotapp.gamesync.GameSyncSingleton;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 public class MainGameActivity extends AppCompatActivity {
 
+    String TAG = "MainGameActivity";
     Button shipButton;
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;
-    Button settingsButton;
+    int powerMax = 0;
+    ImageView backgroundGIF;
+    int selectedBackground;
+    private static int gifNum = 0;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
+        backgroundGIF = findViewById(R.id.background);
+
+        if (gifNum == 0) {
+            selectedBackground = R.drawable.space_background1;
+        } else {
+            selectedBackground = R.drawable.space_background2;
+        }
+        // Loads background GIF
+        Glide.with(this)
+                .load(selectedBackground)
+                .centerCrop()
+                .into(backgroundGIF);
+
         shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
-        settingsButton = findViewById(R.id.settingsButton);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        // handle button activities
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.mybutton) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -38,6 +82,16 @@ public class MainGameActivity extends AppCompatActivity {
      */
     public void onClickShip(View view) {
         SynchronizationFacade.fireButtonPressed(1);
+        Log.d(TAG, "Click");
+        if (powerMax < 100) {
+            powerMax += 1;
+        } else {
+            //Send info to game
+            Toast.makeText(MainGameActivity.this, "Fully Powered!",
+                    Toast.LENGTH_SHORT).show();
+            powerMax = 0;
+        }
+
     }
 
     /**
@@ -84,4 +138,11 @@ public class MainGameActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public static void setGifNum(int num) {
+        gifNum = num;
+    }
+
+    public static int getGifNum() {
+        return gifNum;
+    }
 }

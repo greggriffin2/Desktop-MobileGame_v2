@@ -3,6 +3,8 @@ package com.example.sccopilotapp;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.example.sccopilotapp.gamesync.GameSyncSingleton;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.navigation.NavController;
@@ -37,6 +40,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         codeText = findViewById(R.id.inputCode);
         playButton = findViewById(R.id.playButton);
+        /**
+         * Make Home Action Bar Red (shipRed in colors.xml)
+         */
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#BF2B16"));
+        actionBar.setBackgroundDrawable(colorDrawable);
     }
 
     public void onStart() {
@@ -79,4 +89,5 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
+
 }
