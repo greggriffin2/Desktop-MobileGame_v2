@@ -62,6 +62,15 @@ public class SynchronizationFacade {
     }
 
     /**
+     * Adds an event to be fired when an enemy is killed
+     *
+     * @param listener to be fired
+     */
+    public static void addEnemyKilledEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("EnemyKilled", listener);
+    }
+
+    /**
      * Adds an event to be fired when the game is paused
      *
      * @param listener to be fired
