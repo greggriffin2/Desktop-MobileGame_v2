@@ -22,13 +22,14 @@ import java.beans.PropertyChangeListener;
 public class MainGameActivity extends AppCompatActivity {
 
     String TAG = "MainGameActivity";
-    Button shipButton;
+//    Button shipButton;
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;
 
     int powerMax = 0;
     ImageView backgroundGIF;
+    ImageView shipClick;
     static int background_1 = R.drawable.space_background1;
     static int background_2 = R.drawable.space_background2;
     static int selectedBackground = background_1;
@@ -59,10 +60,11 @@ public class MainGameActivity extends AppCompatActivity {
         backgroundGIF = findViewById(R.id.background);
         loadBackground();
 
-        shipButton = findViewById(R.id.shipButton);
+//        shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
+        shipClick = findViewById(R.id.shipClick);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         // handle button activities
@@ -98,8 +100,16 @@ public class MainGameActivity extends AppCompatActivity {
         Log.d(TAG, "Click");
         if (powerMax < 10) {
             powerMax += 1;
+            float x = shipClick.getScaleX();
+            float y = shipClick.getScaleY();
+            shipClick.setScaleX((float) (x + .05));
+            shipClick.setScaleY((float) (y + .05));
         } else {
             //Send info to game
+            float x = shipClick.getScaleX();
+            float y = shipClick.getScaleY();
+            shipClick.setScaleX((float) (x - .5));
+            shipClick.setScaleY((float) (y - .5));
             Toast.makeText(MainGameActivity.this, "Fully Powered!",
                     Toast.LENGTH_SHORT).show();
             powerMax = 0;
