@@ -106,12 +106,12 @@ public class MainGameActivity extends AppCompatActivity {
             shipClick.setScaleY((float) (y + .05));
         } else {
             //Send info to game
+            Toast.makeText(MainGameActivity.this, "Fully Powered!",
+                    Toast.LENGTH_SHORT).show();
             float x = shipClick.getScaleX();
             float y = shipClick.getScaleY();
             shipClick.setScaleX((float) (x - .5));
             shipClick.setScaleY((float) (y - .5));
-            Toast.makeText(MainGameActivity.this, "Fully Powered!",
-                    Toast.LENGTH_SHORT).show();
             powerMax = 0;
         }
 
