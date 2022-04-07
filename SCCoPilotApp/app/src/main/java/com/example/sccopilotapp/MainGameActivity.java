@@ -41,10 +41,8 @@ public class MainGameActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         // This is a listener for when an enemy is killed in game. At the moment it is not working,
         // but we can still write code for what we want to be done in the app once an enemy is killed
         SynchronizationFacade.addEnemyKilledEvent(new PropertyChangeListener() {
@@ -65,6 +63,7 @@ public class MainGameActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Space Cadet Co-Pilot");
         // handle button activities
     }
 
@@ -148,8 +147,6 @@ public class MainGameActivity extends AppCompatActivity {
             selectedBackground = background_1;
         }
     }
-
-
 
     public void onResume() {
         super.onResume();

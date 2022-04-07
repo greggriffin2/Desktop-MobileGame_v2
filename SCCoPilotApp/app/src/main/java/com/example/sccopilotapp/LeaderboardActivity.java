@@ -1,6 +1,7 @@
 package com.example.sccopilotapp;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -49,6 +50,12 @@ public class LeaderboardActivity extends AppCompatActivity {
         populateScores();
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Leaderboard");
+//        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+//                ActionBar.LayoutParams.WRAP_CONTENT,
+//                ActionBar.LayoutParams.MATCH_PARENT,
+//                Gravity.CENTER);
+//        actionBar.setCustomView(params);
     }
 
     @Override
