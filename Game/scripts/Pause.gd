@@ -26,23 +26,23 @@ func _process(delta):
 
 ## Each of these buttons will perform the desired action.
 	
-## on_continueButton_pressed resumes the game.
+## Resumes the game.
 func _on_continueButton_pressed():
 	get_tree().paused = false
 	unpaused = true
 	visible = false
 
-## on_restartButton_pressed restarts the current level.
+## Restarts the current level.
 func _on_restartButton_pressed():
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 	
-## on_menu returns the user to the main menu.
+## Returns the user to the main menu.
 func _on_menuButton_pressed():
 	get_tree().paused = false
 	get_tree().change_scene("res://MainMenu/MainMenu.tscn")
 
-## _on_exitButton exits the program and ends the current session.
+## Exits the game.
 func _on_exitButton_pressed():
 	get_tree().paused = false
 	get_tree().quit()

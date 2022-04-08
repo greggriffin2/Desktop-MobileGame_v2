@@ -13,8 +13,6 @@ var signaling_connection: WebSocketClient
 var initialized: bool
 var game_code: String
 
-
-
 # Called when the syncrhonization component is first initialized
 func _ready():
 	signaling_connection = WebSocketClient.new()
