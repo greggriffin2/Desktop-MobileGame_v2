@@ -38,6 +38,29 @@ class UserScore:
 def response_build(data, response_status):
     return Response(str(data), status=response_status, mimetype='application/json')
 
+def error_response_build(error_message, response_status):
+    """ Create and return a Response object using input error message and status code.
+
+    Builds an HTTP response using a Flask Response object, and returns it. Response
+    mimetype is set to 'application/json', since the server deals with JSON data.
+    Error JSON construction is an object that has a key 'error' with value of the error message.
+
+    ---
+    parameters:
+      - name: error_message
+        required: true
+        description: Input error message (string) to assign to Response error JSON object.
+      - name: response_status
+        required: true
+        description: HTTP Status Code to assign to the HTTP Response. It is recommended
+                     to pass these using named HTTPStatus attributes. (e.g.: HTTPStatus.BAD_REQUEST)
+    returns:
+        Response object with provided error message and status code.
+    """
+    error = {"error": error_message}
+    result = response_build(json.dumps(error), HTTPStatus.BAD_REQUEST)
+    return result
+
 def log(data):
     log_time = datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")
     print(f"LOG  -  [{log_time}]  {str(data)}\n")
@@ -137,7 +160,10 @@ def retrieve(count):
     table = DB.Table('Scores')
     result_data = ""
     score_list = None
-    count = int(count)
+    try:
+        count = int(count)
+    except ValueError:
+        return error_response_build("Must provide a number if providing parameter to retrieve endpoint.", HTTPStatus.BAD_REQUEST)
 
     if request.method == 'GET':
         scan = table.scan()
