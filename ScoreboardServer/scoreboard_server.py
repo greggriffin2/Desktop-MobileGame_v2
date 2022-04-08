@@ -63,7 +63,7 @@ def error_response_build(error_message, response_status):
 
 def log(data):
     log_time = datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")
-    print(f"LOG  -  [{log_time}]  {str(data)}\n")
+    print(f"LOG  -  [{log_time}]  {str(data)}")
 
 @app.route('/test/create')
 def test_create():
@@ -163,7 +163,7 @@ def retrieve(count):
     try:
         count = int(count)
     except ValueError:
-        return error_response_build("Must provide a number if providing parameter to retrieve endpoint.", HTTPStatus.BAD_REQUEST)
+        return error_response_build("Must provide count as a number if providing count parameter to /retrieve GET endpoint.", HTTPStatus.BAD_REQUEST)
 
     if request.method == 'GET':
         scan = table.scan()
@@ -220,6 +220,10 @@ def add(username, score):
     table = DB.Table('Scores')
     result = ""
     time_made = datetime_generate()
+    try:
+        score = int(score)
+    except ValueError:
+        return error_response_build("Must provide highscore as a number for the second parameter to the /add GET endpoint.", HTTPStatus.BAD_REQUEST)
 
     if request.method == 'GET':
         log(f"ADD {username} {score} ATTEMPTED")
