@@ -38,8 +38,11 @@ func _on_restartButton_pressed():
 	get_tree().reload_current_scene()
 	
 ## on_menu returns the user to the main menu.
-func _on_menu():
-	pass
+func _on_menuButton_pressed():
+	get_tree().paused = false
+	get_tree().change_scene("res://MainMenu/MainMenu.tscn")
 
-
-
+## _on_exitButton exits the program and ends the current session.
+func _on_exitButton_pressed():
+	get_tree().paused = false
+	get_tree().quit()

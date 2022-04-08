@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=1]
 [ext_resource path="res://PauseMenu/restartButton.tscn" type="PackedScene" id=2]
 [ext_resource path="res://PauseMenu/continueButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://PauseMenu/exitButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://PauseMenu/menuButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 6 )
 
 [node name="Pause" type="Control"]
 pause_mode = 2
@@ -27,38 +33,40 @@ margin_left = 400.0
 margin_top = 150.0
 margin_right = 603.0
 margin_bottom = 403.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="pauseLabel" type="Label" parent="pauseMenu"]
-margin_left = 61.0
-margin_top = 31.0
-margin_right = 145.0
-margin_bottom = 45.0
+margin_left = 51.0
+margin_top = 29.0
+margin_right = 154.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 2 )
 text = "PAUSE MENU"
 
-[node name="continueButton" parent="pauseMenu/pauseLabel" instance=ExtResource( 3 )]
+[node name="continueButton" parent="pauseMenu" instance=ExtResource( 3 )]
+margin_left = 63.0
+margin_top = 79.0
+margin_right = 141.0
+margin_bottom = 99.0
 
-[node name="restartButton" parent="pauseMenu/pauseLabel" instance=ExtResource( 2 )]
+[node name="restartButton" parent="pauseMenu" instance=ExtResource( 2 )]
+margin_left = 36.0
+margin_top = 112.0
+margin_right = 167.0
+margin_bottom = 132.0
 
-[node name="menuButton" type="Button" parent="pauseMenu/pauseLabel"]
-margin_left = 2.0
-margin_top = 131.0
-margin_right = 80.0
-margin_bottom = 151.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="menuButton" parent="pauseMenu" instance=ExtResource( 5 )]
+margin_left = 52.0
+margin_top = 147.0
+margin_right = 151.0
+margin_bottom = 167.0
 
-[node name="menuLabel" type="Label" parent="pauseMenu/pauseLabel/menuButton"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 79.0
-margin_bottom = 21.0
-text = "Main Menu"
-align = 1
-valign = 1
+[node name="exitButton" parent="pauseMenu" instance=ExtResource( 4 )]
+margin_left = 44.0
+margin_top = 180.0
+margin_right = 159.0
+margin_bottom = 201.0
 
-[connection signal="pressed" from="pauseMenu/pauseLabel/continueButton" to="." method="_on_continueButton_pressed"]
-[connection signal="pressed" from="pauseMenu/pauseLabel/restartButton" to="." method="_on_restartButton_pressed"]
+[connection signal="pressed" from="pauseMenu/continueButton" to="." method="_on_continueButton_pressed"]
+[connection signal="pressed" from="pauseMenu/restartButton" to="." method="_on_restartButton_pressed"]
+[connection signal="pressed" from="pauseMenu/menuButton" to="." method="_on_menuButton_pressed"]
+[connection signal="pressed" from="pauseMenu/exitButton" to="." method="_on_exitButton_pressed"]

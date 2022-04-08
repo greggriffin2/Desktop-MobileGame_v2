@@ -19,6 +19,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://interface/HUD.gd"
 }, {
+"base": "Sprite",
 "class": "LaserEffect",
 "language": "GDScript",
 "path": "res://projectiles/PlayerLaserEffect.gd"
