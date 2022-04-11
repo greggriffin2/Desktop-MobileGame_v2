@@ -78,6 +78,8 @@ func _on_data():
 		var as_json = json_parse.result
 		set_gamecode(as_json["JoinRoom"])
 
+func send_data(data: PoolByteArray):
+	signaling_connection.put_packet(data)
 
 func reload_connection():
 	print("Reloading connection...")
@@ -90,3 +92,7 @@ func reload_connection():
 
 func _process(_delta):
 	signaling_connection.poll()
+
+func send_powerup_status(statusEnum: int, duration: float):
+	var data = "{'PowerUpStatus:'"+str(statusEnum)+",'duration:"+str(duration)+"}"
+	send_data(data.to_ascii())
