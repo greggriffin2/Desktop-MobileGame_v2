@@ -13,6 +13,7 @@ var signaling_connection: WebSocketClient
 var initialized: bool
 var game_code: String
 
+
 # Called when the syncrhonization component is first initialized
 func _ready():
 	signaling_connection = WebSocketClient.new()
@@ -46,6 +47,7 @@ func init_webrtc_server():
 func set_gamecode(code: String):
 	game_code = code
 	emit_signal("on_gamecode_update", game_code)
+
 
 func _on_closed(was_clean = false):
 	# was_clean will tell you if the disconnection was correctly notified
