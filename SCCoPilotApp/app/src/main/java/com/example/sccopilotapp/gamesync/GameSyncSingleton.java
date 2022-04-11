@@ -3,7 +3,6 @@ package com.example.sccopilotapp.gamesync;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -193,10 +192,6 @@ public class GameSyncSingleton {
             eventHelper.firePropertyChange("PowerUpStatus", null, o);
         } else if (o instanceof JoinRoom) {
 
-        } else if (o instanceof EnemyKilled){
-            Log.d(TAG, "messageHandler: found " + (o.toString()));
-            eventHelper.firePropertyChange("EnemyKilled", null , o);
-
         }
     }
 
@@ -215,7 +210,7 @@ public class GameSyncSingleton {
      * @param eventName     to be listened to
      * @param eventListener that fires when the eventName is called
      */
-    public static void addListener(String eventName, PropertyChangeListener eventListener) {
+    private static void addListener(String eventName, PropertyChangeListener eventListener) {
         eventHelper.addPropertyChangeListener(eventName, eventListener);
     }
 
