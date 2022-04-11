@@ -78,6 +78,10 @@ public class SynchronizationFacade {
         GameSyncSingleton.addListener("GameDisconnected", listener);
     }
 
+    public static void addArbitraryListener(String eventName, PropertyChangeListener l) {
+        GameSyncSingleton.addListener(eventName, l);
+    }
+
     /**
      * Called when a button is pressed in the UI
      *
