@@ -159,6 +159,19 @@ def log(data):
 @app.errorhandler(404)
 @app.errorhandler(400)
 def error_handle(_):
+    """ Handle Flask endpoint error.
+
+    Default endpoint for when accessing an endpoint
+    that doesn't exist. HTTPStatus for endpoint error is
+    set to 404 Not Found. Response contains this 404
+    status as well as error message at JSON 'error' key.
+    ---
+
+    responses:
+      400:
+        description: A JSON string containing error data.
+    """
+
     return error_response_build("Endpoint not recognized, check game/app URL path to scoreboard server.", HTTPStatus.NOT_FOUND)
 
 @app.route('/add', methods=['POST', 'GET'])
