@@ -37,6 +37,10 @@ public class GameSyncSingleton {
     static private OkHttpClient client;
     static private GameSyncStatus status;
 
+    public static GameSyncStatus getConnectionStatus() {
+        return status;
+    }
+
     enum GameSyncStatus {
         UNKNOWN,
         CONNECTING,
