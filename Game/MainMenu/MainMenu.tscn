@@ -1,0 +1,101 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://MainMenu/StartButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/bgScroll.gd" type="Script" id=3]
+[ext_resource path="res://MainMenu/ExitButton.tscn" type="PackedScene" id=4]
+[ext_resource path="res://MainMenu/MainMenu.gd" type="Script" id=5]
+[ext_resource path="res://assets/PNG/playerShip1_red.png" type="Texture" id=6]
+[ext_resource path="res://assets/PNG/phoneimage.png" type="Texture" id=7]
+[ext_resource path="res://assets/Backgrounds/blue.png" type="Texture" id=8]
+[ext_resource path="res://assets/PNG/Stars/starBig.png" type="Texture" id=9]
+
+[sub_resource type="DynamicFont" id=1]
+size = 45
+font_data = ExtResource( 1 )
+
+[sub_resource type="Gradient" id=2]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource( 3 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 1600, 900 )
+
+[node name="background1" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+scale = Vector2( 5, 5 )
+texture = ExtResource( 8 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 1600, 900 )
+
+[node name="TileMap" type="TileMap" parent="ParallaxBackground"]
+format = 1
+
+[node name="Title" type="Label" parent="."]
+margin_left = 232.0
+margin_top = 235.0
+margin_right = 771.0
+margin_bottom = 325.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "SPACE CADET: CO-PILOT"
+align = 1
+valign = 1
+
+[node name="StarParticles" type="CPUParticles2D" parent="Title"]
+position = Vector2( 277, 30 )
+scale = Vector2( 3, 5 )
+amount = 20
+lifetime = 3.0
+texture = ExtResource( 9 )
+emission_shape = 2
+emission_rect_extents = Vector2( 105, 1 )
+direction = Vector2( 0, 1 )
+spread = 40.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 30.0
+initial_velocity_random = 0.6
+angular_velocity = 90.0
+angle = 50.0
+angle_random = 0.5
+scale_amount = 0.1
+scale_amount_random = 0.24
+color_ramp = SubResource( 2 )
+
+[node name="StartButton" parent="." instance=ExtResource( 2 )]
+margin_left = 379.0
+margin_top = 358.0
+margin_right = 621.0
+margin_bottom = 421.0
+
+[node name="ExitButton" parent="." instance=ExtResource( 4 )]
+margin_left = 423.0
+margin_top = 465.0
+margin_right = 576.0
+margin_bottom = 522.0
+
+[node name="Ship" type="Sprite" parent="."]
+position = Vector2( 501, 164 )
+scale = Vector2( 1.42929, 1.28667 )
+texture = ExtResource( 6 )
+
+[node name="PhoneHand" type="Sprite" parent="Ship"]
+show_behind_parent = true
+position = Vector2( 46.5267, -36.903 )
+rotation = 0.785398
+scale = Vector2( 0.1453, 0.134085 )
+texture = ExtResource( 7 )
+
+[node name="PhoneShip" type="Sprite" parent="Ship"]
+position = Vector2( 46.8863, -61.6574 )
+rotation = 0.785398
+scale = Vector2( 0.187854, 0.21576 )
+texture = ExtResource( 6 )
+
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_ExitButton_pressed"]

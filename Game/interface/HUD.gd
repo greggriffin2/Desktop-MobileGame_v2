@@ -16,6 +16,7 @@ onready var life_container := $LifeContainer
 onready var speed_powerup_container := $SpeedPowerUp
 onready var laser_powerup_container := $LaserPowerUp
 onready var score_label := $Score
+onready var death_transition_timer := $DeathTransitionTimer
 
 ## Establish a base score of 0 and base speed of 400.
 var score: int = 0
@@ -48,6 +49,9 @@ func _on_player_life_change(life: int):
 		set_lives(1)
 	else:
 		set_lives(0)
+		var stored_score: int = score
+		death_transition_timer.start(2)
+		
 
 ## Signal method used to increment the score for each damageable object destroyed.
 ## Enemies are worth 15 points while meteors are worth 50 points.
@@ -62,3 +66,7 @@ func _on_speed_change(speed: float):
 		speed_powerup_container.visible = true
 	else:
 		speed_powerup_container.visible = false
+
+
+func _on_DeathTransitionTimer_timeout():
+	get_tree().change_scene("res://GameOver/GameOver.tscn")

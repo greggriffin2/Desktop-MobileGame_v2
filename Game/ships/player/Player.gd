@@ -78,12 +78,16 @@ func take_damage(damage):
 	hit_points -= damage
 	Signals.emit_signal("on_player_life_change", hit_points)
 	if hit_points <= 0:
-		for effect in on_death_effects:
-			var explosion = effect.instance()
-			explosion.global_position = global_position
-			get_tree().current_scene.add_child(explosion)
-		queue_free()
+		on_death()
+	
 		
+func on_death():
+	for effect in on_death_effects:
+		var explosion = effect.instance()
+		explosion.global_position = global_position
+		get_tree().current_scene.add_child(explosion)
+		queue_free()
+			
 
 ## Handles any changes that may occur when an object enters the player's collision area.
 ## Currently, an enemy ship will take 3 damage upon colliding with the player ship.
@@ -106,4 +110,4 @@ func _on_SpeedPowerUpTimer_timeout():
 ## Removes laser bonus once the laser powerup timer runs out.
 func _on_LaserPowerUpTimer_timeout():
 	dual_laser = false
-
+	
