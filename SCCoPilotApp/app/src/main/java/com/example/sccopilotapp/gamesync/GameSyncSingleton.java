@@ -81,7 +81,7 @@ public class GameSyncSingleton {
      * @param joinCode the passcode/secret to join a specific room
      */
     public static void connectSignaling(String joinCode) {
-
+        status = GameSyncStatus.CONNECTING;
         Request request = new Request.Builder().url(remoteAddress).build();
         // TODO: Figure out what exceptions this needs to be throwing
         ws = client.newWebSocket(request, new WebSocketListener() {
@@ -89,6 +89,7 @@ public class GameSyncSingleton {
             public void onClosed(@NonNull WebSocket webSocket, int code, @NonNull String reason) {
                 Log.d(TAG, "onClosed: Code:" + code + " Reason: " + reason);
                 status = GameSyncStatus.DISCONNECTED;
+                eventHelper.firePropertyChange("ConnectionClosed", null, reason);
                 super.onClosed(webSocket, code, reason);
             }
 
@@ -154,7 +155,7 @@ public class GameSyncSingleton {
             Log.d(TAG, "messageHandler: found " + (o.toString()));
             eventHelper.firePropertyChange("PowerUpStatus", null, o);
         } else if (o instanceof JoinRoom) {
-
+            eventHelper.firePropertyChange("Connected", null, o);
         }
     }
 
@@ -175,13 +176,6 @@ public class GameSyncSingleton {
      */
     public static void addListener(String eventName, PropertyChangeListener eventListener) {
         eventHelper.addPropertyChangeListener(eventName, eventListener);
-    }
-
-
-    @Deprecated
-    // TODO: This shouldn't be used externally but is done for testing
-    public static void pushWS(String string) {
-        ws.send(string);
     }
 
     /**
