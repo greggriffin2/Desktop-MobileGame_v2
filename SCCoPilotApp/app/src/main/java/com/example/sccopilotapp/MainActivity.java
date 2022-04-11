@@ -49,10 +49,29 @@ public class MainActivity extends AppCompatActivity {
      * @param validationCode Return: True or False
      */
     public boolean validateConnectionCode(String validationCode) {
-        String correctCode = "a";
-        if (validationCode.equals(correctCode)) {
+        //String correctCode = "a";
+        if (validationCode.length() > 18) {
+            Toast.makeText(MainActivity.this, "Code must be less than 18 characters!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (validationCode.matches(".*\\d.*")){
+            Toast.makeText(MainActivity.this, "Code must not contain any numbers!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (validationCode.trim().length() == 0){
+            Toast.makeText(MainActivity.this, "Code must not be empty!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (validationCode.trim().length() != 0){
+            for(int i = 0; i < validationCode.length(); i++){
+                if (validationCode.contains(" ")){
+                    Toast.makeText(MainActivity.this, "Code cannot contain spaces!", Toast.LENGTH_LONG).show();
+                    return false;
+                }
+            }
             return true;
-        } else {
+        }
+        else{
             return true;
         }
     }
@@ -67,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onClickPlay: Creating sync singleton");
         SynchronizationFacade.connect(codeText.getText().toString());
         String validatedCode = codeText.getText().toString();
-        if (validateConnectionCode(validatedCode)) {
+        if (validateConnectionCode(validatedCode) == true) {
             Log.d(TAG, "matched:success");
             Intent intent = new Intent(this, MainGameActivity.class);
             startActivity(intent);
