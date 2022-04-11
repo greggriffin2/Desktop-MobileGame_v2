@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sccopilotapp.gamesync.GameSyncSingleton;
+import com.example.sccopilotapp.gamesync.JoinRoom;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 public class MainActivity extends AppCompatActivity {
