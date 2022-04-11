@@ -191,7 +191,7 @@ public class GameSyncSingleton {
             Log.d(TAG, "messageHandler: found " + (o.toString()));
             eventHelper.firePropertyChange("PowerUpStatus", null, o);
         } else if (o instanceof JoinRoom) {
-
+            eventHelper.firePropertyChange("Connected", null, o);
         }
     }
 
@@ -210,7 +210,7 @@ public class GameSyncSingleton {
      * @param eventName     to be listened to
      * @param eventListener that fires when the eventName is called
      */
-    private static void addListener(String eventName, PropertyChangeListener eventListener) {
+    public static void addListener(String eventName, PropertyChangeListener eventListener) {
         eventHelper.addPropertyChangeListener(eventName, eventListener);
     }
 
