@@ -136,7 +136,7 @@ def error_response_build(error_message, response_status):
         Response object with provided error message and status code.
     """
     error = {"error": error_message}
-    result = response_build(json.dumps(error), HTTPStatus.BAD_REQUEST)
+    result = response_build(json.dumps(error), response_status)
     return result
 
 def log(data):
@@ -158,7 +158,7 @@ def log(data):
 
 @app.errorhandler(404)
 @app.errorhandler(400)
-def error_handle(err):
+def error_handle(_):
     return error_response_build("Endpoint not recognized, check game/app URL path to scoreboard server.", HTTPStatus.NOT_FOUND)
 
 @app.route('/add', methods=['POST', 'GET'])
