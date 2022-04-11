@@ -13,6 +13,7 @@ var signaling_connection: WebSocketClient
 var initialized: bool
 var game_code: String
 
+
 # Called when the syncrhonization component is first initialized
 func _ready():
 	signaling_connection = WebSocketClient.new()
@@ -47,6 +48,7 @@ func set_gamecode(code: String):
 	game_code = code
 	emit_signal("on_gamecode_update", game_code)
 
+
 func _on_closed(was_clean = false):
 	# was_clean will tell you if the disconnection was correctly notified
 	# by the remote peer before closing the socket.
@@ -76,6 +78,8 @@ func _on_data():
 		var as_json = json_parse.result
 		set_gamecode(as_json["JoinRoom"])
 
+func send_data(data: PoolByteArray):
+	signaling_connection.put_packet(data)
 
 func reload_connection():
 	print("Reloading connection...")
@@ -88,3 +92,7 @@ func reload_connection():
 
 func _process(_delta):
 	signaling_connection.poll()
+
+func send_powerup_status(statusEnum: int, duration: float):
+	var data = "{'PowerUpStatus:'"+str(statusEnum)+",'duration:"+str(duration)+"}"
+	send_data(data.to_ascii())
