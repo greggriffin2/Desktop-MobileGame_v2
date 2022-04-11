@@ -156,6 +156,11 @@ def log(data):
     log_time = datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")
     print(f"LOG  -  [{log_time}]  {str(data)}")
 
+@app.errorhandler(404)
+@app.errorhandler(400)
+def error_handle(err):
+    return error_response_build("Endpoint not recognized, check game/app URL path to scoreboard server.", HTTPStatus.NOT_FOUND)
+
 @app.route('/add', methods=['POST', 'GET'])
 def post_add():
     """ Add a Score to database based on POST data.
