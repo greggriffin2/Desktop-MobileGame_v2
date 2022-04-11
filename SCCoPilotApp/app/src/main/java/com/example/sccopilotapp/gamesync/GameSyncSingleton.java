@@ -11,8 +11,12 @@ import androidx.annotation.Nullable;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.google.gson.Gson;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.webrtc.DataChannel;
 import org.webrtc.IceCandidate;
@@ -150,6 +154,7 @@ public class GameSyncSingleton {
             Log.d(TAG, "messageHandler: found " + (o.toString()));
             eventHelper.firePropertyChange("PowerUpStatus", null, o);
         } else if (o instanceof JoinRoom) {
+
         }
     }
 
