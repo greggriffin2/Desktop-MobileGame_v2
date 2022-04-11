@@ -1,16 +1,9 @@
 package com.example.sccopilotapp.gamesync;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.List;
 
 enum ConnectionStatus {
     CONNECTED,
@@ -114,7 +107,7 @@ public class SynchronizationFacade {
      * @param stopRange  last score to retrieve
      * @return a list of scores in order from highest score to lowest
      */
-    public static List<LeaderboardScore> getScores(int startRange, int stopRange) {
+    public static ArrayList<LeaderboardScore> getScores(int startRange, int stopRange) {
         ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
         for (int i = 0; i < 5; i++) {
             testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2));

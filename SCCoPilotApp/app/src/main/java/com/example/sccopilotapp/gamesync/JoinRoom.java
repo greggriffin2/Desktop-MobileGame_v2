@@ -1,9 +1,7 @@
 package com.example.sccopilotapp.gamesync;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonTypeName("JoinRoom")
 /**

@@ -1,6 +1,5 @@
 package com.example.sccopilotapp.gamesync;
 
-import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("ButtonPressed")

@@ -7,13 +7,16 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * Enemy Killed event
  */
 public class EnemyKilled extends DataObject {
-    public EnemyKilled() {}
+    public EnemyKilled() {
+    }
+
     String enemyType;
 
-    public String getEnemyType(){
+    public String getEnemyType() {
         return this.enemyType;
     }
-    public void setEnemyType(String type){
+
+    public void setEnemyType(String type) {
         this.enemyType = type;
     }
 }

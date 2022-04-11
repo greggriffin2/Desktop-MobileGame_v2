@@ -1,129 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LeaderboardActivity">
 
-    <TextView
-        android:id="@+id/boardTitle"
-        android:layout_width="120dp"
-        android:layout_height="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/leaderboard"
-        android:textSize="20sp"
-        android:layout_marginTop="-500dp" />
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <TableLayout
-        android:layout_width="300dp"
-        android:layout_height="160dp"
-        android:id="@+id/boardTable"
-        app:layout_constraintTop_toTopOf="@+id/boardTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="-300dp">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/player1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/player_1"
-                android:layout_gravity="start" />
-
-            <TextView
-                android:id="@+id/player_1Score"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="50dp"
-                android:singleLine="true"
-                android:text="@string/player_1score" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/player2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/player_2_"
-                android:layout_gravity="start" />
-
-            <TextView
-                android:id="@+id/player_2Score"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="50dp"
-                android:singleLine="true"
-                android:text="@string/player_2score_" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/player3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/player_3"
-                android:layout_gravity="start" />
-
-            <TextView
-                android:id="@+id/player_3Score"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="50dp"
-                android:singleLine="true"
-                android:text="@string/player_3score" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/player4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/player_4"
-                android:layout_gravity="start" />
-
-            <TextView
-                android:id="@+id/player_4Score"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="50dp"
-                android:singleLine="true"
-                android:text="@string/player_4score" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/player5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/player_5"
-                android:layout_gravity="start" />
-
-            <TextView
-                android:id="@+id/player_5Score"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginStart="50dp"
-                android:singleLine="true"
-                android:text="@string/player_5score" />
-        </TableRow>
-
-    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

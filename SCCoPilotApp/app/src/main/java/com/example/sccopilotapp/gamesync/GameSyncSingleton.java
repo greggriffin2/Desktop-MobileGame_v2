@@ -3,7 +3,6 @@ package com.example.sccopilotapp.gamesync;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,12 +10,6 @@ import androidx.annotation.Nullable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.webrtc.DataChannel;
 import org.webrtc.IceCandidate;
@@ -193,9 +186,9 @@ public class GameSyncSingleton {
             eventHelper.firePropertyChange("PowerUpStatus", null, o);
         } else if (o instanceof JoinRoom) {
 
-        } else if (o instanceof EnemyKilled){
+        } else if (o instanceof EnemyKilled) {
             Log.d(TAG, "messageHandler: found " + (o.toString()));
-            eventHelper.firePropertyChange("EnemyKilled", null , o);
+            eventHelper.firePropertyChange("EnemyKilled", null, o);
 
         }
     }
