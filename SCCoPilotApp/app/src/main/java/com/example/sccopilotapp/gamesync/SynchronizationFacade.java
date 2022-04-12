@@ -1,13 +1,17 @@
 package com.example.sccopilotapp.gamesync;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.sccopilotapp.LeaderboardActivity;
+
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -117,7 +121,7 @@ public class SynchronizationFacade {
      * @param stopRange  last score to retrieve
      * @return a list of scores in order from highest score to lowest
      */
-    public static ArrayList<LeaderboardScore> getScores(int startRange, int stopRange) {
+    public static ArrayList<LeaderboardScore> getScores(int startRange, int stopRange) throws IOException {
         ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
         for (int i = 0; i < 5; i++) {
             testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2));
