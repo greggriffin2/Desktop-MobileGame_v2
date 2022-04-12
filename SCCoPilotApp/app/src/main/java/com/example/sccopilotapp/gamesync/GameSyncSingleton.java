@@ -41,17 +41,6 @@ public class GameSyncSingleton {
     static private OkHttpClient client;
     static private GameSyncStatus status;
 
-    public static GameSyncStatus getConnectionStatus() {
-        return status;
-    }
-
-    enum GameSyncStatus {
-        UNKNOWN,
-        CONNECTING,
-        CONNECTED,
-        DISCONNECTED
-    }
-
     public GameSyncSingleton(Context context) {
         status = GameSyncStatus.DISCONNECTED;
         objectMapper = new ObjectMapper();
@@ -73,6 +62,10 @@ public class GameSyncSingleton {
 //        PeerConnection p = peerFactory.createPeerConnection(iceServerList, );
 
 
+    }
+
+    public static GameSyncStatus getConnectionStatus() {
+        return status;
     }
 
     /**
@@ -169,16 +162,6 @@ public class GameSyncSingleton {
     }
 
     /**
-     * Adds a generic event listener for sync events
-     *
-     * @param eventName     to be listened to
-     * @param eventListener that fires when the eventName is called
-     */
-    public static void addListener(String eventName, PropertyChangeListener eventListener) {
-        eventHelper.addPropertyChangeListener(eventName, eventListener);
-    }
-
-    /**
      * Sets the remote address
      *
      * @param remoteAddress
@@ -186,6 +169,16 @@ public class GameSyncSingleton {
     public static void setRemoteAddress(String remoteAddress) {
         // TODO: Reinitialize connection if remote changes while a connection is active
         GameSyncSingleton.remoteAddress = remoteAddress;
+    }
+
+    /**
+     * Adds a generic event listener for sync events
+     *
+     * @param eventName     to be listened to
+     * @param eventListener that fires when the eventName is called
+     */
+    public static void addListener(String eventName, PropertyChangeListener eventListener) {
+        eventHelper.addPropertyChangeListener(eventName, eventListener);
     }
 
     /**
@@ -202,5 +195,12 @@ public class GameSyncSingleton {
         } catch (JsonProcessingException jsonProcessingException) {
             jsonProcessingException.printStackTrace();
         }
+    }
+
+    enum GameSyncStatus {
+        UNKNOWN,
+        CONNECTING,
+        CONNECTED,
+        DISCONNECTED
     }
 }
