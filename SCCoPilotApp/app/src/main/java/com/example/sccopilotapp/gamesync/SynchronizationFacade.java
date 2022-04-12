@@ -1,12 +1,6 @@
 package com.example.sccopilotapp.gamesync;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
-import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -79,8 +73,16 @@ public class SynchronizationFacade {
      * @param ButtonPress
      */
     public static void fireButtonPressed(int ButtonPress) {
-        ButtonPressed p = new ButtonPressed(1);
+        ButtonPressedEvent p = new ButtonPressedEvent(1);
         GameSyncSingleton.sendEvent(p);
+    }
+
+    /**
+     * Fires an event to the game notifying the activation of an ability
+     *
+     * @param powerupID
+     */
+    public static void fireActivatePowerup(int powerupID) {
     }
 
     /**
