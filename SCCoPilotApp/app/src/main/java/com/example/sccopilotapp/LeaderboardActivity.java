@@ -80,7 +80,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             this.finish();
             return true;
         }
@@ -95,8 +95,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (requestFailed) {
             // return dummy data
             return SynchronizationFacade.getScores(0, 5);
-        } else
-        { // TODO: implement JSON parsing into ArrayList<LeaderboardScore> here
+        } else { // TODO: implement JSON parsing into ArrayList<LeaderboardScore> here
             return new ArrayList<LeaderboardScore>(5);
         }
     }

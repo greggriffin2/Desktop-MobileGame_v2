@@ -1,23 +1,10 @@
 package com.example.sccopilotapp.gamesync;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.example.sccopilotapp.LeaderboardActivity;
 
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 enum ConnectionStatus {
     CONNECTED,

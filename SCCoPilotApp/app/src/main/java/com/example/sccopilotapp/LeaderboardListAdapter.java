@@ -17,8 +17,10 @@ public class LeaderboardListAdapter extends ArrayAdapter<LeaderboardScore> {
     private final Activity context;
     ArrayList<LeaderboardScore> players;
 
-    /** Populates the custom XML file leaderboard_custom_list with leaderboard
+    /**
+     * Populates the custom XML file leaderboard_custom_list with leaderboard
      * data to be inflated into rows of a ListView
+     *
      * @param context Called by the LeaderboardActivity
      * @param players The ArrayList of players and scores
      */
