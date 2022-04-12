@@ -8,16 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * Button pressed event
  */
 public class ButtonPressed extends DataObject {
-    public int getTimesPressed() {
-        return timesPressed;
-    }
-
-    public void setTimesPressed(int timesPressed) {
-        this.timesPressed = timesPressed;
-    }
-
     int timesPressed;
-
 
     //Empty constructor for serialization
     public ButtonPressed() {
@@ -26,4 +17,14 @@ public class ButtonPressed extends DataObject {
     ButtonPressed(int timesPressed) {
         this.timesPressed = timesPressed;
     }
+
+    public int getTimesPressed() {
+        return timesPressed;
+    }
+
+    public void setTimesPressed(int timesPressed) {
+        this.timesPressed = timesPressed;
+    }
 }
+
+
