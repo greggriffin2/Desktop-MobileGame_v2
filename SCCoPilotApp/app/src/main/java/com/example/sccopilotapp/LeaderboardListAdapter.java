@@ -17,6 +17,11 @@ public class LeaderboardListAdapter extends ArrayAdapter<LeaderboardScore> {
     private final Activity context;
     ArrayList<LeaderboardScore> players;
 
+    /** Populates the custom XML file leaderboard_custom_list with leaderboard
+     * data to be inflated into rows of a ListView
+     * @param context Called by the LeaderboardActivity
+     * @param players The ArrayList of players and scores
+     */
     public LeaderboardListAdapter(Activity context, ArrayList<LeaderboardScore> players) {
         super(context, R.layout.leaderboard_custom_list, players);
         // TODO Auto-generated constructor stub
@@ -26,6 +31,13 @@ public class LeaderboardListAdapter extends ArrayAdapter<LeaderboardScore> {
 
     }
 
+    /**
+     * Transforms the array of data into RowViews to be put into the custom ListView
+     * @param position
+     * @param view
+     * @param parent
+     * @return
+     */
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         @SuppressLint({"ViewHolder", "InflateParams"}) View rowView =

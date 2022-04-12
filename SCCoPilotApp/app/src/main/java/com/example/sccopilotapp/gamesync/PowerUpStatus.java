@@ -3,7 +3,7 @@ package com.example.sccopilotapp.gamesync;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("PowerUpStatus")
-class PowerUpStatus extends DataObject {
+public class PowerUpStatus extends DataObject {
     PowerUpStatusEnum status;
     int duration;
 

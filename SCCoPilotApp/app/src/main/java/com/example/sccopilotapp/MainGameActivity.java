@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.sccopilotapp.gamesync.PowerUpStatus;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 import java.beans.PropertyChangeEvent;
@@ -45,10 +46,14 @@ public class MainGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // This is a listener for when an enemy is killed in game. At the moment it is not working,
         // but we can still write code for what we want to be done in the app once an enemy is killed
-        SynchronizationFacade.addEnemyKilledEvent(new PropertyChangeListener() {
+        SynchronizationFacade.addPowerUpEvent(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 // add actions to be performed on event here
+                PowerUpStatus powerUp = (PowerUpStatus) propertyChangeEvent.getNewValue();
+                // check ID of powerUp to load correct image
+                // change upgrades button/Image to be clickable/outline it with a color
+
             }
         });
 

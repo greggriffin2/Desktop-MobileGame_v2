@@ -1,9 +1,19 @@
 package com.example.sccopilotapp.gamesync;
 
 import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 enum ConnectionStatus {
     CONNECTED,
@@ -50,8 +60,8 @@ public class SynchronizationFacade {
      *
      * @param listener to be fired
      */
-    public void addPowerUpEvent(PropertyChangeListener listener) {
-
+    public static void addPowerUpEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("PowerUpStatus", listener);
     }
 
     /**
@@ -114,6 +124,4 @@ public class SynchronizationFacade {
         }
         return testLeaderboard;
     }
-
-
 }
