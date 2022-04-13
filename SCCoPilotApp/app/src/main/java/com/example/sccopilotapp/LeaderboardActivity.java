@@ -3,6 +3,7 @@ package com.example.sccopilotapp;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,8 +51,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         Handler mainHandler = new Handler(this.getMainLooper());
         client.newCall(request).enqueue(new Callback() {
             @Override
+            // If request fails
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
+                // TODO: this code never runs. Find how to make it recognize a failure and run this code
+                jsonTestBox.setText(R.string.jsonFAILED);
                 try {
                     populateScores(generateDummyData());
                 } catch (Exception f) {
@@ -60,6 +64,7 @@ public class LeaderboardActivity extends AppCompatActivity {
             }
 
             @Override
+            // If request succeeds
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String json = (Objects.requireNonNull(response.body())).string();
@@ -67,6 +72,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
+                                jsonTestBox.setVisibility(View.GONE);
                                 populateScores(json);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -92,9 +98,7 @@ public class LeaderboardActivity extends AppCompatActivity {
      * ArrayList of LeaderboardScores
      */
     public List<LeaderboardScore> parseJSON(String json) throws Exception {
-        // TODO: implement JSON parsing into ArrayList<LeaderboardScore> here
         ObjectMapper mapper = new ObjectMapper();
-        // TODO: this does not parse correctly
         List<LeaderboardScore> parsedArray = mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {
         });
         return parsedArray;
@@ -128,6 +132,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         leaderboard.setAdapter(adapter);
     }
 
+    // Dummy data only generates when JSON response fails
     public ArrayList<LeaderboardScore> generateDummyData() throws IOException {
         return SynchronizationFacade.getScores(0, 5);
     }
