@@ -157,9 +157,8 @@ def log(data):
     print(f"LOG  -  [{log_time}]  {str(data)}")
 
 @app.errorhandler(404)
-@app.errorhandler(400)
-def error_handle(_):
-    """ Handle Flask endpoint error.
+def error_handle_404(_):
+    """ Handle Flask HTTP 404 endpoint error.
 
     Default endpoint for when accessing an endpoint
     that doesn't exist. HTTPStatus for endpoint error is
@@ -168,11 +167,28 @@ def error_handle(_):
     ---
 
     responses:
+      404:
+        description: A JSON string containing error data.
+    """
+
+    return error_response_build("Endpoint not recognized, check game / app URL path to scoreboard server.", HTTPStatus.NOT_FOUND)
+
+@app.errorhandler(400)
+def error_handle_400(_):
+    """ Handle Flask 400 endpoint error.
+
+    Default endpoint for when client sends invalid request data
+    to an endpoint. HTTPStatus for endpoint error is
+    set to 400 Bad Request. Response contains this 400
+    status as well as error message at JSON 'error' key.
+    ---
+
+    responses:
       400:
         description: A JSON string containing error data.
     """
 
-    return error_response_build("Endpoint not recognized, check game/app URL path to scoreboard server.", HTTPStatus.NOT_FOUND)
+    return error_response_build("Bad request data, check HTTP POST request body / HTTP URL path.", HTTPStatus.BAD_REQUEST)
 
 @app.route('/add', methods=['POST', 'GET'])
 def post_add():
@@ -266,7 +282,6 @@ def retrieve(count):
 
     result = response_build(result_data, HTTPStatus.OK)
     return result
-
 
 @app.route('/add/<username>/<score>/')
 def add(username, score):
