@@ -188,7 +188,7 @@ def error_handle_400(_):
         description: A JSON string containing error data.
     """
 
-    return error_response_build("Bad request data, check HTTP POST request body / HTTP URL path.", HTTPStatus.BAD_REQUEST)
+    return error_response_build("Bad request data, check HTTP POST request body syntax / HTTP URL path.", HTTPStatus.BAD_REQUEST)
 
 @app.route('/add', methods=['POST', 'GET'])
 def post_add():
@@ -210,16 +210,22 @@ def post_add():
     if request.method == 'POST':
         post_data = request.get_json()
         if post_data is None:
-            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
+            result = error_response_build("Malformed Request: HTTP POST body must contain JSON data.", HTTPStatus.BAD_REQUEST)
             return result
         if isinstance(post_data, dict):
             if 'username' in post_data and 'info' in post_data:
+                if 'highscore' not in post_data['info']:
+                    result = error_response_build("Malformed Request: HTTP POST body JSON must have 'highscore' key in 'info' dict.", HTTPStatus.BAD_REQUEST)
+                    return result
                 post_data['datetime'] = datetime_generate()
                 result = response_build(f"POST DATA GOOD FORMAT {str(post_data)}", HTTPStatus.OK)
                 log(result.get_data())
                 table.put_item(Item=post_data)
+            else:
+                result = error_response_build("Malformed Request: HTTP POST body JSON dict must have keys 'username' and 'info', with 'highscore' key in 'info' dict.", HTTPStatus.BAD_REQUEST)
+                log(result)
         else:
-            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
+            result = error_response_build("Malformed Request: HTTP POST body JSON must be a dict.", HTTPStatus.BAD_REQUEST)
             log(result)
 
     return result
