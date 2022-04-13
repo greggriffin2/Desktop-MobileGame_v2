@@ -12,8 +12,7 @@ public class SynchronizationFacade {
     private static GameSyncSingleton sync;
 
     public SynchronizationFacade(String remoteAddress, Context context) {
-        if (sync != null) {
-        } else {
+        if (sync == null) {
             sync = new GameSyncSingleton(context);
             GameSyncSingleton.setRemoteAddress(remoteAddress);
         }
@@ -70,19 +69,21 @@ public class SynchronizationFacade {
     /**
      * Called when a button is pressed in the UI
      *
-     * @param ButtonPress
+     * @param ButtonPress number of times the button is pressed
      */
     public static void fireButtonPressed(int ButtonPress) {
-        ButtonPressedEvent p = new ButtonPressedEvent(1);
+        ButtonPressedEvent p = new ButtonPressedEvent(ButtonPress);
         GameSyncSingleton.sendEvent(p);
     }
 
     /**
-     * Fires an event to the game notifying the activation of an ability
+     * Fires an activatePowerUp event with the given ID
      *
      * @param powerupID
      */
-    public static void fireActivatePowerup(int powerupID) {
+    public static void fireActivatePowerup(PowerUpStatusEvent.PowerUpStatusEnum powerupID) {
+        PowerUpStatusEvent event = new PowerUpStatusEvent(powerupID, 0);
+        GameSyncSingleton.sendEvent(event);
     }
 
     /**
