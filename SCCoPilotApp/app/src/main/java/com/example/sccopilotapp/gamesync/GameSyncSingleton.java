@@ -11,18 +11,11 @@ import androidx.annotation.Nullable;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.google.gson.Gson;
+import org.webrtc.DataChannel;
+import org.webrtc.PeerConnectionFactory;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.webrtc.DataChannel;
-import org.webrtc.IceCandidate;
-import org.webrtc.MediaStream;
-import org.webrtc.PeerConnection;
-import org.webrtc.PeerConnectionFactory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -31,7 +24,7 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
 
-public class GameSyncSingleton {
+public class GameSyncSingleton { // TODO: this should use the proper Singleton format for java.
     static private ObjectMapper objectMapper;
     static private String remoteAddress;
     static private PropertyChangeSupport eventHelper;
@@ -40,17 +33,6 @@ public class GameSyncSingleton {
     static private WebSocket ws;
     static private OkHttpClient client;
     static private GameSyncStatus status;
-
-    public static GameSyncStatus getConnectionStatus() {
-        return status;
-    }
-
-    enum GameSyncStatus {
-        UNKNOWN,
-        CONNECTING,
-        CONNECTED,
-        DISCONNECTED
-    }
 
     public GameSyncSingleton(Context context) {
         status = GameSyncStatus.DISCONNECTED;
@@ -73,6 +55,10 @@ public class GameSyncSingleton {
 //        PeerConnection p = peerFactory.createPeerConnection(iceServerList, );
 
 
+    }
+
+    public static GameSyncStatus getConnectionStatus() {
+        return status;
     }
 
     /**
@@ -101,9 +87,9 @@ public class GameSyncSingleton {
 
             @Override
             public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable Response response) {
-                Log.d(TAG, "onFailure: Failure " + t.toString());
+                Log.d(TAG, "onFailure: Failure " + t);
                 if (response != null) {
-                    Log.d(TAG, "onFailure: Failure " + response.toString());
+                    Log.d(TAG, "onFailure: Failure " + response);
                 }
                 status = GameSyncStatus.UNKNOWN;
                 eventHelper.firePropertyChange("Error", t, response);
@@ -125,15 +111,15 @@ public class GameSyncSingleton {
 
             @Override
             public void onMessage(@NonNull WebSocket webSocket, @NonNull ByteString bytes) {
-                Log.d(TAG, "onMessage: Bytes: " + bytes.toString());
+                Log.d(TAG, "onMessage: Bytes: " + bytes);
                 super.onMessage(webSocket, bytes);
             }
 
             @Override
             public void onOpen(@NonNull WebSocket webSocket, @NonNull Response response) {
                 status = GameSyncStatus.CONNECTED;
-                Log.d(TAG, "onOpen: Response: " + response.toString());
-                JoinRoom room = new JoinRoom(joinCode);
+                Log.d(TAG, "onOpen: Response: " + response);
+                JoinRoomEvent room = new JoinRoomEvent(joinCode);
                 try {
                     String msg = objectMapper.writeValueAsString(room);
                     Log.d(TAG, "onOpen: SendingMessage:" + msg);
@@ -146,15 +132,20 @@ public class GameSyncSingleton {
         });
     }
 
+    /**
+     * Distributes deserialized messages to their appropriate events
+     *
+     * @param o data events are notified of
+     */
     private static void messageHandler(DataObject o) {
         Log.d(TAG, "messageHandler: Handling object" + o);
-        if (o instanceof ButtonPressed) {
-            Log.d(TAG, "messageHandler: found " + (o.toString()));
+        if (o instanceof ButtonPressedEvent) {
+            Log.d(TAG, "messageHandler: found " + o);
             eventHelper.firePropertyChange("ButtonEvent", null, o);
-        } else if (o instanceof PowerUpStatus) {
-            Log.d(TAG, "messageHandler: found " + (o.toString()));
+        } else if (o instanceof PowerUpStatusEvent) {
+            Log.d(TAG, "messageHandler: found " + o);
             eventHelper.firePropertyChange("PowerUpStatus", null, o);
-        } else if (o instanceof JoinRoom) {
+        } else if (o instanceof JoinRoomEvent) {
             eventHelper.firePropertyChange("Connected", null, o);
         }
     }
@@ -169,6 +160,16 @@ public class GameSyncSingleton {
     }
 
     /**
+     * Sets the remote address
+     *
+     * @param remoteAddress of the Signaling Server
+     */
+    public static void setRemoteAddress(String remoteAddress) {
+        // TODO: Reinitialize connection if remote changes while a connection is active
+        GameSyncSingleton.remoteAddress = remoteAddress;
+    }
+
+    /**
      * Adds a generic event listener for sync events
      *
      * @param eventName     to be listened to
@@ -179,28 +180,24 @@ public class GameSyncSingleton {
     }
 
     /**
-     * Sets the remote address
+     * Pushes an event to the game
      *
-     * @param remoteAddress
-     */
-    public static void setRemoteAddress(String remoteAddress) {
-        // TODO: Reinitialize connection if remote changes while a connection is active
-        GameSyncSingleton.remoteAddress = remoteAddress;
-    }
-
-    /**
-     * pushes an event
-     *
-     * @param e
+     * @param e Event to be sent to the game
      */
     public static void sendEvent(DataObject e) {
-        String msg = null;
         try {
-            msg = objectMapper.writeValueAsString(e);
+            String msg = objectMapper.writeValueAsString(e);
             Log.d(TAG, "sendEvent: sending message " + msg);
             ws.send(msg);
         } catch (JsonProcessingException jsonProcessingException) {
             jsonProcessingException.printStackTrace();
         }
+    }
+
+    enum GameSyncStatus {
+        UNKNOWN,
+        CONNECTING,
+        CONNECTED,
+        DISCONNECTED
     }
 }
