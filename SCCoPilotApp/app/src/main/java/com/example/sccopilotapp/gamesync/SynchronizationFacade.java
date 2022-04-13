@@ -6,11 +6,6 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-enum ConnectionStatus {
-    CONNECTED,
-    DISCONNECTED,
-    UNKNOWN
-}
 
 public class SynchronizationFacade {
 
@@ -33,7 +28,7 @@ public class SynchronizationFacade {
      * @param remoteAddress
      */
     public static void updateAddress(String remoteAddress) {
-
+        GameSyncSingleton.setRemoteAddress(remoteAddress);
     }
 
     /**
@@ -69,17 +64,16 @@ public class SynchronizationFacade {
      *
      * @param listener to be fired
      */
-    public void addPausedEvent(PropertyChangeListener listener) {
-
+    public static void addPausedEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("GamePausedEvent", listener);
     }
 
-    /**
-     * Adds an event to be fired when the game is resumed
-     *
-     * @param listener
-     */
-    public void addUnpausedEvent(PropertyChangeListener listener) {
+    public static void addDisconnectedEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("GameDisconnected", listener);
+    }
 
+    public static void addArbitraryListener(String eventName, PropertyChangeListener l) {
+        GameSyncSingleton.addListener(eventName, l);
     }
 
     /**
@@ -97,8 +91,8 @@ public class SynchronizationFacade {
      *
      * @return Connection Status
      */
-    public static ConnectionStatus getConnectionStatus() {
-        return ConnectionStatus.UNKNOWN;
+    public static GameSyncSingleton.GameSyncStatus getConnectionStatus() {
+        return GameSyncSingleton.getConnectionStatus();
     }
 
     /**

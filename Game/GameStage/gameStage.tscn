@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Scenes/ParallaxBackground.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Pause.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Background/ParallaxBackground.tscn" type="PackedScene" id=1]
+[ext_resource path="res://PauseMenu/Pause.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ships/player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/enemySpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://interface/HUD.tscn" type="PackedScene" id=5]
