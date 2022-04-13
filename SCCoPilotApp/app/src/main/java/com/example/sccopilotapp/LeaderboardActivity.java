@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sccopilotapp.gamesync.LeaderboardScore;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +30,12 @@ public class LeaderboardActivity extends AppCompatActivity {
     ListView leaderboard;
     TextView jsonTestBox;
     String url = "https://coolspacegame.ddns.net/retrieve";
-    boolean requestFailed = true;
+    boolean responseFailed = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-        try {
-            populateScores();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -60,22 +57,38 @@ public class LeaderboardActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    requestFailed = false;
-                    final String myResponse = (Objects.requireNonNull(response.body())).toString();
+                    responseFailed = false;
+                    String json = (Objects.requireNonNull(response.body())).string();
+                    try {
+                        populateScores(json);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     // This only works in the activity that it is is running in. Why I put it in here
                     // instead of SyncFacade
                     LeaderboardActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            // TODO: replace this with method call to parse JSON into ArrayList
                             // may want to use JSONObject instead of a String
-                            jsonTestBox.setText(myResponse);
+                            jsonTestBox.setText(json);
+//                            try {
+//                                populateScores();
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
                         }
                     });
                 }
             }
         });
+        if (responseFailed){
+            try {
+                populateScores(generateDummyData());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -91,26 +104,44 @@ public class LeaderboardActivity extends AppCompatActivity {
      * Gets array of names and scores from JSON request and transforms the object into an
      * ArrayList of LeaderboardScores
      */
-    public List<LeaderboardScore> getLeaderboard() throws Exception {
-        if (requestFailed) {
-            // return dummy data
-            return SynchronizationFacade.getScores(0, 5);
-        } else { // TODO: implement JSON parsing into ArrayList<LeaderboardScore> here
-            return new ArrayList<LeaderboardScore>(5);
-        }
+    public ArrayList<LeaderboardScore> parseJSON(String json) throws Exception {
+         // TODO: implement JSON parsing into ArrayList<LeaderboardScore> here
+            ObjectMapper mapper = new ObjectMapper();
+            // TODO: this does not parse correctly
+            LeaderboardScore parsedArray = mapper.readValue(json, LeaderboardScore.class);
+            ArrayList<LeaderboardScore> result = new ArrayList<>(5);
+            result.add(parsedArray);
+            return result;
+
     }
 
     /**
-     * Instantiates local leaderboard with getLeaderboard(). Populates custom ListView with custom
+     * Instantiates local leaderboard with parseJSON(). Populates custom ListView with custom
      * ArrayAdapter
+     * preconditions: HTTPS response must have succeeded
+     * postconditions: Screen will have scores updated
+     * class invariants: Only LB will be changed
+     */
+    public void populateScores(String json) throws Exception {
+        ArrayList<LeaderboardScore> LB = this.parseJSON(json);
+        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, LB);
+        leaderboard = findViewById(R.id.list);
+        leaderboard.setAdapter(adapter);
+    }
+    /**
+     * Dummy data version of populateScores
+     * Populates custom ListView with custom ArrayAdapter
      * preconditions: There must be a valid Object returned from SynchronizationFacade.getScores()
      * postconditions: Screen will have scores updated
      * class invariants: Only LB will be changed
      */
-    public void populateScores() throws Exception {
-        ArrayList<LeaderboardScore> LB = (ArrayList<LeaderboardScore>) this.getLeaderboard();
-        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, LB);
+    public void populateScores(ArrayList<LeaderboardScore> dummyData) throws Exception {
+        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, dummyData);
         leaderboard = findViewById(R.id.list);
         leaderboard.setAdapter(adapter);
+    }
+
+    public ArrayList<LeaderboardScore> generateDummyData() throws IOException {
+        return SynchronizationFacade.getScores(0, 5);
     }
 }
