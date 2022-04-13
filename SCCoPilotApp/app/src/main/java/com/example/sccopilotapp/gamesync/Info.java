@@ -7,20 +7,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Info {
     public String score;
 
-    public Info(){
+    public Info() {
     }
 
-    public Info(String score){
+    public Info(String score) {
         this.score = score;
     }
 
     @JsonProperty("highscore")
-    public String getScore(){
+    public String getScore() {
         return score;
     }
 
     @JsonProperty("highscore")
-    public void setScore(String newScore){
+    public void setScore(String newScore) {
         this.score = newScore;
     }
 }

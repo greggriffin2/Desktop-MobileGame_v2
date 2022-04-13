@@ -1,7 +1,5 @@
 package com.example.sccopilotapp.gamesync;
 
-import android.icu.text.IDNA;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -24,16 +22,16 @@ public class LeaderboardScore {
     }
 
     @JsonProperty("username")
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getScore(){
+    public String getScore() {
         return this.info.getScore();
     }
 
     @JsonProperty("username")
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }

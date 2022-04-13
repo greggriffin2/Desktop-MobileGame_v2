@@ -15,7 +15,6 @@ import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.DataInput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,20 +58,21 @@ public class LeaderboardActivity extends AppCompatActivity {
                     f.printStackTrace();
                 }
             }
+
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String json = (Objects.requireNonNull(response.body())).string();
-                        mainHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    populateScores(json);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                populateScores(json);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        });
+                        }
+                    });
                 }
             }
         });
@@ -92,11 +92,12 @@ public class LeaderboardActivity extends AppCompatActivity {
      * ArrayList of LeaderboardScores
      */
     public List<LeaderboardScore> parseJSON(String json) throws Exception {
-         // TODO: implement JSON parsing into ArrayList<LeaderboardScore> here
-            ObjectMapper mapper = new ObjectMapper();
-            // TODO: this does not parse correctly
-            List<LeaderboardScore> parsedArray = mapper.readValue(json, new TypeReference<List<LeaderboardScore>>(){});
-            return parsedArray;
+        // TODO: implement JSON parsing into ArrayList<LeaderboardScore> here
+        ObjectMapper mapper = new ObjectMapper();
+        // TODO: this does not parse correctly
+        List<LeaderboardScore> parsedArray = mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {
+        });
+        return parsedArray;
 
     }
 
@@ -113,6 +114,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         leaderboard = findViewById(R.id.list);
         leaderboard.setAdapter(adapter);
     }
+
     /**
      * Dummy data version of populateScores
      * Populates custom ListView with custom ArrayAdapter
