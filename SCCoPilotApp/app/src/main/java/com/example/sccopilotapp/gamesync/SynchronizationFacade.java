@@ -23,11 +23,11 @@ public class SynchronizationFacade {
     }
 
     /**
-     * Updates the Signaling and Scoreboard server address
+     * Updates the Signaling server address
      *
-     * @param remoteAddress
+     * @param remoteAddress address for the Signaling Server
      */
-    public static void updateAddress(String remoteAddress) {
+    public static void updateSignalingAddress(String remoteAddress) {
         GameSyncSingleton.setRemoteAddress(remoteAddress);
     }
 
