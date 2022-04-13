@@ -24,7 +24,7 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
 
-public class GameSyncSingleton {
+public class GameSyncSingleton { // TODO: this should use the proper Singleton format for java.
     static private ObjectMapper objectMapper;
     static private String remoteAddress;
     static private PropertyChangeSupport eventHelper;
