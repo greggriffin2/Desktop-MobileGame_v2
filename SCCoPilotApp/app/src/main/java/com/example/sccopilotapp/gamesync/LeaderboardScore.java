@@ -1,33 +1,37 @@
 package com.example.sccopilotapp.gamesync;
 
+import android.icu.text.IDNA;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-@JsonTypeName("info")
+@JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeName("LeaderboardScore")
 
 public class LeaderboardScore {
     public String name;
-    public int score;
+    public Info info;
 
     public LeaderboardScore() {
     }
 
-    public LeaderboardScore(String name, int score) {
+    public LeaderboardScore(String name, Info info) {
         this.name = name;
-        this.score = score;
+        this.info = info;
     }
+
     @JsonProperty("username")
     public void setName(String name){
         this.name = name;
     }
-    @JsonProperty("highscore")
-    public void setScore(int score){
-        this.score = score;
+
+    public String getScore(){
+        return this.info.getScore();
     }
-    @JsonProperty("highscore")
-    public int getScore(){
-        return this.score;
-    }
+
     @JsonProperty("username")
     public String getName(){
         return this.name;
