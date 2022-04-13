@@ -27,7 +27,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     ListView leaderboard;
     TextView jsonTestBox;
-    String url = "http://ec2-3-86-200-25.compute-1.amazonaws.com/retrieve";
+    String url = "https://coolspacegame.ddns.net/retrieve";
     boolean requestFailed = true;
 
     @Override
