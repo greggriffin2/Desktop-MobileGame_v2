@@ -3,8 +3,8 @@ package com.example.sccopilotapp.gamesync;
 import android.content.Context;
 
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SynchronizationFacade {
@@ -47,6 +47,15 @@ public class SynchronizationFacade {
      */
     public static void addPowerUpEvent(PropertyChangeListener listener) {
         GameSyncSingleton.addListener("PowerUpStatus", listener);
+    }
+
+    /**
+     * Adds an event to be fired when an enemy is killed
+     *
+     * @param listener to be fired
+     */
+    public static void addEnemyKilledEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("EnemyKilled", listener);
     }
 
     /**
@@ -102,13 +111,11 @@ public class SynchronizationFacade {
      * @param stopRange  last score to retrieve
      * @return a list of scores in order from highest score to lowest
      */
-    public static List<LeaderboardScore> getScores(int startRange, int stopRange) {
+    public static ArrayList<LeaderboardScore> getScores(int startRange, int stopRange) throws IOException {
         ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
         for (int i = 0; i < 5; i++) {
             testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2));
         }
         return testLeaderboard;
     }
-
-
 }

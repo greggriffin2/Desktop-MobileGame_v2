@@ -24,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
         titleText = findViewById(R.id.titleText);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Settings");
         toggleButton.setOnClickListener(view -> onToggleClick(toggleButton));
 
     }

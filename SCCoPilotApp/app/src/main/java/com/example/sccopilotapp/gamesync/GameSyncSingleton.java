@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.webrtc.DataChannel;
-import org.webrtc.PeerConnectionFactory;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
+import org.webrtc.DataChannel;
+import org.webrtc.PeerConnectionFactory;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -147,6 +147,9 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
             eventHelper.firePropertyChange("PowerUpStatus", null, o);
         } else if (o instanceof JoinRoomEvent) {
             eventHelper.firePropertyChange("Connected", null, o);
+        } else if (o instanceof EnemyKilled) {
+            Log.d(TAG, "messageHandler: found " + (o.toString()));
+            eventHelper.firePropertyChange("EnemyKilled", null, o);
         }
     }
 
