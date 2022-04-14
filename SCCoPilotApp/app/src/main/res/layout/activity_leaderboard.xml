@@ -21,7 +21,7 @@
         app:layout_constraintStart_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"
-        android:text="@string/json_request_failed"
+        android:text="@string/jsonLoading"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp" />
 

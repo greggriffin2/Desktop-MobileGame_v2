@@ -114,7 +114,7 @@ public class SynchronizationFacade {
     public static ArrayList<LeaderboardScore> getScores(int startRange, int stopRange) throws IOException {
         ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
         for (int i = 0; i < 5; i++) {
-            testLeaderboard.add(new LeaderboardScore("Joe", (i + 1) * 2));
+            testLeaderboard.add(new LeaderboardScore("Joe", new Info("5" + i)));
         }
         return testLeaderboard;
     }

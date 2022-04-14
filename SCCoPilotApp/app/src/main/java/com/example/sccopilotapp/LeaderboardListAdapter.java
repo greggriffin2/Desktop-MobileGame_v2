@@ -45,7 +45,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<LeaderboardScore> {
         TextView scoreNum = rowView.findViewById(R.id.LBsubtitle);
 
         playerName.setText(players.get(position).name);
-        String score = Integer.toString(players.get(position).score);
+        String score = players.get(position).getScore();
         scoreNum.setText(score);
 
         return rowView;
