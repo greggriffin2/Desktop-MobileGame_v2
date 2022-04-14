@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeName("LeaderboardScore")
-
 public class LeaderboardScore {
     public String name;
     public Info info;

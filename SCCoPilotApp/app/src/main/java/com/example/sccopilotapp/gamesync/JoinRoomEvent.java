@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("JoinRoom")
-/**
- * JoinRoom object is a request to join a room that already exists.
- */
-public class JoinRoom extends DataObject {
+public class JoinRoomEvent extends DataObject {
+    /**
+     * JoinRoom object is a request to join a room that already exists.
+     */
     String roomName;
 
     // Empty constructor for serialization
-    public JoinRoom() {
+    public JoinRoomEvent() {
     }
 
-    public JoinRoom(String roomName) {
+    public JoinRoomEvent(String roomName) {
         this.roomName = roomName;
     }
 

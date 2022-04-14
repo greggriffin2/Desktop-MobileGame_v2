@@ -6,19 +6,13 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-enum ConnectionStatus {
-    CONNECTED,
-    DISCONNECTED,
-    UNKNOWN
-}
 
 public class SynchronizationFacade {
 
     private static GameSyncSingleton sync;
 
     public SynchronizationFacade(String remoteAddress, Context context) {
-        if (sync != null) {
-        } else {
+        if (sync == null) {
             sync = new GameSyncSingleton(context);
             GameSyncSingleton.setRemoteAddress(remoteAddress);
         }
@@ -28,12 +22,12 @@ public class SynchronizationFacade {
     }
 
     /**
-     * Updates the Signaling and Scoreboard server address
+     * Updates the Signaling server address
      *
-     * @param remoteAddress
+     * @param remoteAddress address for the Signaling Server
      */
-    public static void updateAddress(String remoteAddress) {
-
+    public static void updateSignalingAddress(String remoteAddress) {
+        GameSyncSingleton.setRemoteAddress(remoteAddress);
     }
 
     /**
@@ -69,27 +63,36 @@ public class SynchronizationFacade {
      *
      * @param listener to be fired
      */
-    public void addPausedEvent(PropertyChangeListener listener) {
-
+    public static void addPausedEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("GamePausedEvent", listener);
     }
 
-    /**
-     * Adds an event to be fired when the game is resumed
-     *
-     * @param listener
-     */
-    public void addUnpausedEvent(PropertyChangeListener listener) {
+    public static void addDisconnectedEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("GameDisconnected", listener);
+    }
 
+    public static void addArbitraryListener(String eventName, PropertyChangeListener l) {
+        GameSyncSingleton.addListener(eventName, l);
     }
 
     /**
      * Called when a button is pressed in the UI
      *
-     * @param ButtonPress
+     * @param ButtonPress number of times the button is pressed
      */
     public static void fireButtonPressed(int ButtonPress) {
-        ButtonPressed p = new ButtonPressed(1);
+        ButtonPressedEvent p = new ButtonPressedEvent(ButtonPress);
         GameSyncSingleton.sendEvent(p);
+    }
+
+    /**
+     * Fires an activatePowerUp event with the given ID
+     *
+     * @param powerupID
+     */
+    public static void fireActivatePowerup(PowerUpStatusEvent.PowerUpStatusEnum powerupID) {
+        PowerUpStatusEvent event = new PowerUpStatusEvent(powerupID, 0);
+        GameSyncSingleton.sendEvent(event);
     }
 
     /**
@@ -97,8 +100,8 @@ public class SynchronizationFacade {
      *
      * @return Connection Status
      */
-    public static ConnectionStatus getConnectionStatus() {
-        return ConnectionStatus.UNKNOWN;
+    public static GameSyncSingleton.GameSyncStatus getConnectionStatus() {
+        return GameSyncSingleton.getConnectionStatus();
     }
 
     /**
