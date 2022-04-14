@@ -1,5 +1,8 @@
 package com.example.sccopilotapp.gamesync;
 
+/**
+ * Single Scoreboard record
+ */
 public class LeaderboardScore {
     public final String name;
     public final int score;

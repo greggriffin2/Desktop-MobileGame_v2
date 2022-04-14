@@ -13,8 +13,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.sccopilotapp.gamesync.GameSyncSingleton;
-import com.example.sccopilotapp.gamesync.JoinRoom;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,25 +53,21 @@ public class MainActivity extends AppCompatActivity {
         if (validationCode.length() > 18) {
             Toast.makeText(MainActivity.this, "Code must be less than 18 characters!", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if (validationCode.matches(".*\\d.*")){
+        } else if (validationCode.matches(".*\\d.*")) {
             Toast.makeText(MainActivity.this, "Code must not contain any numbers!", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if (validationCode.trim().length() == 0){
+        } else if (validationCode.trim().length() == 0) {
             Toast.makeText(MainActivity.this, "Code must not be empty!", Toast.LENGTH_LONG).show();
             return false;
-        }
-        else if (validationCode.trim().length() != 0){
-            for(int i = 0; i < validationCode.length(); i++){
-                if (validationCode.contains(" ")){
+        } else if (validationCode.trim().length() != 0) {
+            for (int i = 0; i < validationCode.length(); i++) {
+                if (validationCode.contains(" ")) {
                     Toast.makeText(MainActivity.this, "Code cannot contain spaces!", Toast.LENGTH_LONG).show();
                     return false;
                 }
             }
             return true;
-        }
-        else{
+        } else {
             return true;
         }
     }

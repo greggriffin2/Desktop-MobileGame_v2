@@ -14,6 +14,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.sccopilotapp.gamesync.PowerUpStatusEvent;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 import java.beans.PropertyChangeEvent;
@@ -22,7 +23,7 @@ import java.beans.PropertyChangeListener;
 public class MainGameActivity extends AppCompatActivity {
 
     String TAG = "MainGameActivity";
-//    Button shipButton;
+    //    Button shipButton;
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;
@@ -42,16 +43,17 @@ public class MainGameActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         // This is a listener for when an enemy is killed in game. At the moment it is not working,
         // but we can still write code for what we want to be done in the app once an enemy is killed
-        SynchronizationFacade.addEnemyKilledEvent(new PropertyChangeListener() {
+        SynchronizationFacade.addPowerUpEvent(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 // add actions to be performed on event here
+                PowerUpStatusEvent powerUp = (PowerUpStatusEvent) propertyChangeEvent.getNewValue();
+                // check ID of powerUp to load correct image
+                // change upgrades button/Image to be clickable/outline it with a color
             }
         });
 
@@ -66,7 +68,8 @@ public class MainGameActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         shipClick = findViewById(R.id.shipClick);
         ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Space Cadet Co-Pilot");
         // handle button activities
     }
 
@@ -158,7 +161,6 @@ public class MainGameActivity extends AppCompatActivity {
             selectedBackground = background_1;
         }
     }
-
 
 
     public void onResume() {

@@ -29,4 +29,5 @@
     <string name="warp">Warp</string>
     <string name="toggleOFFTEST">Toggle is OFF</string>
     <string name="toggleButtonText">Change</string>
+    <string name="json_request_failed">JSON request failed</string>
 </resources>
