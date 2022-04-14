@@ -116,6 +116,29 @@ def response_build(data, response_status):
     """
     return Response(str(data), status=response_status, mimetype='application/json')
 
+def error_response_build(error_message, response_status):
+    """ Create and return a Response object using input error message and status code.
+
+    Builds an HTTP response using a Flask Response object, and returns it. Response
+    mimetype is set to 'application/json', since the server deals with JSON data.
+    Error JSON construction is an object that has a key 'error' with value of the error message.
+
+    ---
+    parameters:
+      - name: error_message
+        required: true
+        description: Input error message (string) to assign to Response error JSON object.
+      - name: response_status
+        required: true
+        description: HTTP Status Code to assign to the HTTP Response. It is recommended
+                     to pass these using named HTTPStatus attributes. (e.g.: HTTPStatus.BAD_REQUEST)
+    returns:
+        Response object with provided error message and status code.
+    """
+    error = {"error": error_message}
+    result = response_build(json.dumps(error), response_status)
+    return result
+
 def log(data):
     """ Log data to the console.
 
@@ -131,7 +154,41 @@ def log(data):
 
     """
     log_time = datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")
-    print(f"LOG  -  [{log_time}]  {str(data)}\n")
+    print(f"LOG  -  [{log_time}]  {str(data)}")
+
+@app.errorhandler(404)
+def error_handle_404(_):
+    """ Handle Flask HTTP 404 endpoint error.
+
+    Default endpoint for when accessing an endpoint
+    that doesn't exist. HTTPStatus for endpoint error is
+    set to 404 Not Found. Response contains this 404
+    status as well as error message at JSON 'error' key.
+    ---
+
+    responses:
+      404:
+        description: A JSON string containing error data.
+    """
+
+    return error_response_build("Endpoint not recognized, check game / app URL path to scoreboard server.", HTTPStatus.NOT_FOUND)
+
+@app.errorhandler(400)
+def error_handle_400(_):
+    """ Handle Flask 400 endpoint error.
+
+    Default endpoint for when client sends invalid request data
+    to an endpoint. HTTPStatus for endpoint error is
+    set to 400 Bad Request. Response contains this 400
+    status as well as error message at JSON 'error' key.
+    ---
+
+    responses:
+      400:
+        description: A JSON string containing error data.
+    """
+
+    return error_response_build("Bad request data, check HTTP POST request body syntax / HTTP URL path.", HTTPStatus.BAD_REQUEST)
 
 @app.route('/add', methods=['POST', 'GET'])
 def post_add():
@@ -153,16 +210,22 @@ def post_add():
     if request.method == 'POST':
         post_data = request.get_json()
         if post_data is None:
-            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
+            result = error_response_build("Malformed Request: HTTP POST body must contain JSON data.", HTTPStatus.BAD_REQUEST)
             return result
         if isinstance(post_data, dict):
             if 'username' in post_data and 'info' in post_data:
+                if 'highscore' not in post_data['info']:
+                    result = error_response_build("Malformed Request: HTTP POST body JSON must have 'highscore' key in 'info' dict.", HTTPStatus.BAD_REQUEST)
+                    return result
                 post_data['datetime'] = datetime_generate()
                 result = response_build(f"POST DATA GOOD FORMAT {str(post_data)}", HTTPStatus.OK)
                 log(result.get_data())
                 table.put_item(Item=post_data)
+            else:
+                result = error_response_build("Malformed Request: HTTP POST body JSON dict must have keys 'username' and 'info', with 'highscore' key in 'info' dict.", HTTPStatus.BAD_REQUEST)
+                log(result)
         else:
-            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
+            result = error_response_build("Malformed Request: HTTP POST body JSON must be a dict.", HTTPStatus.BAD_REQUEST)
             log(result)
 
     return result
@@ -190,7 +253,10 @@ def retrieve(count):
     table = DB.Table('Scores')
     result_data = ""
     score_list = None
-    count = int(count)
+    try:
+        count = int(count)
+    except ValueError:
+        return error_response_build("Must provide count as a number if providing count parameter to /retrieve GET endpoint.", HTTPStatus.BAD_REQUEST)
 
     if request.method == 'GET':
         scan = table.scan()
@@ -223,7 +289,6 @@ def retrieve(count):
     result = response_build(result_data, HTTPStatus.OK)
     return result
 
-
 @app.route('/add/<username>/<score>/')
 def add(username, score):
     """ Adds a username & score to database.
@@ -247,6 +312,10 @@ def add(username, score):
     table = DB.Table('Scores')
     result = ""
     time_made = datetime_generate()
+    try:
+        score = int(score)
+    except ValueError:
+        return error_response_build("Must provide highscore as a number for the second parameter to the /add GET endpoint.", HTTPStatus.BAD_REQUEST)
 
     if request.method == 'GET':
         log(f"ADD {username} {score} ATTEMPTED")
