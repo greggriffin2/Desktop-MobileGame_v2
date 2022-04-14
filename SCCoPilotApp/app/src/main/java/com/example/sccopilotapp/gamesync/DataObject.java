@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = JoinRoomEvent.class, name = "JoinRoom"),
         @JsonSubTypes.Type(value = PowerUpStatusEvent.class, name = "PowerUpStatus"),
-        @JsonSubTypes.Type(value = ButtonPressedEvent.class, name = "PowerButtonPressed")
+        @JsonSubTypes.Type(value = ButtonPressedEvent.class, name = "PowerButtonPressed"),
+        @JsonSubTypes.Type(value = EnemyKilled.class, name = "EnemyKilled")
 })
 public abstract class DataObject {
 }
