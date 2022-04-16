@@ -11,6 +11,7 @@ var on_death_effects := [
 	preload("res://Explosions/ODELayer2.tscn"),
 	preload("res://Explosions/ODELayer3.tscn")
 ]
+#var sync_component := get_node("/root/NetworkSynchronizationSingleton")
 
 ## Exported variables for speed, health, and automatic firing delays for both weapons.
 export var fire_delay: float = 0.1
@@ -96,7 +97,10 @@ func _on_Player_area_entered(area):
 	if area.is_in_group("damageable"):
 		area.take_damage(3)
 	elif area.is_in_group("speedpowerup"):
-		speed += 150
+		if speed == 550:
+			speed = 550
+		else:
+			speed += 150
 		Signals.emit_signal("on_speed_change", speed)
 		speed_up_timer.start(5)
 	elif area.is_in_group("laserpowerup"):

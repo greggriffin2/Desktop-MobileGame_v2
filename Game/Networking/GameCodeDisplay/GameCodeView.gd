@@ -7,7 +7,7 @@ var mp_singleton: SynchronizationSingleton
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	mp_singleton = get_node("/root/NetworkSynchronizationSingleton")
-	gamecode_label = get_node("VBoxContainer/HBoxContainer/GameCodeLabel")
+	gamecode_label = get_node("GameCodeLabel")
 	mp_singleton.connect("on_gamecode_update", self, "update_gamecode")
 	update_gamecode(mp_singleton.game_code)
 

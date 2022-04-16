@@ -1,12 +1,19 @@
 extends Node2D
+class_name GameOver
 
 # Declaring a variable for the end-screen score label
 onready var score_label := $Score
-var score: int = 0	# Placeholder for high score implementation
+onready var high_score_label := $HighScore
+onready var score: int = ScoreSystem.score
+onready var high_score: int = ScoreSystem.session_high_score
+
+func _ready():
+	score_display()
 
 # Placeholder for end score implementation
 func score_display():
-	score_label.text = "SCORE: " + str(score)
+	score_label.set_text("SCORE: " + str(score))
+	high_score_label.set_text("HIGH SCORE: " + str(high_score))
 
 # Restarts the game stage scene
 func _on_RetryButton_pressed():

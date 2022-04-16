@@ -42,12 +42,11 @@ func _physics_process(delta):
 func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
+		ScoreSystem.add_score(500)
+		ScoreSystem.add_meteor_kill()
 		var effect := meteor_effect.instance()
 		effect.position = position
 		get_parent().add_child(effect)
-		
-		Signals.emit_signal("on_score_increment", 50)
-		
 		queue_free()
 
 ## Notifies the game to remove the meteor if it exits the screen.

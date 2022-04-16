@@ -1,8 +1,8 @@
 extends Node2D
 
-## This script has since been properly organized into other scripts. 
-## However, I am not sure if I can fully remove this script.
-## I have tried with other scripts before and it ended up crashing the project.
-
+## When the game stage scene is loaded, the following values are reset to zero. 
 func _ready():
-	pass
+	ScoreSystem.score = 0
+	ScoreSystem.score_multiplier = 1
+	ScoreSystem.enemies_killed = 0
+	ScoreSystem.meteors_killed = 0
