@@ -15,23 +15,19 @@ var meteors_killed: int = 0
 ## This multiplier is based on the number of enemies the player has killed.
 func add_score(amount):
 	if enemies_killed < 9:
-		score += amount
 		score_multiplier = 1
-	elif enemies_killed in range(9,25):
-		score += (2 * amount)
+	elif enemies_killed < 25:
 		score_multiplier = 2
-	elif enemies_killed in range(24,40):
-		score += (3 * amount)
+	elif enemies_killed < 40:
 		score_multiplier = 3
-	elif enemies_killed in range(39,65):
-		score += (4 * amount)
+	elif enemies_killed < 65:
 		score_multiplier = 4
-	elif enemies_killed in range(64,100):
-		score += (5 * amount)
+	elif enemies_killed < 100:
 		score_multiplier = 5
 	else:
-		score += (10 * amount)
 		score_multiplier = 10
+		
+	score += score_multiplier * amount
 
 ## Handles any updating that needs to be done for the session's high score.
 func update_high_score():

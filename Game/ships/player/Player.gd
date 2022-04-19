@@ -97,7 +97,7 @@ func _on_Player_area_entered(area):
 	if area.is_in_group("damageable"):
 		area.take_damage(3)
 	elif area.is_in_group("speedpowerup"):
-		if speed == 550:
+		if speed >= 550:
 			speed = 550
 		else:
 			speed += 150
