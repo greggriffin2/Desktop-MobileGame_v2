@@ -150,6 +150,12 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
         } else if (o instanceof EnemyKilled) {
             Log.d(TAG, "messageHandler: found " + (o.toString()));
             eventHelper.firePropertyChange("EnemyKilled", null, o);
+        } else if (o instanceof UserJoined) {
+            Log.d(TAG, "messageHandler: found " + (o.toString()));
+            eventHelper.firePropertyChange("UserJoined", null, o);
+        } else if (o instanceof UserLeft) {
+            Log.d(TAG, "messageHandler: found " + (o.toString()));
+            eventHelper.firePropertyChange("UserLeft", null, o);
         }
     }
 

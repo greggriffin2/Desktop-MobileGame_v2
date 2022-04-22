@@ -2,7 +2,7 @@ package com.example.sccopilotapp.gamesync;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserJoined {
+public class UserJoined extends DataObject {
     String ip;
 
     @JsonProperty("ip_joined")
