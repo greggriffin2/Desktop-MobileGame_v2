@@ -5,7 +5,7 @@ extends Node
 signal on_signaling_initialized
 signal on_gamecode_update
 signal on_webrtc_initialized
-
+signal user_joined(data)
 
 export var websocket_url = "wss://pedanticmonkey.space/rooms"
 
@@ -60,6 +60,7 @@ func _on_data():
 func send_data(data):
 	signaling_connection.put_packet(data)
 
+
 func connect_ws():
 	print_debug("Connecting to server...")
 	var err = webrtc_mp.connect_to_url(websocket_url)
@@ -97,8 +98,9 @@ func reload_connection():
 
 
 func send_powerup_status(statusEnum: int, duration: float):
-	var data = "{'PowerUpStatus:'"+str(statusEnum)+",'duration:"+str(duration)+"}"
+	var data = "{'PowerUpStatus:'" + str(statusEnum) + ",'duration:" + str(duration) + "}"
 	send_data(data.to_ascii())
+
 
 func handle(jsn: JSONParseResult, mpsingleton):
 	if typeof(jsn.result) == TYPE_ARRAY:
@@ -111,6 +113,8 @@ func handle_dictionary_data(data: Dictionary, mpsingleton):
 	match data:
 		{}:
 			pass
+		{"ip": var info, ..}:
+			emit_signal("user_joined", info)
 		{"JoinRoom": var roomKey, ..}:
 			mpsingleton.set_gamecode(roomKey)
 		{"status": var status, "duration": var duration, ..}:

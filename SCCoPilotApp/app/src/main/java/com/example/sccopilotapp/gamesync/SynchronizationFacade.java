@@ -75,6 +75,14 @@ public class SynchronizationFacade {
         GameSyncSingleton.addListener(eventName, l);
     }
 
+    public static void addUserConnectedEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("UserConnected", listener);
+    }
+
+    public static void addUserDisconnectedEvent(PropertyChangeListener listener) {
+        GameSyncSingleton.addListener("UserDisconnected", listener);
+    }
+
     /**
      * Called when a button is pressed in the UI
      *
