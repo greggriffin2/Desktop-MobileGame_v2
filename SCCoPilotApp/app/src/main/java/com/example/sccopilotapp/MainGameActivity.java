@@ -99,7 +99,7 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickShip(View view) {
-        SynchronizationFacade.fireButtonPressed(1);
+        SynchronizationFacade.fireButtonPressed(69);
         Log.d(TAG, "Click");
         if (powerMax < 10) {
             powerMax += 1;
@@ -109,7 +109,7 @@ public class MainGameActivity extends AppCompatActivity {
             shipClick.setScaleY((float) (y + .05));
         } else {
             //Send info to game
-            Toast.makeText(MainGameActivity.this, "Fully Powered!",
+            Toast.makeText(MainGameActivity.this, "Healed Ship 50 hitpoints!",
                     Toast.LENGTH_SHORT).show();
             float x = shipClick.getScaleX();
             float y = shipClick.getScaleY();
