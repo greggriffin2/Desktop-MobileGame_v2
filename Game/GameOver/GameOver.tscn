@@ -6,10 +6,10 @@
 [ext_resource path="res://assets/PNG/Stars/starBig.png" type="Texture" id=4]
 [ext_resource path="res://GameOver/GameOver.gd" type="Script" id=5]
 
-[sub_resource type="Gradient" id=1]
+[sub_resource type="Gradient" id=7]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=8]
 size = 50
 font_data = ExtResource( 2 )
 
@@ -53,7 +53,7 @@ angle = 50.0
 angle_random = 0.5
 scale_amount = 0.1
 scale_amount_random = 0.24
-color_ramp = SubResource( 1 )
+color_ramp = SubResource( 7 )
 
 [node name="TileMap" type="TileMap" parent="ParallaxBackground"]
 format = 1
@@ -64,20 +64,32 @@ margin_top = 95.0
 margin_right = 655.0
 margin_bottom = 176.0
 custom_colors/font_color = Color( 1, 0.984314, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 8 )
 text = "GAME OVER"
 align = 1
 valign = 1
 
 [node name="Score" type="Label" parent="."]
-margin_left = 444.0
-margin_top = 197.0
-margin_right = 510.0
-margin_bottom = 214.0
+margin_left = 284.0
+margin_top = 195.0
+margin_right = 350.0
+margin_bottom = 212.0
 rect_scale = Vector2( 2, 2 )
 custom_colors/font_color = Color( 1, 0.984314, 0, 1 )
 custom_fonts/font = SubResource( 4 )
-text = "Score: 0"
+text = "SCORE"
+align = 1
+valign = 1
+
+[node name="HighScore" type="Label" parent="."]
+margin_left = 547.0
+margin_top = 194.0
+margin_right = 613.0
+margin_bottom = 211.0
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color = Color( 1, 0.984314, 0, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "HIGH"
 align = 1
 valign = 1
 

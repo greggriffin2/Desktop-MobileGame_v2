@@ -57,6 +57,9 @@ func _on_data():
 	handle(json_parse, self)
 
 
+func send_data(data):
+	signaling_connection.put_packet(data)
+
 func connect_ws():
 	print_debug("Connecting to server...")
 	var err = webrtc_mp.connect_to_url(websocket_url)
@@ -92,6 +95,10 @@ func reload_connection():
 	if err != OK:
 		print_debug("Could not connect to websocket server, Error: ", err)
 
+
+func send_powerup_status(statusEnum: int, duration: float):
+	var data = "{'PowerUpStatus:'"+str(statusEnum)+",'duration:"+str(duration)+"}"
+	send_data(data.to_ascii())
 
 func handle(jsn: JSONParseResult, mpsingleton):
 	if typeof(jsn.result) == TYPE_ARRAY:

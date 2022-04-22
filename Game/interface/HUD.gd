@@ -5,6 +5,7 @@ class_name HUD
 ##	The HUD script will track various signal methods.
 ##	It will utilize any changes made to player health, score, and player speed
 ##	to update the UI with the appropriate icons or values.
+##	Also displays player statistics such as enemies and meteors killed.
 
 ## Preloading icons for UI use.
 var life_icon := preload("res://interface/LifeIcon.tscn")
@@ -16,18 +17,30 @@ onready var life_container := $LifeContainer
 onready var speed_powerup_container := $SpeedPowerUp
 onready var laser_powerup_container := $LaserPowerUp
 onready var score_label := $Score
+onready var score_mult_label := $ScoreMult
+onready var high_score_label := $HighScore
+onready var enemy_label := $EnemiesKilled
+onready var meteor_label := $MeteorsKilled
 onready var death_transition_timer := $DeathTransitionTimer
-
-## Establish a base score of 0 and base speed of 400.
-var score: int = 0
 
 ## Signals and function calls loaded at the start of the scene.
 func _ready():
 	clear_lives()
 	Signals.connect("on_player_life_change", self, "_on_player_life_change")
-	Signals.connect("on_score_increment", self, "_on_score_increment")
 	Signals.connect("on_speed_change", self, "_on_speed_change")
 	Signals.connect("on_laser_powerup", self, "_on_laser_powerup")
+	
+func _process(delta):
+	var score = ScoreSystem.score
+	var score_mult = ScoreSystem.score_multiplier
+	var high_score = ScoreSystem.session_high_score
+	var enemy_kills = ScoreSystem.enemies_killed
+	var meteor_kills = ScoreSystem.meteors_killed
+	score_label.set_text("Score: " + str(score))
+	score_mult_label.set_text("Multiplier: " + str(score_mult) + "X")
+	high_score_label.set_text("High Score: " + str(high_score))
+	enemy_label.set_text("Enemies: " + str(enemy_kills))
+	meteor_label.set_text("Meteors: " + str(meteor_kills))
 
 ## Clears the initial container so that it can be set using the player life change signal.
 func clear_lives():
@@ -49,15 +62,8 @@ func _on_player_life_change(life: int):
 		set_lives(1)
 	else:
 		set_lives(0)
-		var stored_score: int = score
 		death_transition_timer.start(2)
-		
 
-## Signal method used to increment the score for each damageable object destroyed.
-## Enemies are worth 15 points while meteors are worth 50 points.
-func _on_score_increment(amount: int):
-	score += amount
-	score_label.text = "SCORE: " + str(score)
 
 ## Signal method used to monitor the player's current speed. 
 ## Displays the speed powerup icon when the player's speed exceeds 400.

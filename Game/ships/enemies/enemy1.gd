@@ -9,7 +9,7 @@ class_name enemy1
 ##	Each enemy will also have a unique projectile and tactical pattern.
 
 var speed = 100
-var hit_points = 3
+var hit_points = 2
 
 ## Creating preloads for the enemy laser, an on-death explosion effect, and the two available powerups.
 var enemy1_laser := preload("res://projectiles/EnemyLaser.tscn")
@@ -33,18 +33,18 @@ func _physics_process(delta):
 func take_damage(damage):
 	hit_points -= damage
 	if hit_points <= 0:
+		ScoreSystem.add_score(150)
+		ScoreSystem.add_enemy_kill()
 		var effect := on_death_explosion.instance()
 		effect.global_position = global_position
 		get_tree().current_scene.add_child(effect)
 		
-		Signals.emit_signal("on_score_increment", 15)
-		
 		var powerup_roll = randi()
-		if powerup_roll % 4 == 0:
+		if powerup_roll % 20 == 0:
 			var powerup: SpeedPowerUp = speed_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)
-		elif powerup_roll % 4 == 1:
+		elif powerup_roll % 30 == 1:
 			var powerup: LaserPowerUp = laser_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)
