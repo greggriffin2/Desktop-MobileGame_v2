@@ -6,6 +6,7 @@ signal on_signaling_initialized
 signal on_gamecode_update
 signal on_webrtc_initialized
 signal user_joined(data)
+signal user_left(data)
 
 export var websocket_url = "wss://pedanticmonkey.space/rooms"
 
@@ -113,7 +114,9 @@ func handle_dictionary_data(data: Dictionary, mpsingleton):
 	match data:
 		{}:
 			pass
-		{"ip": var info, ..}:
+		{"ip_left": var info, ..}:
+			emit_signal("user_left", info)
+		{"ip_joined": var info, ..}:
 			emit_signal("user_joined", info)
 		{"JoinRoom": var roomKey, ..}:
 			mpsingleton.set_gamecode(roomKey)
