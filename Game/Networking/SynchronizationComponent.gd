@@ -57,6 +57,9 @@ func _on_data():
 	handle(json_parse, self)
 
 
+func send_data(data):
+	signaling_connection.put_packet(data)
+
 func connect_ws():
 	print_debug("Connecting to server...")
 	var err = webrtc_mp.connect_to_url(websocket_url)
