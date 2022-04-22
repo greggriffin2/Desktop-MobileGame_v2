@@ -7,6 +7,7 @@
     <string name="settings1">settings1</string>
     <string name="setting1toggle">setting1Toggle</string>
     <string name="black">Black</string>
+    <string name="jsonFAILED">Failed to retrieve leaderboard scores, try again</string>
     <string name="white">White</string>
     <string name="settings_Title">SETTINGS</string>
     <string name="ship_color">Ship Color</string>
@@ -29,4 +30,5 @@
     <string name="warp">Warp</string>
     <string name="toggleOFFTEST">Toggle is OFF</string>
     <string name="toggleButtonText">Change</string>
+    <string name="jsonLoading">Loading leaderboard data…</string>
 </resources>

@@ -1,84 +1,194 @@
+"""
+Scoreboard Server implemented with Flask HTTP GET/POST endpoints and Amazon DynamoDB.
+"""
+
 import datetime
 import time
 import json
-import boto3
 import decimal
 from http import HTTPStatus
+import boto3
 from flask import Flask, request, Response
 app = Flask(__name__)
-DB = boto3.resource('dynamodb', endpoint_url="http://dynamodb.us-east-1.amazonaws.com", region_name='us-east-1')
+ENDPOINT = "http://dynamodb.us-east-1.amazonaws.com"
+DB = boto3.resource('dynamodb', endpoint_url=ENDPOINT, region_name='us-east-1')
 
 def datetime_generate():
+    """ Generates a new datetime integer.
+
+    Uses datetime and time modules to assemble and return a current UNIX datetime.
+    ---
+    returns:
+      Integer representing current UNIX datetime, at 1-second precision.
+
+    """
+
     return int(time.mktime(datetime.datetime.now().timetuple()))
 
 class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
+    """ Custom JSON encoder for Decimal conversion. """
+    def default(self, o):  # pylint: disable=E0202
+        """ Default conversion method.
+
+        Converts Decimal() types to native Python integer type.
+
+        ---
+        parameters:
+          - name: o
+            required: true
+            description: Object instance to convert to integer.
+        returns:
+            Integer-converted value of Decimal object parameter.
+        """
         if isinstance(o, decimal.Decimal):
             return int(o)
         return super(DecimalEncoder, self).default(o)
 
 class UserScore:
-    def __init__(self, username, score, datetime=None):
+    """
+    Class representing a user and their respective score data.
+    """
+    def __init__(self, username, score, scoretime=None):
+        """ UserScore constructor.
+
+        Creates a new UserScore object instance.
+
+        ---
+        parameters:
+          - name: username
+            required: true
+            description: Username of the user.
+        parameters:
+          - name: score
+            required: true
+            description: Highscore of the user.
+        parameters:
+          - name: scoretime
+            required: false
+            description: UNIX-format datetime that the score was made. If not
+                         set, a new datetime is generated for the UserScore.
+        """
         self.username = username
         self.score = score
-        if datetime is None:
-            self.datetime = datetime_generate()
+        if scoretime is None:
+            self.scoretime = datetime_generate()
         else:
-            self.datetime = datetime
+            self.scoretime = scoretime
         log(f"NEW USER SCORE CREATED: {username} {score}")
 
     def to_json(self):
+        """ Creates and returns a JSON string representing the UserScore object.
+
+        Assembles a result dictionary in the format expected by the DynamoDB remote database,
+        and adds to it the UserScore data. Username and datetime are given as primary keys for
+        the UserScore, and other data is provided under the 'info' dictionary.
+        ---
+        returns:
+          JSON string containing UserScore data, in the format expected
+          by the DynamoDB remote database.
+
+        """
         result = {}
         result["username"] = self.username
-        result["datetime"] = self.datetime
+        result["datetime"] = self.scoretime
         result["info"] = {}
         result["info"]["highscore"] = self.score
         return json.dumps(result)
 
 def response_build(data, response_status):
+    """ Create and return a Response object using input data and status code.
+
+    Builds an HTTP response using a Flask Response object, and returns it. Response
+    mimetype is set to 'application/json', since the server deals with JSON data.
+
+    ---
+    parameters:
+      - name: data
+        required: true
+        description: Input data (any type) to return as a JSON string via Response.
+                     Input is converted to a string prior to passing to Response constructor.
+      - name: response_status
+        required: true
+        description: HTTP Status Code to assign to the HTTP Response. It is recommended
+                     to pass these using named HTTPStatus attributes. (e.g.: HTTPStatus.OK)
+    returns:
+        Response object with provided status code containing given payload data.
+    """
     return Response(str(data), status=response_status, mimetype='application/json')
 
-def log(data):
-    log_time = datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")
-    print(f"LOG  -  [{log_time}]  {str(data)}\n")
+def error_response_build(error_message, response_status):
+    """ Create and return a Response object using input error message and status code.
 
-@app.route('/test/create')
-def test_create():
-    result = "START.\n"
+    Builds an HTTP response using a Flask Response object, and returns it. Response
+    mimetype is set to 'application/json', since the server deals with JSON data.
+    Error JSON construction is an object that has a key 'error' with value of the error message.
 
-    new_table = DB.create_table(
-                    TableName='Scores',
-                    KeySchema=[
-                        {
-                            'AttributeName': 'username',
-                            'KeyType': 'HASH' # partition AKA primary key
-                        },
-                        {
-                            'AttributeName': 'datetime',
-                            'KeyType': 'RANGE' # sort AKA partial key
-                        },
-                    ],
-                    AttributeDefinitions=[
-                        {
-                            'AttributeName': 'username',
-                            'AttributeType': 'S' # string
-                        },
-                        {
-                            'AttributeName': 'datetime',
-                            'AttributeType': 'N' # number (?)
-                        }
-                    ],
-                    ProvisionedThroughput={
-                        'ReadCapacityUnits': 10,
-                        'WriteCapacityUnits': 10
-                    })
-
-    result += str(new_table)
-    result += "\n"
-
-    result += "DONE.\n"
+    ---
+    parameters:
+      - name: error_message
+        required: true
+        description: Input error message (string) to assign to Response error JSON object.
+      - name: response_status
+        required: true
+        description: HTTP Status Code to assign to the HTTP Response. It is recommended
+                     to pass these using named HTTPStatus attributes. (e.g.: HTTPStatus.BAD_REQUEST)
+    returns:
+        Response object with provided error message and status code.
+    """
+    error = {"error": error_message}
+    result = response_build(json.dumps(error), response_status)
     return result
 
+def log(data):
+    """ Log data to the console.
+
+    Log some input data to the console. Resulting output format
+    also contains time of log event.
+
+    ---
+    parameters:
+      - name: data
+        required: true
+        description: Input data (any type) to log to the console.
+                     Input is converted to a string prior to print() call.
+
+    """
+    log_time = datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")
+    print(f"LOG  -  [{log_time}]  {str(data)}")
+
+@app.errorhandler(404)
+def error_handle_404(_):
+    """ Handle Flask HTTP 404 endpoint error.
+
+    Default endpoint for when accessing an endpoint
+    that doesn't exist. HTTPStatus for endpoint error is
+    set to 404 Not Found. Response contains this 404
+    status as well as error message at JSON 'error' key.
+    ---
+
+    responses:
+      404:
+        description: A JSON string containing error data.
+    """
+
+    return error_response_build("Endpoint not recognized, check game / app URL path to scoreboard server.", HTTPStatus.NOT_FOUND)
+
+@app.errorhandler(400)
+def error_handle_400(_):
+    """ Handle Flask 400 endpoint error.
+
+    Default endpoint for when client sends invalid request data
+    to an endpoint. HTTPStatus for endpoint error is
+    set to 400 Bad Request. Response contains this 400
+    status as well as error message at JSON 'error' key.
+    ---
+
+    responses:
+      400:
+        description: A JSON string containing error data.
+    """
+
+    return error_response_build("Bad request data, check HTTP POST request body syntax / HTTP URL path.", HTTPStatus.BAD_REQUEST)
 
 @app.route('/add', methods=['POST', 'GET'])
 def post_add():
@@ -100,16 +210,22 @@ def post_add():
     if request.method == 'POST':
         post_data = request.get_json()
         if post_data is None:
-            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
+            result = error_response_build("Malformed Request: HTTP POST body must contain JSON data.", HTTPStatus.BAD_REQUEST)
             return result
         if isinstance(post_data, dict):
             if 'username' in post_data and 'info' in post_data:
+                if 'highscore' not in post_data['info']:
+                    result = error_response_build("Malformed Request: HTTP POST body JSON must have 'highscore' key in 'info' dict.", HTTPStatus.BAD_REQUEST)
+                    return result
                 post_data['datetime'] = datetime_generate()
                 result = response_build(f"POST DATA GOOD FORMAT {str(post_data)}", HTTPStatus.OK)
                 log(result.get_data())
                 table.put_item(Item=post_data)
+            else:
+                result = error_response_build("Malformed Request: HTTP POST body JSON dict must have keys 'username' and 'info', with 'highscore' key in 'info' dict.", HTTPStatus.BAD_REQUEST)
+                log(result)
         else:
-            result = response_build("Malformed Request", HTTPStatus.BAD_REQUEST)
+            result = error_response_build("Malformed Request: HTTP POST body JSON must be a dict.", HTTPStatus.BAD_REQUEST)
             log(result)
 
     return result
@@ -126,10 +242,10 @@ def retrieve(count):
     are returned.
     ---
     parameters:
-      - name: count (int)
-          in: path
-          required: false
-          description: Amount of scores to return in result JSON data.
+      - name: count
+        in: path
+        required: false
+        description: Amount of scores to return in result JSON data.
     responses:
       200:
         description: A JSON string containing highscore data.
@@ -137,7 +253,10 @@ def retrieve(count):
     table = DB.Table('Scores')
     result_data = ""
     score_list = None
-    count = int(count)
+    try:
+        count = int(count)
+    except ValueError:
+        return error_response_build("Must provide count as a number if providing count parameter to /retrieve GET endpoint.", HTTPStatus.BAD_REQUEST)
 
     if request.method == 'GET':
         scan = table.scan()
@@ -150,7 +269,7 @@ def retrieve(count):
         sorted_scores.append(score_list[0])
         for cur_item in score_list:
             cur_score = cur_item["info"]["highscore"]
-            for i in range(len(sorted_scores)):
+            for i, _ in enumerate(sorted_scores):
                 found_lower = False
                 score = sorted_scores[i]["info"]["highscore"]
                 if score < cur_score:
@@ -170,7 +289,6 @@ def retrieve(count):
     result = response_build(result_data, HTTPStatus.OK)
     return result
 
-
 @app.route('/add/<username>/<score>/')
 def add(username, score):
     """ Adds a username & score to database.
@@ -178,14 +296,14 @@ def add(username, score):
     Adds a username and score to a remote database as a single new entry in the table.
     ---
     parameters:
-      - username (str): Username to store into remote database.
+      - name: username
         in: path
         required: true
-        description: The username
+        description: Username to store into remote database.
       - name: score
-          in: path
-          required: true
-          description: Game highscore to store into remote database.
+        in: path
+        required: true
+        description: Game highscore to store into remote database.
     responses:
       200:
         description: Successful
@@ -194,6 +312,10 @@ def add(username, score):
     table = DB.Table('Scores')
     result = ""
     time_made = datetime_generate()
+    try:
+        score = int(score)
+    except ValueError:
+        return error_response_build("Must provide highscore as a number for the second parameter to the /add GET endpoint.", HTTPStatus.BAD_REQUEST)
 
     if request.method == 'GET':
         log(f"ADD {username} {score} ATTEMPTED")

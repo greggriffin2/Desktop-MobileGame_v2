@@ -1,7 +1,10 @@
 package com.example.sccopilotapp;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,92 +13,127 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sccopilotapp.gamesync.LeaderboardScore;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class LeaderboardActivity extends AppCompatActivity {
-    private TextView boardTitle;
-    private TextView player1;
-    private TextView player1Score;
-    private TextView player2;
-    private TextView player2Score;
-    private TextView player3;
-    private TextView player3Score;
-    private TextView player4;
-    private TextView player4Score;
-    private TextView player5;
-    private TextView player5Score;
 
-    private ArrayList<TextView> players = new ArrayList<>(5);
-    private ArrayList<TextView> scores = new ArrayList<>(5);
+    ListView leaderboard;
+    TextView jsonTestBox;
+    String url = "https://coolspacegame.ddns.net/retrieve";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-        boardTitle = findViewById(R.id.boardTitle);
-
-        player1 = findViewById(R.id.player1);
-        player1Score = findViewById(R.id.player_1Score);
-        player2 = findViewById(R.id.player2);
-        player2Score = findViewById(R.id.player_2Score);
-        player3 = findViewById(R.id.player3);
-        player3Score = findViewById(R.id.player_3Score);
-        player4 = findViewById(R.id.player4);
-        player4Score = findViewById(R.id.player_4Score);
-        player5 = findViewById(R.id.player5);
-        player5Score = findViewById(R.id.player_5Score);
-        populateScores();
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Leaderboard");
+        jsonTestBox = findViewById(R.id.jsonTestBox);
+
+        // JSON request starts here
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Handler mainHandler = new Handler(this.getMainLooper());
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            // If request fails
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+                // TODO: this code never runs. Find how to make it recognize a failure and run this code
+                jsonTestBox.setText(R.string.jsonFAILED);
+                try {
+                    populateScores(generateDummyData());
+                } catch (Exception f) {
+                    f.printStackTrace();
+                }
+            }
+
+            @Override
+            // If request succeeds
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String json = (Objects.requireNonNull(response.body())).string();
+                    mainHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                jsonTestBox.setVisibility(View.GONE);
+                                populateScores(json);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     /**
-     * Calls to the facade and gets array of the players and their scores,
-     * helper function to populateScores()
+     * Gets array of names and scores from JSON request and transforms the object into an
+     * ArrayList of LeaderboardScores
      */
-    public List<LeaderboardScore> getLeaderboard() {
-        return SynchronizationFacade.getScores(0, 5);
+    public List<LeaderboardScore> parseJSON(String json) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        List<LeaderboardScore> parsedArray = mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {
+        });
+        return parsedArray;
+
     }
 
     /**
-     * Sets local players and scores Arrays to point to the TextView elements that will be updated,
-     * then gets the Leaderboard from the websocket, then populates the screen (TextViews) with
-     * that data.
-     * preconditions: There must be a valid Object returned from SynchronizationFacade.getScores()
+     * Instantiates local leaderboard with parseJSON(). Populates custom ListView with custom
+     * ArrayAdapter
+     * preconditions: HTTPS response must have succeeded
      * postconditions: Screen will have scores updated
-     * class invariants: Nothing except for the TextView elements will be changed
+     * class invariants: Only LB will be changed
      */
-    public void populateScores() {
-
-        // populates local lists players and scores, pointing to the TextView elements
-        players.add(player1);
-        scores.add(player1Score);
-        players.add(player2);
-        scores.add(player2Score);
-        players.add(player3);
-        scores.add(player3Score);
-        players.add(player4);
-        scores.add(player4Score);
-        players.add(player5);
-        scores.add(player5Score);
-        List<LeaderboardScore> LB = this.getLeaderboard();
-
-        for (int i = 0; i < LB.size(); i++) {
-            players.get(i).setText((CharSequence) LB.get(i).name);
-            scores.get(i).setText((CharSequence) Integer.toString(LB.get(i).score));
-        }
+    public void populateScores(String json) throws Exception {
+        List<LeaderboardScore> LB = this.parseJSON(json);
+        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, (ArrayList<LeaderboardScore>) LB);
+        leaderboard = findViewById(R.id.list);
+        leaderboard.setAdapter(adapter);
     }
 
+    /**
+     * Dummy data version of populateScores
+     * Populates custom ListView with custom ArrayAdapter
+     * preconditions: There must be a valid Object returned from SynchronizationFacade.getScores()
+     * postconditions: Screen will have scores updated
+     * class invariants: Only LB will be changed
+     */
+    public void populateScores(ArrayList<LeaderboardScore> dummyData) throws Exception {
+        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, dummyData);
+        leaderboard = findViewById(R.id.list);
+        leaderboard.setAdapter(adapter);
+    }
+
+    // Dummy data only generates when JSON response fails
+    public ArrayList<LeaderboardScore> generateDummyData() throws IOException {
+        return SynchronizationFacade.getScores(0, 5);
+    }
 }
