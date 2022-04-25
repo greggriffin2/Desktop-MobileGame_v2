@@ -8,8 +8,8 @@ class_name enemy1
 ##	Each enemy has a movement speed, a point value (score gained by player after defeat), and hit points.
 ##	Each enemy will also have a unique projectile and tactical pattern.
 
-var speed = 100
-var hit_points = 2
+var speed: int = 100
+var hit_points: int = 2
 
 ## Creating preloads for the enemy laser, an on-death explosion effect, and the two available powerups.
 var enemy1_laser := preload("res://projectiles/EnemyLaser.tscn")
@@ -19,10 +19,13 @@ var laser_powerup := preload("res://PowerUps/LaserPowerUp.tscn")
 
 ## Creating an object from the FireTimer node.
 onready var fire_timer = $FireTimer
+var move = Vector2.ZERO
 
 
 ## Handles enemy ship movement and potential tactical patterns.
 func _physics_process(delta):
+	move = global_position.direction_to(PlayerSingleton.player_position)
+	global_position.x += move.x
 	global_position.y += speed * delta
 	if fire_timer.is_stopped():
 		projectile()
@@ -39,12 +42,12 @@ func take_damage(damage):
 		effect.global_position = global_position
 		get_tree().current_scene.add_child(effect)
 		
-		var powerup_roll = randi()
-		if powerup_roll % 20 == 0:
+		var powerup_roll = randf()
+		if powerup_roll < 0.05:
 			var powerup: SpeedPowerUp = speed_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)
-		elif powerup_roll % 30 == 1:
+		elif powerup_roll > 0.05 and powerup_roll < 0.2:
 			var powerup: LaserPowerUp = laser_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)

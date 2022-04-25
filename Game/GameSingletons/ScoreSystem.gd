@@ -10,6 +10,7 @@ var score_multiplier: int = 1
 var session_high_score: int = 0
 var enemies_killed: int = 0
 var meteors_killed: int = 0
+var sessions_played: bool = false
 
 ## Handles any increments to player score and sets a multiplier. 
 ## This multiplier is based on the number of enemies the player has killed.

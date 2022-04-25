@@ -22,6 +22,7 @@ onready var high_score_label := $HighScore
 onready var enemy_label := $EnemiesKilled
 onready var meteor_label := $MeteorsKilled
 onready var death_transition_timer := $DeathTransitionTimer
+onready var health_label := $HealthLabel
 
 ## Signals and function calls loaded at the start of the scene.
 func _ready():
@@ -41,6 +42,7 @@ func _process(delta):
 	high_score_label.set_text("High Score: " + str(high_score))
 	enemy_label.set_text("Enemies: " + str(enemy_kills))
 	meteor_label.set_text("Meteors: " + str(meteor_kills))
+	health_label.set_text("Health: " + str(PlayerSingleton.player_health))
 
 ## Clears the initial container so that it can be set using the player life change signal.
 func clear_lives():
