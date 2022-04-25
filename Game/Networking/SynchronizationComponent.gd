@@ -7,6 +7,7 @@ signal on_gamecode_update
 signal on_webrtc_initialized
 signal user_joined(data)
 signal user_left(data)
+signal on_app_button_press
 
 export var websocket_url = "wss://pedanticmonkey.space/rooms"
 
@@ -22,6 +23,7 @@ func _ready():
 	# webrtc_mp = WebRTCMultiplayer.new()
 	init_signaling_server()
 	# init_webrtc_server()
+	pause_mode = Node.PAUSE_MODE_PROCESS
 
 
 func _process(_delta):
@@ -123,7 +125,7 @@ func handle_dictionary_data(data: Dictionary, mpsingleton):
 		{"status": var status, "duration": var duration, ..}:
 			pass
 		{"timesPressed": var timesPressed, ..}:
-			pass
+			emit_signal("on_app_button_press")
 		{"enemyType": var enemyType, ..}:
 			pass
 		_:

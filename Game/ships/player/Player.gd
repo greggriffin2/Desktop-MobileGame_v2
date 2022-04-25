@@ -6,6 +6,7 @@ class_name Player
 
 ## Creating preloads of the player laser and some on-death effects for the player.
 var player_laser := preload("res://projectiles/PlayerLaser.tscn")
+var player_laser_up := preload("res://projectiles/LaserUpgrade.tscn")
 var on_death_effects := [
 	preload("res://Explosions/ODELayer1.tscn"),
 	preload("res://Explosions/ODELayer2.tscn"),
@@ -29,13 +30,18 @@ onready var laser_up_timer := $LaserPowerUpTimer
 
 ## Initializing input vector.
 var input_vector = Vector2.ZERO
+var enemies: int = 0
+var sync_singleton: SynchronizationSingleton
+var press_counter: int = 0
 
 ## Setting boolean for the laser powerup to false.
-var dual_laser = false
+var laser_up = false
 
 ## Signal(s) loaded at the start of the scene.
 func _ready():
 	Signals.emit_signal("on_player_life_change", hit_points)
+	sync_singleton = get_node("/root/NetworkSynchronizationSingleton")
+	sync_singleton.connect("on_app_button_press", self, "_on_app_button_press")
 
 ## System checks for each of these processes repeatedly.
 ## In this case, the system will check for player movement and input actions.
@@ -46,19 +52,43 @@ func _process(delta):
 		sprite.frame = 2
 	else:
 		sprite.frame = 1
+	
+	enemies = ScoreSystem.enemies_killed
 		
-	if Input.is_action_pressed("fire_weapon") and slow_fire_timer.is_stopped():
+	if Input.is_action_pressed("fire_weapon") and (slow_fire_timer.is_stopped() and fire_timer.is_stopped()):
 		slow_fire_timer.start(slow_fire_delay)
-		var laser := player_laser.instance()
-		laser.position = position
-		get_tree().current_scene.add_child(laser)
-		
-	if Input.is_action_pressed("fire_auto") and fire_timer.is_stopped() and dual_laser == true:
-		fire_timer.start(fire_delay)
-		for child in firing_positions.get_children():
-			var laser := player_laser.instance()
-			laser.global_position = child.global_position
-			get_tree().current_scene.add_child(laser)
+		if laser_up == false:
+			if enemies < 20:
+				var laser := player_laser.instance()
+				laser.position = position
+				get_tree().current_scene.add_child(laser)
+			elif enemies < 40:
+				for child in firing_positions.get_children():
+					if child != $FiringPositions/CenterMuzzle:
+						var laser := player_laser.instance()
+						laser.global_position = child.global_position
+						get_tree().current_scene.add_child(laser)
+			else:
+				for child in firing_positions.get_children():
+					var laser := player_laser.instance()
+					laser.global_position = child.global_position
+					get_tree().current_scene.add_child(laser)
+		else:
+			if enemies < 20:
+				var laser := player_laser_up.instance()
+				laser.position = position
+				get_tree().current_scene.add_child(laser)
+			elif enemies < 40:
+				for child in firing_positions.get_children():
+					if child != $FiringPositions/CenterMuzzle:
+						var laser := player_laser_up.instance()
+						laser.global_position = child.global_position
+						get_tree().current_scene.add_child(laser)
+			else:
+				for child in firing_positions.get_children():
+					var laser := player_laser_up.instance()
+					laser.global_position = child.global_position
+					get_tree().current_scene.add_child(laser)
 
 
 ## Handles player movement using physics and user input.
@@ -68,6 +98,8 @@ func _physics_process(delta):
 	input_vector.y = (Input.get_action_strength("ui_down") + 0.1) - Input.get_action_strength("ui_up")
 
 	global_position += input_vector * speed * delta
+	PlayerSingleton.update_player_position(global_position.x, global_position.y)
+	PlayerSingleton.update_health(hit_points)
 	
 	var viewRect := get_viewport_rect()
 	global_position.x = clamp(global_position.x, 15, viewRect.size.x - 15)
@@ -79,8 +111,18 @@ func take_damage(damage):
 	hit_points -= damage
 	Signals.emit_signal("on_player_life_change", hit_points)
 	if hit_points <= 0:
+		ScoreSystem.sessions_played = true
 		on_death()
 	
+func _on_app_button_press():
+	press_counter += 1
+	if press_counter % 10 == 0:
+		if !get_tree().paused:
+			hit_points += 20
+			if hit_points >= 100:
+				hit_points = 100
+		else:
+			pass
 		
 func on_death():
 	for effect in on_death_effects:
@@ -104,8 +146,8 @@ func _on_Player_area_entered(area):
 		Signals.emit_signal("on_speed_change", speed)
 		speed_up_timer.start(5)
 	elif area.is_in_group("laserpowerup"):
-		dual_laser = true
-		laser_up_timer.start(8)
+		laser_up = true
+		laser_up_timer.start(10)
 
 ## Removes speed bonus once the speed powerup timer runs out.
 func _on_SpeedPowerUpTimer_timeout():
@@ -113,5 +155,5 @@ func _on_SpeedPowerUpTimer_timeout():
 	
 ## Removes laser bonus once the laser powerup timer runs out.
 func _on_LaserPowerUpTimer_timeout():
-	dual_laser = false
+	laser_up = false
 	

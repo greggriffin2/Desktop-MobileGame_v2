@@ -103,6 +103,16 @@ _global_script_classes=[ {
 "class": "enemySpawner",
 "language": "GDScript",
 "path": "res://ships/enemies/enemySpawner.gd"
+}, {
+"base": "Area2D",
+"class": "enemyUFO",
+"language": "GDScript",
+"path": "res://ships/enemies/enemyUFO.gd"
+}, {
+"base": "Node2D",
+"class": "gameStage",
+"language": "GDScript",
+"path": "res://GameStage/gameStage.gd"
 } ]
 _global_script_class_icons={
 "EnemyLaser": "",
@@ -123,20 +133,23 @@ _global_script_class_icons={
 "SpeedPowerUp": "",
 "SynchronizationSingleton": "",
 "enemy1": "",
-"enemySpawner": ""
+"enemySpawner": "",
+"enemyUFO": "",
+"gameStage": ""
 }
 
 [application]
 
 config/name="SCCP"
-run/main_scene="res://MainMenu/MainMenu.tscn"
+run/main_scene="res://Networking/GameCodeDisplay/GameCodeDisplay.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 NetworkSynchronizationSingleton="*res://Networking/SynchronizationComponent.gd"
-ScoreSystem="*res://ScoreSystem.gd"
+ScoreSystem="*res://GameSingletons/ScoreSystem.gd"
 Signals="*res://Autoloads/Signals.gd"
+PlayerSingleton="*res://GameSingletons/PlayerSingleton.gd"
 
 [display]
 

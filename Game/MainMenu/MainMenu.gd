@@ -1,9 +1,11 @@
 extends Node2D
 
 onready var high_score_label := $HighScore
+onready var game_code_label := $GameCodeLabel
 
 func _ready():
 	score_display()
+	game_code_label.set_text("Game Code: " + PlayerSingleton.game_code)
 	
 func score_display():
 	high_score_label.set_text("High Score: " + str(ScoreSystem.session_high_score))
