@@ -20,6 +20,9 @@ polygon = PoolVector2Array( -14, -39, -16, -13, -36, -1, -40, -1, -45, -9, -52, 
 [node name="LeftMuzzle" type="Node2D" parent="FiringPositions"]
 position = Vector2( -45.3333, -12 )
 
+[node name="CenterMuzzle" type="Node2D" parent="FiringPositions"]
+position = Vector2( 0, -35 )
+
 [node name="RightMuzzle" type="Node2D" parent="FiringPositions"]
 position = Vector2( 42.6667, -11.3333 )
 
@@ -37,5 +40,7 @@ one_shot = true
 [node name="SlowAutoFireTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="timeout" from="AutoFireTimer" to="." method="_on_AutoFireTimer_timeout"]
 [connection signal="timeout" from="SpeedPowerUpTimer" to="." method="_on_SpeedPowerUpTimer_timeout"]
 [connection signal="timeout" from="LaserPowerUpTimer" to="." method="_on_LaserPowerUpTimer_timeout"]
+[connection signal="timeout" from="SlowAutoFireTimer" to="." method="_on_SlowAutoFireTimer_timeout"]

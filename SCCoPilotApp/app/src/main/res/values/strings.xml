@@ -9,7 +9,7 @@
     <string name="black">Black</string>
     <string name="jsonFAILED">Failed to retrieve leaderboard scores, try again</string>
     <string name="white">White</string>
-    <string name="settings_Title">SETTINGS</string>
+    <string name="settings_Title">Appearance</string>
     <string name="ship_color">Ship Color</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="player_1">Player 1</string>

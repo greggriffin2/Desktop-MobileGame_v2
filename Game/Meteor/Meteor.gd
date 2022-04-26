@@ -4,11 +4,7 @@ class_name Meteor
 ##@Desc:
 ##	This class stores and distributes all data and methods related to the meteor.
 
-## Exported variables for rotation and speed bounds, as well as health value.
-export var min_speed: float = 20
-export var max_speed: float = 60
-export var min_rotation_speed: float = -50
-export var max_rotation_speed: float = 50
+## Exported variable for health value.
 export var health: int = 20
 
 ## Used to tell the meteor if it is colliding with the player.
@@ -23,8 +19,8 @@ var rotation_rate: float = 0
 
 ## Establishes meteor speed and rotation at a random, limited value on spawn.
 func _ready():
-	speed = rand_range(min_speed, max_speed)
-	rotation_rate = rand_range(min_rotation_speed, max_rotation_speed)
+	speed = rand_range(20, 60)
+	rotation_rate = rand_range(-50, 50)
 	
 ## Tells the meteor to damage the player while it is colliding with the player.
 func _process(delta):
