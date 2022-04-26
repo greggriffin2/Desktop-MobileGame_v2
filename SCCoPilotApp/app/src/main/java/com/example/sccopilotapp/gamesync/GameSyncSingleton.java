@@ -203,7 +203,7 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
         }
     }
 
-    enum GameSyncStatus {
+    public enum GameSyncStatus {
         UNKNOWN,
         CONNECTING,
         CONNECTED,

@@ -68,7 +68,7 @@ public class MainGameActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         shipClick = findViewById(R.id.shipClick);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle("Space Cadet Co-Pilot");
         // handle button activities
     }
