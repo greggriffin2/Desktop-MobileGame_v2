@@ -1,8 +1,12 @@
 package com.example.sccopilotapp;
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -93,15 +97,26 @@ public class MainActivity extends AppCompatActivity {
                 playButton.setVisibility(View.INVISIBLE);
                 connectingButton.setVisibility(View.VISIBLE);
             }
-            if (SynchronizationFacade.getConnectionStatus() == GameSyncSingleton.GameSyncStatus.CONNECTED) {
-                Intent intent = new Intent(this, MainGameActivity.class);
-                startActivity(intent);
-            } else {
+            Log.d(TAG, (GameSyncSingleton.getConnectionStatus()).toString());
+//            final Handler handler = new Handler();
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    // Do something after 5s = 5000ms
+//
+//                }
+//            }, 5000);
+            if (SynchronizationFacade.getConnectionStatus() != (GameSyncSingleton.GameSyncStatus.CONNECTED)) {
                 Log.d(TAG, "matched:failure");
                 playButton.setVisibility(View.VISIBLE);
                 connectingButton.setVisibility(View.INVISIBLE);
                 Toast.makeText(MainActivity.this, "Connection Failed: code incorrect",
                         Toast.LENGTH_LONG).show();
+
+            } else {
+                Log.d(TAG, (GameSyncSingleton.getConnectionStatus()).toString());
+                Intent intent = new Intent(this, MainGameActivity.class);
+                startActivity(intent);
             }
         }
     }
