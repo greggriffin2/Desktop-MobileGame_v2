@@ -1,6 +1,5 @@
 package com.example.sccopilotapp;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Responsible for initiating tooltip dialog box from help button press
+     *
      * @param item
      * @return
      */
@@ -70,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void toolTipPopup(){
+    public void toolTipPopup() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.MA_tooltip);
         alertDialogBuilder.setTitle("Welcome to Space Cadet Co-Pilot");
         alertDialogBuilder.setPositiveButton("Got it!", (dialogInterface, i) -> {
-            Log.d("tooltip","Closed - MainActivity");
+            Log.d("tooltip", "Closed - MainActivity");
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

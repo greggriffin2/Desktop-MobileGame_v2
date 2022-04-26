@@ -89,7 +89,7 @@ public class MainGameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
-        if (id == R.id.help_button){
+        if (id == R.id.help_button) {
             toolTipPopup();
         }
         return super.onOptionsItemSelected(item);
@@ -165,24 +165,24 @@ public class MainGameActivity extends AppCompatActivity {
         }
     }
 
-    public void toolTipPopup(){
+    public void toolTipPopup() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.MGA_tooltip);
         alertDialogBuilder.setTitle("Need Help?");
         alertDialogBuilder.setPositiveButton("Got it!", (dialogInterface, i) -> {
-            Log.d("tooltip","Closed - MainGameActivity");
+            Log.d("tooltip", "Closed - MainGameActivity");
 
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
-    public void exitConfirmationPopup(){
+    public void exitConfirmationPopup() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.exit_confirmation);
         alertDialogBuilder.setTitle("Are you sure you want to exit?");
         alertDialogBuilder.setPositiveButton("Leave", (dialogInterface, i) -> {
-            Log.d("tooltip","Accepted - Exited MainGameActivity");
+            Log.d("tooltip", "Accepted - Exited MainGameActivity");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
