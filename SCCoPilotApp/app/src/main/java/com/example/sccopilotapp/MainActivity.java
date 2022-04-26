@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onClickPlay: Creating sync singleton");
         SynchronizationFacade.connect(codeText.getText().toString());
         String validatedCode = codeText.getText().toString();
-        if (validateConnectionCode(validatedCode) == true) {
+        if (validateConnectionCode(validatedCode)) {
             Log.d(TAG, "Code = Valid");
             while (SynchronizationFacade.getConnectionStatus() == GameSyncSingleton.GameSyncStatus.CONNECTING) {
                 playButton.setVisibility(View.INVISIBLE);
@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             } else {
                 Log.d(TAG, "matched:failure");
+                playButton.setVisibility(View.VISIBLE);
+                connectingButton.setVisibility(View.INVISIBLE);
                 Toast.makeText(MainActivity.this, "Connection Failed: code incorrect",
                         Toast.LENGTH_LONG).show();
             }
