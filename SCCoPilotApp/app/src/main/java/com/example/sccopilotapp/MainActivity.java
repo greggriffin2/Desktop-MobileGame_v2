@@ -1,16 +1,21 @@
 package com.example.sccopilotapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
@@ -21,6 +26,20 @@ public class MainActivity extends AppCompatActivity {
     private EditText codeText;
     private Button playButton;
 
+    /**
+     * Creates the action bar that includes the page title and Help button
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        MenuItem settingsButton = menu.findItem(R.id.mybutton);
+        settingsButton.setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SynchronizationFacade syncFacade = new SynchronizationFacade("wss://pedanticmonkey.space/rooms", getApplicationContext());
@@ -28,13 +47,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         codeText = findViewById(R.id.inputCode);
         playButton = findViewById(R.id.playButton);
-        /**
-         * Make Home Action Bar Red (shipRed in colors.xml)
-         */
         ActionBar actionBar;
         actionBar = getSupportActionBar();
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#BF2B16"));
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(colorDrawable);
+        actionBar.setTitle("Space Cadet Co-Pilot");
+
+    }
+
+    /**
+     * Responsible for initiating tooltip dialog box from help button press
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.help_button) {
+            toolTipPopup();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void toolTipPopup(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.MA_tooltip);
+        alertDialogBuilder.setTitle("Welcome to Space Cadet Co-Pilot");
+        alertDialogBuilder.setPositiveButton("Got it!", (dialogInterface, i) -> {
+            Log.d("tooltip","Closed - MainActivity");
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void onStart() {

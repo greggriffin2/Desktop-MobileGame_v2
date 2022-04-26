@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -88,6 +89,9 @@ public class MainGameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
+        if (id == R.id.help_button){
+            toolTipPopup();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -150,8 +154,7 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickExit(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        exitConfirmationPopup();
     }
 
     public static void changeBackground() {
@@ -160,6 +163,34 @@ public class MainGameActivity extends AppCompatActivity {
         } else {
             selectedBackground = background_1;
         }
+    }
+
+    public void toolTipPopup(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.MGA_tooltip);
+        alertDialogBuilder.setTitle("Need Help?");
+        alertDialogBuilder.setPositiveButton("Got it!", (dialogInterface, i) -> {
+            Log.d("tooltip","Closed - MainGameActivity");
+
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void exitConfirmationPopup(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.exit_confirmation);
+        alertDialogBuilder.setTitle("Are you sure you want to exit?");
+        alertDialogBuilder.setPositiveButton("Leave", (dialogInterface, i) -> {
+            Log.d("tooltip","Accepted - Exited MainGameActivity");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
+        alertDialogBuilder.setNegativeButton("Stay", (dialogInterface, i) -> {
+            Log.d("tooltip", "Denied - Remained in session");
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 
