@@ -56,13 +56,11 @@ public class MainGameActivity extends AppCompatActivity {
                 // change upgrades button/Image to be clickable/outline it with a color
             }
         });
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
         loadBackground();
 
-//        shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
