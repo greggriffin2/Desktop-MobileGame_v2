@@ -6,9 +6,14 @@ on:
   pull_request:
     branches: [ main ]
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: SCCoPilotApp
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 11
@@ -18,21 +23,18 @@ jobs:
         distribution: 'temurin'
         cache: gradle
     - name: Grant execute permission for gradlew
-      working-directory: ./SCCoPilotApp
       run: chmod +x gradlew
     - name: Build with Gradle
-      working-directory: ./SCCoPilotApp
       run: ./gradlew build
-    - name: Release Artifacts
-      working-directory: ./SCCoPilotApp
+    - name: Build release artifacts
       run: ./gradlew assembleRelease
     - name: Push artifacts
-      working-directory: ./SCCoPilotApp
       run: |
-        mkdir downloads && cp app/build/outputs/apk/release/app-release-unsigned.apk downloads/
+        mkdir downloads
+        cp app/build/outputs/apk/release/app-release-unsigned.apk downloads/
     - name: upload artifacts
       uses: actions/upload-artifact@v2
       with: 
-          name: artifacts
-          path: ./SCCoPilotApp/downloads
+          name: release-apk
+          path: SCCoPilotApp/downloads
 
