@@ -3,6 +3,8 @@ name: Godot CI Deploy
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   GODOT_VERSION: 3.4.4
@@ -10,6 +12,10 @@ env:
 
 jobs:
   export-windows:
+    defaults:
+      run:
+        shell: bash
+        working-directory: Game
     name: Windows Export
     runs-on: ubuntu-20.04
     container:
@@ -20,22 +26,19 @@ jobs:
         with:
           lfs: true
       - name: Setup
-        working-directory: ./Game
         run: |
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
       - name: Windows Build
-        working-directory: ./Game
         run: |
           mkdir -v -p build/windows
           cd $EXPORT_NAME
           godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
       - name: Upload Artifact
-        working-directory: ./Game
         uses: actions/upload-artifact@v1
         with:
           name: windows
-          path: build/windows
+          path: Game/build/windows
 
   export-linux:
     name: Linux Export
@@ -52,17 +55,15 @@ jobs:
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
       - name: Linux Build
-        working-directory: ./Game
         run: |
           mkdir -v -p build/linux
           cd $EXPORT_NAME
           godot -v --export "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
       - name: Upload Artifact
-        working-directory: ./Game
         uses: actions/upload-artifact@v1
         with:
           name: linux
-          path: build/linux
+          path: Game/build/linux
 
   export-mac:
     name: Mac Export
@@ -79,14 +80,12 @@ jobs:
           mkdir -v -p ~/.local/share/godot/templates
           mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
       - name: Mac Build
-        working-directory: ./Game
         run: |
           mkdir -v -p build/mac
           cd $EXPORT_NAME
           godot -v --export "Mac OSX" ../build/mac/$EXPORT_NAME.zip
       - name: Upload Artifact
-        working-directory: ./Game
         uses: actions/upload-artifact@v1
         with:
           name: mac
-          path: build/mac
+          path: Game/build/mac
