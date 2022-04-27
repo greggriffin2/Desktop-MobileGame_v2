@@ -32,6 +32,10 @@
     <string name="toggleButtonText">Change</string>
     <string name="jsonLoading">Loading leaderboard data…</string>
     <string name="helpbutton">HelpButton</string>
+    <string name="disconnecteddialog">
+        You have been disconnected from the current game session. Please go back to the home screen
+        and try again.
+    </string>
     <string name="MA_tooltip">
         To begin, start up the desktop game to generate a game code.
         \n\nThen type in the code here and press play!

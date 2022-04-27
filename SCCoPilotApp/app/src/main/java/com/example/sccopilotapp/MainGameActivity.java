@@ -46,18 +46,14 @@ public class MainGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // This is a listener for when an enemy is killed in game. At the moment it is not working,
-        // but we can still write code for what we want to be done in the app once an enemy is killed
-        SynchronizationFacade.addPowerUpEvent(new PropertyChangeListener() {
+        // TODO: change this to be a listener for when the game disconnects
+        SynchronizationFacade.addUserDisconnectedEvent(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 // add actions to be performed on event here
-                PowerUpStatusEvent powerUp = (PowerUpStatusEvent) propertyChangeEvent.getNewValue();
-                // check ID of powerUp to load correct image
-                // change upgrades button/Image to be clickable/outline it with a color
+                disconnectedDialog();
             }
         });
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
@@ -191,6 +187,17 @@ public class MainGameActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void disconnectedDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.disconnecteddialog);
+        alertDialogBuilder.setTitle("Disconnected from Session");
+        alertDialogBuilder.setPositiveButton("Ok", (dialogInterface, i) -> {
+            Log.d("tooltip", "Accepted - Exited MainGameActivity, DISCONNECTEd");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 
 
