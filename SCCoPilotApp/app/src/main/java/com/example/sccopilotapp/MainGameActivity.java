@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.sccopilotapp.gamesync.PowerUpStatusEvent;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 import java.beans.PropertyChangeEvent;
@@ -36,6 +35,12 @@ public class MainGameActivity extends AppCompatActivity {
     static int background_2 = R.drawable.space_background2;
     static int selectedBackground = background_1;
 
+    /**
+     * Creates the ActionBar at the top of the screen
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
@@ -61,6 +66,7 @@ public class MainGameActivity extends AppCompatActivity {
 
 //        shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
+        upgradesButton.setVisibility(View.INVISIBLE); // not using this, leaves room for Toast
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
         shipClick = findViewById(R.id.shipClick);
@@ -78,6 +84,12 @@ public class MainGameActivity extends AppCompatActivity {
                 .into(backgroundGIF);
     }
 
+    /**
+     * Handles button presses for the ActionBar
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -92,9 +104,8 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     /**
-     * This method will listen for the clicks on the ship and add
-     * to a running total that will eventually be sent to the game
-     * to let it know when the power up bar is full.
+     * This method sends a buttonPressed signal to gamesync whenever the button is pressed.
+     * Also handles UI changes around the button press
      *
      * @param view
      */
@@ -109,8 +120,8 @@ public class MainGameActivity extends AppCompatActivity {
             shipClick.setScaleY((float) (y + .05));
         } else {
             //Send info to game
-            Toast.makeText(MainGameActivity.this, "Healed Ship 20 hitpoints!",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainGameActivity.this,
+                    "Healed Ship 20 hit-points!", Toast.LENGTH_SHORT).show();
             float x = shipClick.getScaleX();
             float y = shipClick.getScaleY();
             shipClick.setScaleX((float) (x - .5));
@@ -189,12 +200,12 @@ public class MainGameActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void disconnectedDialog(){
+    public void disconnectedDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.disconnecteddialog);
         alertDialogBuilder.setTitle("Disconnected from Session");
         alertDialogBuilder.setPositiveButton("Ok", (dialogInterface, i) -> {
-            Log.d("tooltip", "Accepted - Exited MainGameActivity, DISCONNECTEd");
+            Log.d("tooltip", "Accepted - Exited MainGameActivity, DISCONNECTED");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
