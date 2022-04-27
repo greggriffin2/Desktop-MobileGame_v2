@@ -15,7 +15,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.sccopilotapp.gamesync.GameSyncSingleton;
+import com.example.sccopilotapp.gamesync.PowerUpStatusEvent;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +33,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SynchronizationFacade syncFacade = new SynchronizationFacade("wss://pedanticmonkey.space/rooms", getApplicationContext());
         super.onCreate(savedInstanceState);
+        SynchronizationFacade.addConnectedEvent(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                // add actions to be performed on event here
+                Intent intent = new Intent(MainActivity.this, MainGameActivity.class);
+                startActivity(intent);
+            }
+        });
+        SynchronizationFacade.addUserDisconnectedEvent(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                // add actions to be performed on event here
+                playButton.setVisibility(View.VISIBLE);
+                connectingButton.setVisibility(View.INVISIBLE);
+                Toast.makeText(MainActivity.this, "Code Not Valid! Retry!", Toast.LENGTH_LONG).show();
+            }
+        });
         setContentView(R.layout.activity_main);
         codeText = findViewById(R.id.inputCode);
         playButton = findViewById(R.id.playButton);
@@ -89,36 +110,53 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickPlay(View view) {
         Log.d(TAG, "onClickPlay: Creating sync singleton");
-        SynchronizationFacade.connect(codeText.getText().toString());
+//        SynchronizationFacade.connect(codeText.getText().toString());
         String validatedCode = codeText.getText().toString();
+//        SynchronizationFacade.addUserConnectedEvent(new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+//                // add actions to be performed on event here
+//                Intent intent = new Intent(MainActivity.this, MainGameActivity.class);
+//                startActivity(intent);
+//                // check ID of powerUp to load correct image
+//                // change upgrades button/Image to be clickable/outline it with a color
+//            }
+//        });
         if (validateConnectionCode(validatedCode)) {
-            Log.d(TAG, "Code = Valid");
-            while (SynchronizationFacade.getConnectionStatus() == GameSyncSingleton.GameSyncStatus.CONNECTING) {
-                playButton.setVisibility(View.INVISIBLE);
-                connectingButton.setVisibility(View.VISIBLE);
-            }
-            Log.d(TAG, (GameSyncSingleton.getConnectionStatus()).toString());
-//            final Handler handler = new Handler();
-//            handler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    // Do something after 5s = 5000ms
-//
-//                }
-//            }, 5000);
-            if (SynchronizationFacade.getConnectionStatus() != (GameSyncSingleton.GameSyncStatus.CONNECTED)) {
-                Log.d(TAG, "matched:failure");
-                playButton.setVisibility(View.VISIBLE);
-                connectingButton.setVisibility(View.INVISIBLE);
-                Toast.makeText(MainActivity.this, "Connection Failed: code incorrect",
-                        Toast.LENGTH_LONG).show();
-
-            } else {
-                Log.d(TAG, (GameSyncSingleton.getConnectionStatus()).toString());
-                Intent intent = new Intent(this, MainGameActivity.class);
-                startActivity(intent);
-            }
+            playButton.setVisibility(View.INVISIBLE);
+            connectingButton.setVisibility(View.VISIBLE);
+        }else{
+            playButton.setVisibility(View.VISIBLE);
+            connectingButton.setVisibility(View.INVISIBLE);
         }
     }
+//            Log.d(TAG, "Code = Valid");
+//            while (SynchronizationFacade.getConnectionStatus() == GameSyncSingleton.GameSyncStatus.CONNECTING) {
+//                playButton.setVisibility(View.INVISIBLE);
+//                connectingButton.setVisibility(View.VISIBLE);
+//            }
+//            Log.d(TAG, (GameSyncSingleton.getConnectionStatus()).toString());
+////            final Handler handler = new Handler();
+////            handler.postDelayed(new Runnable() {
+////                @Override
+////                public void run() {
+////                    // Do something after 5s = 5000ms
+////
+////                }
+////            }, 5000);
+//            if (SynchronizationFacade.getConnectionStatus() != (GameSyncSingleton.GameSyncStatus.CONNECTED)) {
+//                Log.d(TAG, "matched:failure");
+//                playButton.setVisibility(View.VISIBLE);
+//                connectingButton.setVisibility(View.INVISIBLE);
+//                Toast.makeText(MainActivity.this, "Connection Failed: code incorrect",
+//                        Toast.LENGTH_LONG).show();
+//
+//            } else {
+//                Log.d(TAG, (GameSyncSingleton.getConnectionStatus()).toString());
+//                Intent intent = new Intent(this, MainGameActivity.class);
+//                startActivity(intent);
+//            }
+//        }
+
 
 }
