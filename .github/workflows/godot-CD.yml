@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  GODOT_VERSION: 3.4.4
+  GODOT_VERSION: 3.3.4
   EXPORT_NAME: CoPilotGame
 
 jobs:
