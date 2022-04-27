@@ -31,8 +31,10 @@ jobs:
       working-directory: ./SCCoPilotApp
       run: |
         mkdir downloads && cp app/build/outputs/apk/release/app-release-unsigned.apk downloads/
+    - name: upload artifacts
       uses: actions/upload-artifact@v2
-        with: 
+      working-directory: ./SCCoPilotApp
+      with: 
           name: artifacts
           path: downloads
 
