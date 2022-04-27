@@ -24,3 +24,15 @@ jobs:
     - name: Build with Gradle
       working-directory: ./SCCoPilotApp
       run: ./gradlew build
+    - name: Release Artifacts
+      working-directory: ./SCCoPilotApp
+      run: ./gradlew assembleRelease
+    - name: Push artifacts
+      working-directory: ./SCCoPilotApp
+      run: |
+        mkdir downloads && cp app/build/outputs/apk/release/app-release-unsigned.apk downloads/
+      uses: actions/upload-artifact@v2
+        with: 
+          name: artifacts
+          path: downloads
+
