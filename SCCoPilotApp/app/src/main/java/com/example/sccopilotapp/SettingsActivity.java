@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**
      * Adds back button functionality
+     *
      * @param item
      * @return
      */

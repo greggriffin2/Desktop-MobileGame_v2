@@ -104,7 +104,8 @@ public class LeaderboardActivity extends AppCompatActivity {
      */
     public List<LeaderboardScore> parseJSON(String json) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {});
+        return mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {
+        });
 
     }
 
