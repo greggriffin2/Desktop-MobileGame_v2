@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
          */
         ActionBar actionBar;
         actionBar = getSupportActionBar();
+        actionBar.setTitle("Space Cadet: Co-Pilot");
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#BF2B16"));
         actionBar.setBackgroundDrawable(colorDrawable);
     }
