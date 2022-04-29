@@ -56,7 +56,7 @@ public class MainGameActivity extends AppCompatActivity {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 // add actions to be performed on event here
-                disconnectedDialog();
+                disconnectedDialogPopup();
             }
         });
         super.onCreate(savedInstanceState);
@@ -71,6 +71,7 @@ public class MainGameActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exitButton);
         shipClick = findViewById(R.id.shipClick);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle("Space Cadet Co-Pilot");
         // handle button activities
@@ -200,7 +201,7 @@ public class MainGameActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void disconnectedDialog() {
+    public void disconnectedDialogPopup() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.disconnecteddialog);
         alertDialogBuilder.setTitle("Disconnected from Session");

@@ -55,12 +55,17 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 // TODO: this code never runs. Find how to make it recognize a failure and run this code
-                jsonTestBox.setText(R.string.jsonFAILED);
-                try {
-                    populateScores(generateDummyData());
-                } catch (Exception f) {
-                    f.printStackTrace();
-                }
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        jsonTestBox.setText(R.string.jsonFAILED);
+                        try {
+                            populateScores(generateDummyData());
+                        } catch (Exception f) {
+                            f.printStackTrace();
+                        }
+                    }
+                });
             }
 
             @Override
