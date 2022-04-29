@@ -51,14 +51,14 @@ public class MainGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: change this to be a listener for when the game disconnects
-        SynchronizationFacade.addUserDisconnectedEvent(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                // add actions to be performed on event here
-                disconnectedDialogPopup();
-            }
-        });
+//        // TODO: change this to be a listener for when the game disconnects
+//        SynchronizationFacade.addUserDisconnectedEvent(new PropertyChangeListener() {
+//            @Override
+//            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+//                // add actions to be performed on event here
+//                disconnectedDialogPopup();
+//            }
+//        });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
@@ -121,8 +121,7 @@ public class MainGameActivity extends AppCompatActivity {
             shipClick.setScaleY((float) (y + .05));
         } else {
             //Send info to game
-            Toast.makeText(MainGameActivity.this,
-                    "Healed Ship 20 hit-points!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainGameActivity.this, R.string.toast_text, Toast.LENGTH_SHORT).show();
             float x = shipClick.getScaleX();
             float y = shipClick.getScaleY();
             shipClick.setScaleX((float) (x - .5));

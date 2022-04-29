@@ -32,6 +32,7 @@
     <string name="toggleButtonText">Change</string>
     <string name="jsonLoading">Loading leaderboard data…</string>
     <string name="helpbutton">HelpButton</string>
+    <string name="toast_text">Healed Ship 20 hit-points!</string>
     <string name="disconnecteddialog">
         You have been disconnected from the current game session. Please go back to the home screen
         and try again.
