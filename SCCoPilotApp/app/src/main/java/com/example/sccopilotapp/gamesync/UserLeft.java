@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class UserLeft {
+public class UserLeft extends DataObject {
     String ip;
 
     @JsonProperty("ip_left")
