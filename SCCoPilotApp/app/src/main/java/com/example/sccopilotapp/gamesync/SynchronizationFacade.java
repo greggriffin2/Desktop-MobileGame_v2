@@ -126,6 +126,7 @@ public class SynchronizationFacade {
         }
         return testLeaderboard;
     }
+
     public static void addConnectedEvent(PropertyChangeListener listener) {
         GameSyncSingleton.addListener("Connected", listener);
     }
