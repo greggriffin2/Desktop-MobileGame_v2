@@ -58,8 +58,8 @@ public class LeaderboardActivity extends AppCompatActivity {
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        jsonTestBox.setText(R.string.jsonFAILED);
                         try {
+                            jsonTestBox.setText(R.string.jsonFAILED);
                             populateScores(generateDummyData());
                         } catch (Exception f) {
                             f.printStackTrace();
@@ -99,14 +99,12 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     /**
-     * Gets array of names and scores from JSON request and transforms the object into an
-     * ArrayList of LeaderboardScores
+     * Gets array of names and scores from JSON request and transforms the object into a
+     * List of LeaderboardScores
      */
     public List<LeaderboardScore> parseJSON(String json) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        List<LeaderboardScore> parsedArray = mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {
-        });
-        return parsedArray;
+        return mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {});
 
     }
 
