@@ -31,4 +31,9 @@
     <string name="toggleOFFTEST">Toggle is OFF</string>
     <string name="toggleButtonText">Change</string>
     <string name="jsonLoading">Loading leaderboard data…</string>
+    <string name="lessThan18">Code must be less than 18 characters!</string>
+    <string name="emptyText">Code must not be empty!</string>
+    <string name="stringWithNumber">Code must not contain any numbers!</string>
+    <string name="stringWithSpaces">Code cannot contain spaces!</string>
+    <string name="incorrectCode">Code Incorrect</string>
 </resources>

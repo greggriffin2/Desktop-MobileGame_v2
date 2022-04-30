@@ -1,5 +1,6 @@
 package com.example.sccopilotapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -85,18 +86,18 @@ public class MainActivity extends AppCompatActivity {
         //String correctCode = "a";
         validationCode.toLowerCase(Locale.ROOT);
         if (validationCode.length() > 18) {
-            Toast.makeText(MainActivity.this, "Code must be less than 18 characters!", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, R.string.lessThan18, Toast.LENGTH_LONG).show();
             return false;
         } else if (validationCode.matches(".*\\d.*")) {
-            Toast.makeText(MainActivity.this, "Code must not contain any numbers!", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, R.string.stringWithNumber, Toast.LENGTH_LONG).show();
             return false;
         } else if (validationCode.trim().length() == 0) {
-            Toast.makeText(MainActivity.this, "Code must not be empty!", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, R.string.emptyText, Toast.LENGTH_LONG).show();
             return false;
         } else if (validationCode.trim().length() != 0) {
             for (int i = 0; i < validationCode.length(); i++) {
                 if (validationCode.contains(" ")) {
-                    Toast.makeText(MainActivity.this, "Code cannot contain spaces!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, R.string.stringWithSpaces, Toast.LENGTH_LONG).show();
                     return false;
                 }
             }
