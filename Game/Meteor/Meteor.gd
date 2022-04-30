@@ -4,6 +4,8 @@ class_name Meteor
 ##@Desc:
 ##	This class stores and distributes all data and methods related to the meteor.
 
+onready var health_label := $HealthLabel
+
 ## Exported variable for health value.
 export var health: int = 20
 
@@ -24,6 +26,7 @@ func _ready():
 	
 ## Tells the meteor to damage the player while it is colliding with the player.
 func _process(delta):
+	health_label.set_text(str(health))
 	if player_in_area != null:
 		player_in_area.take_damage(1)
 	

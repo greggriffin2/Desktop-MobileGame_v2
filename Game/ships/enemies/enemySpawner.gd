@@ -18,7 +18,7 @@ var preload_meteor := preload("res://Meteor/Meteor.tscn")
 ## Declaring a variable from the spawn timer and establishing an initial time set.
 onready var spawn_timer := $spawnTimer
 onready var spawn_dec_timer := $SpawnDecrementTimer
-var next_spawn_time := 4.0
+var next_spawn_time := 3.0
 
 ## Spawn positions are initially null so that enemies do not spawn before the timer starts.
 ## This will be used later to spawn boss ships at specified points.
@@ -44,16 +44,16 @@ func _on_spawnTimer_timeout():
 	var enemy_roll = rand_range(0, 10)
 	print(enemy_roll)
 	
-	if enemy_roll <= 1:
+	if enemy_roll < 1:
 		var meteor := preload_meteor.instance()
 		meteor.position = Vector2(x_pos, position.y)
 		get_tree().current_scene.add_child(meteor)
-	elif enemy_roll > 1 and enemy_roll < 3:
+	elif enemy_roll < 3:
 		var enemy_preload = preload_enemyUFO
 		var enemy: enemyUFO = enemy_preload.instance()
 		enemy.position = Vector2(x_pos, position.y)
 		get_tree().current_scene.add_child(enemy)
-	elif enemy_roll >= 3:
+	else:
 		var enemy_preload = preload_enemy1
 		var enemy: enemy1 = enemy_preload.instance()
 		enemy.position = Vector2(x_pos, position.y)
@@ -67,3 +67,4 @@ func _on_SpawnDecrementTimer_timeout():
 		next_spawn_time -= 0.5
 	else:
 		next_spawn_time = 1.0
+	print(next_spawn_time)

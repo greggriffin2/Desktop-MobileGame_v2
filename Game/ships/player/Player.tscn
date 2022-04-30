@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ships/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/PNG/player_sheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
 
 [node name="Player" type="Area2D" groups=["player"]]
 scale = Vector2( 1.5, 1.5 )
@@ -27,18 +34,28 @@ position = Vector2( 0, -35 )
 position = Vector2( 42.6667, -11.3333 )
 
 [node name="AutoFireTimer" type="Timer" parent="."]
-one_shot = true
 
 [node name="SpeedPowerUpTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
 [node name="LaserPowerUpTimer" type="Timer" parent="."]
-wait_time = 8.0
+wait_time = 10.0
 one_shot = true
 
 [node name="SlowAutoFireTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="TimerLabel" type="Label" parent="."]
+margin_left = -20.6667
+margin_top = 45.3333
+margin_right = 19.3333
+margin_bottom = 62.3333
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
 
 [connection signal="timeout" from="AutoFireTimer" to="." method="_on_AutoFireTimer_timeout"]
 [connection signal="timeout" from="SpeedPowerUpTimer" to="." method="_on_SpeedPowerUpTimer_timeout"]

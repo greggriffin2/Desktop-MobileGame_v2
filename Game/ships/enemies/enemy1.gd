@@ -18,9 +18,13 @@ var speed_powerup := preload("res://PowerUps/SpeedPowerUp.tscn")
 var laser_powerup := preload("res://PowerUps/LaserPowerUp.tscn")
 
 ## Creating an object from the FireTimer node.
+onready var health_label = $HealthLabel
 onready var fire_timer = $FireTimer
 var move = Vector2.ZERO
 
+
+func _process(delta):
+	health_label.set_text(str(hit_points))
 
 ## Handles enemy ship movement and potential tactical patterns.
 func _physics_process(delta):
@@ -47,7 +51,7 @@ func take_damage(damage):
 			var powerup: SpeedPowerUp = speed_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)
-		elif powerup_roll > 0.05 and powerup_roll < 0.2:
+		elif powerup_roll < 0.1:
 			var powerup: LaserPowerUp = laser_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)

@@ -27,12 +27,14 @@ onready var slow_fire_timer := $SlowAutoFireTimer
 onready var fire_timer := $AutoFireTimer
 onready var speed_up_timer := $SpeedPowerUpTimer
 onready var laser_up_timer := $LaserPowerUpTimer
+onready var timer_label := $TimerLabel
 
 ## Initializing input vector.
 var input_vector = Vector2.ZERO
 var enemies: int = 0
 var sync_singleton: SynchronizationSingleton
 var press_counter: int = 0
+var power_up_seconds: int
 
 ## Setting boolean for the laser powerup to false.
 var laser_up = false
@@ -55,14 +57,14 @@ func _process(delta):
 	
 	enemies = ScoreSystem.enemies_killed
 		
-	if Input.is_action_pressed("fire_weapon") and (slow_fire_timer.is_stopped() and fire_timer.is_stopped()):
+	if Input.is_action_pressed("fire_weapon") and slow_fire_timer.is_stopped():
 		slow_fire_timer.start(slow_fire_delay)
 		if laser_up == false:
-			if enemies < 20:
+			if enemies < 50:
 				var laser := player_laser.instance()
 				laser.position = position
 				get_tree().current_scene.add_child(laser)
-			elif enemies < 40:
+			elif enemies < 100:
 				for child in firing_positions.get_children():
 					if child != $FiringPositions/CenterMuzzle:
 						var laser := player_laser.instance()
@@ -74,11 +76,11 @@ func _process(delta):
 					laser.global_position = child.global_position
 					get_tree().current_scene.add_child(laser)
 		else:
-			if enemies < 20:
+			if enemies < 50:
 				var laser := player_laser_up.instance()
 				laser.position = position
 				get_tree().current_scene.add_child(laser)
-			elif enemies < 40:
+			elif enemies < 100:
 				for child in firing_positions.get_children():
 					if child != $FiringPositions/CenterMuzzle:
 						var laser := player_laser_up.instance()
@@ -148,6 +150,9 @@ func _on_Player_area_entered(area):
 	elif area.is_in_group("laserpowerup"):
 		laser_up = true
 		laser_up_timer.start(10)
+		power_up_seconds = 10
+		timer_label.set_text(str(power_up_seconds))
+		fire_timer.start(1)
 
 ## Removes speed bonus once the speed powerup timer runs out.
 func _on_SpeedPowerUpTimer_timeout():
@@ -156,4 +161,11 @@ func _on_SpeedPowerUpTimer_timeout():
 ## Removes laser bonus once the laser powerup timer runs out.
 func _on_LaserPowerUpTimer_timeout():
 	laser_up = false
-	
+	fire_timer.stop()
+
+func _on_AutoFireTimer_timeout():
+	power_up_seconds -= 1
+	timer_label.set_text(str(power_up_seconds))
+	if power_up_seconds == 0:
+		power_up_seconds = 10
+		timer_label.set_text("")

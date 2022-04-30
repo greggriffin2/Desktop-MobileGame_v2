@@ -5,9 +5,15 @@ var on_death_explosion := preload("res://Explosions/OnDeathExplosionEffect.tscn"
 var speed_powerup := preload("res://PowerUps/SpeedPowerUp.tscn")
 var laser_powerup := preload("res://PowerUps/LaserPowerUp.tscn")
 
+onready var health_label := $HealthLabel
+
 export var speed: int = 200
 export var hit_points: int = 5
 var move = Vector2.ZERO
+
+
+func _process(delta):
+	health_label.set_text(str(hit_points))
 
 
 func _physics_process(delta):
@@ -38,6 +44,7 @@ func take_damage(damage):
 func _on_enemyUFO_area_entered(area):
 	if area.is_in_group("player"):
 		area.take_damage(25)
+		self.take_damage(5)
 
 
 func _on_VisibilityNotifier2D_screen_exited():
