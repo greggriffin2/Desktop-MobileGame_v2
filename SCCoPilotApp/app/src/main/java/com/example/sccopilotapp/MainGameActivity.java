@@ -188,12 +188,12 @@ public class MainGameActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.exit_confirmation);
         alertDialogBuilder.setTitle("Are you sure you want to exit?");
-        alertDialogBuilder.setPositiveButton("Leave", (dialogInterface, i) -> {
+        alertDialogBuilder.setPositiveButton(R.string.MGA_yes, (dialogInterface, i) -> {
             Log.d("tooltip", "Accepted - Exited MainGameActivity");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
-        alertDialogBuilder.setNegativeButton("Stay", (dialogInterface, i) -> {
+        alertDialogBuilder.setNegativeButton(R.string.MGA_no, (dialogInterface, i) -> {
             Log.d("tooltip", "Denied - Remained in session");
         });
         AlertDialog alertDialog = alertDialogBuilder.create();

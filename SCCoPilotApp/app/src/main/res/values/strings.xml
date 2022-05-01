@@ -32,6 +32,8 @@
     <string name="toggleButtonText">Change</string>
     <string name="jsonLoading">Loading leaderboard data…</string>
     <string name="helpbutton">HelpButton</string>
+    <string name="MGA_no">Stay</string>
+    <string name="MGA_yes">Leave</string>
     <string name="toast_text">Healed Ship 20 hit-points!</string>
     <string name="disconnecteddialog">
         You have been disconnected from the current game session. Please go back to the home screen

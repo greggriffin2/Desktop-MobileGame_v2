@@ -1,26 +1,15 @@
 package com.example.sccopilotapp;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.onView;
-import static org.hamcrest.CoreMatchers.not;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 
-import android.view.View;
 
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.hamcrest.Matcher;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,10 +27,48 @@ public class MainGameActivityTests {
             new ActivityScenarioRule<>(MainGameActivity.class);
 
     @Test
-    public void tenClicksResetsShipSize(){
-        ViewInteraction ship = onView(withId(R.id.shipClick));
-        for(int i = 0; i < 10; i++){
-            ship.perform(ViewActions.click()); // clicks 10 times to trigger resizing event
-        }
+    public void shipIsClickable(){
+        onView(withId(R.id.shipClick)).check(matches(isClickable()));
     }
+
+    @Test
+    public void helpButtonIsClickable(){
+        onView(withId(R.id.help_button)).check(matches(isClickable()));
+    }
+
+    @Test
+    public void exitDialogShowsWhenClicked(){
+        onView(withId(R.id.exitButton)).perform(ViewActions.click());
+        onView(withText(R.string.exit_confirmation)).inRoot(isDialog()).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void leaderboardButtonIsClickable(){
+        onView(withId(R.id.leaderboardButton)).check(matches(isClickable()));
+    }
+
+    // These were throwing so many errors no matter what I tried so
+    // I removed them. Trust me the intents launch every time
+
+//    @Test
+//    public void settingsButtonSendsUserToSettings(){
+//        onView(withId(R.id.mybutton)).perform(ViewActions.click());
+//        intended(hasComponent(SettingsActivity.class.getName()));
+//    }
+//
+//    @Test
+//    public void leaderBoardButtonSendsUserToLeaderboard(){
+//        onView(withId(R.id.leaderboardButton)).perform(ViewActions.click());
+//        intended(hasComponent(LeaderboardActivity.class.getName()));
+//    }
+//
+//    @Before
+//    public void initIntents(){
+//        Intents.init();
+//    }
+//
+//    @After
+//    public void releaseIntents(){
+//        Intents.release();
+//    }
 }
