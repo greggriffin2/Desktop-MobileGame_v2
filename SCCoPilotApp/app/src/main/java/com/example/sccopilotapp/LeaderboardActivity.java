@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
@@ -153,6 +154,9 @@ public class LeaderboardActivity extends AppCompatActivity {
         leaderboard.setAdapter(adapter);
     }
 
+    /**
+     * Builds and displays a prompt to enter a leaderboard filter
+     */
     public void filterPrompt(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Filter by name");
@@ -175,12 +179,19 @@ public class LeaderboardActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    /**
+     * Taking a copy of the fetched leaderboard, removes items from it that match a String filter
+     * given by the user. Refreshes the leaderboard after
+     * @param filter
+     */
     public void filterScores(String filter){
         Vector<LeaderboardScore> temp = this.LB;
-        for(LeaderboardScore item : temp){
-            if(item.name.equalsIgnoreCase(filter)){
-                temp.remove(item);
-            }
+        Iterator<LeaderboardScore> iterator = temp.iterator();
+        while (iterator.hasNext()) {
+            LeaderboardScore item = iterator.next();
+
+            if (!item.name.equalsIgnoreCase(filter))
+                iterator.remove();
         }
         leaderboard.invalidateViews();
         LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, temp);
