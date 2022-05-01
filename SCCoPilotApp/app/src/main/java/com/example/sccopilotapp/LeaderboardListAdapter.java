@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.sccopilotapp.gamesync.LeaderboardScore;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class LeaderboardListAdapter extends ArrayAdapter<LeaderboardScore> {

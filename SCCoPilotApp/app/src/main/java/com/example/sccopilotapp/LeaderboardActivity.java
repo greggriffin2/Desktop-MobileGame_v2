@@ -1,7 +1,5 @@
 package com.example.sccopilotapp;
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -23,9 +21,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -120,10 +116,10 @@ public class LeaderboardActivity extends AppCompatActivity {
             this.finish();
             return true;
         }
-        if (id == R.id.leaderboard_reload){
+        if (id == R.id.leaderboard_reload) {
             reloadActivity();
         }
-        if (id == R.id.leaderboard_filter){
+        if (id == R.id.leaderboard_filter) {
             filterPrompt();
         }
         return super.onOptionsItemSelected(item);
@@ -157,7 +153,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     /**
      * Builds and displays a prompt to enter a leaderboard filter
      */
-    public void filterPrompt(){
+    public void filterPrompt() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Filter by name");
 
@@ -182,9 +178,10 @@ public class LeaderboardActivity extends AppCompatActivity {
     /**
      * Taking a copy of the fetched leaderboard, removes items from it that match a String filter
      * given by the user. Refreshes the leaderboard after
+     *
      * @param filter
      */
-    public void filterScores(String filter){
+    public void filterScores(String filter) {
         Vector<LeaderboardScore> temp = this.LB;
         Iterator<LeaderboardScore> iterator = temp.iterator();
         while (iterator.hasNext()) {
@@ -218,7 +215,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
     //TODO: send user to MainActivity when game session ends
 
-    public void reloadActivity(){
+    public void reloadActivity() {
         finish();
         overridePendingTransition(0, 0);
         startActivity(getIntent());

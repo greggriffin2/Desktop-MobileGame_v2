@@ -6,7 +6,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -33,7 +32,7 @@ public class LeaderboardActivityTests {
     }
 
     @Test
-    public void reloadButtonIsClickable(){
+    public void reloadButtonIsClickable() {
         onView(withId(R.id.leaderboard_reload)).check(matches(isDisplayed()));
     }
 }
