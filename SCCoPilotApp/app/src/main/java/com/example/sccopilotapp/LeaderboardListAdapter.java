@@ -11,11 +11,12 @@ import android.widget.TextView;
 import com.example.sccopilotapp.gamesync.LeaderboardScore;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class LeaderboardListAdapter extends ArrayAdapter<LeaderboardScore> {
 
     private final Activity context;
-    ArrayList<LeaderboardScore> players;
+    Vector<LeaderboardScore> players;
 
     /**
      * Populates the custom XML file leaderboard_custom_list with leaderboard
@@ -24,7 +25,7 @@ public class LeaderboardListAdapter extends ArrayAdapter<LeaderboardScore> {
      * @param context Called by the LeaderboardActivity
      * @param players The ArrayList of players and scores
      */
-    public LeaderboardListAdapter(Activity context, ArrayList<LeaderboardScore> players) {
+    public LeaderboardListAdapter(Activity context, Vector<LeaderboardScore> players) {
         super(context, R.layout.leaderboard_custom_list, players);
         // TODO Auto-generated constructor stub
 

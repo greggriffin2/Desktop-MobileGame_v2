@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Vector;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -36,7 +37,7 @@ import okhttp3.Response;
 public class LeaderboardActivity extends AppCompatActivity {
 
     ListView leaderboard;
-    List<LeaderboardScore> LB;
+    Vector<LeaderboardScore> LB;
     TextView jsonTestBox;
     String url = "https://coolspacegame.ddns.net/retrieve";
     String filterText;
@@ -131,9 +132,9 @@ public class LeaderboardActivity extends AppCompatActivity {
      * Gets array of names and scores from JSON request and transforms the object into a
      * List of LeaderboardScores
      */
-    public List<LeaderboardScore> parseJSON(String json) throws Exception {
+    public Vector<LeaderboardScore> parseJSON(String json) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(json, new TypeReference<List<LeaderboardScore>>() {
+        return mapper.readValue(json, new TypeReference<Vector<LeaderboardScore>>() {
         });
 
     }
@@ -147,7 +148,7 @@ public class LeaderboardActivity extends AppCompatActivity {
      */
     public void populateScores(String json) throws Exception {
         this.LB = this.parseJSON(json);
-        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, (ArrayList<LeaderboardScore>) LB);
+        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, this.LB);
         leaderboard = findViewById(R.id.list);
         leaderboard.setAdapter(adapter);
     }
@@ -175,14 +176,14 @@ public class LeaderboardActivity extends AppCompatActivity {
     }
 
     public void filterScores(String filter){
-        List<LeaderboardScore> temp = this.LB;
+        Vector<LeaderboardScore> temp = this.LB;
         for(LeaderboardScore item : temp){
             if(item.name.equalsIgnoreCase(filter)){
                 temp.remove(item);
             }
         }
         leaderboard.invalidateViews();
-        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, (ArrayList<LeaderboardScore>) temp);
+        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, temp);
         leaderboard = findViewById(R.id.list);
         leaderboard.setAdapter(adapter);
     }
@@ -194,14 +195,14 @@ public class LeaderboardActivity extends AppCompatActivity {
      * postconditions: Screen will have scores updated
      * class invariants: Only LB will be changed
      */
-    public void populateScores(ArrayList<LeaderboardScore> dummyData) throws Exception {
+    public void populateScores(Vector<LeaderboardScore> dummyData) throws Exception {
         LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, dummyData);
         leaderboard = findViewById(R.id.list);
         leaderboard.setAdapter(adapter);
     }
 
     // Dummy data only generates when JSON response fails
-    public ArrayList<LeaderboardScore> generateDummyData() throws IOException {
+    public Vector<LeaderboardScore> generateDummyData() throws IOException {
         return SynchronizationFacade.getScores(0, 5);
     }
     //TODO: send user to MainActivity when game session ends

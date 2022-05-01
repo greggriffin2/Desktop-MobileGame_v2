@@ -5,6 +5,7 @@ import android.content.Context;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class SynchronizationFacade {
@@ -119,8 +120,8 @@ public class SynchronizationFacade {
      * @param stopRange  last score to retrieve
      * @return a list of scores in order from highest score to lowest
      */
-    public static ArrayList<LeaderboardScore> getScores(int startRange, int stopRange) throws IOException {
-        ArrayList<LeaderboardScore> testLeaderboard = new ArrayList<>(5);
+    public static Vector<LeaderboardScore> getScores(int startRange, int stopRange) throws IOException {
+        Vector<LeaderboardScore> testLeaderboard = new Vector<>(5);
         for (int i = 0; i < 5; i++) {
             testLeaderboard.add(new LeaderboardScore("Joe", new Info("5" + i)));
         }
