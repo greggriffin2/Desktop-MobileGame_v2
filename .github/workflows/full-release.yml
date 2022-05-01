@@ -26,8 +26,10 @@ jobs:
         with:
           java-version: 11
       - name: Make Gradle executable
-        run: chmod +x ./gradlew
+        working-directory: SCCoPilotApp
+        run: chmod +x Game/gradlew
       - name: Build Release APK
+        working-directory: SCCoPilotApp
         run: ./gradlew assembleRelease
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
