@@ -12,7 +12,7 @@
   * Scoreboard Server:
     * Run `python scoreboard_server.py` from the `ScoreBoardServer` directory
   * Websocket/Relay Server:
-    * Run `python SignalingServer.py`
+    * Build following instructions in the README.md contained in the `Relay` folder.
 * Game
   * Open the `project.godot` in Godot
   * Go to Project -> Export -> Select your desired target system
@@ -23,9 +23,12 @@
 
 * Godot
   * [Godot GDScript Toolkit](https://github.com/Scony/godot-gdscript-toolkit/issues) provides a set of style guides and checks for Godot projects using GDScript
+  
 * Android Studio
   * Use the provided linting and code formatting tools.
   * To autoformat code right click on the project -> Reformat code
+  
 * Python Project
   * Use pep8 in PyCharm or similar.
-* 
+  
+  
