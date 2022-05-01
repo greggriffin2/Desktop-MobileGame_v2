@@ -1,15 +1,20 @@
 package com.example.sccopilotapp;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sccopilotapp.gamesync.LeaderboardScore;
@@ -31,8 +36,10 @@ import okhttp3.Response;
 public class LeaderboardActivity extends AppCompatActivity {
 
     ListView leaderboard;
+    List<LeaderboardScore> LB;
     TextView jsonTestBox;
     String url = "https://coolspacegame.ddns.net/retrieve";
+    String filterText;
 
     /**
      * Creates the ActionBar at the top of the screen
@@ -114,6 +121,9 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (id == R.id.leaderboard_reload){
             reloadActivity();
         }
+        if (id == R.id.leaderboard_filter){
+            filterPrompt();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -136,8 +146,43 @@ public class LeaderboardActivity extends AppCompatActivity {
      * class invariants: Only LB will be changed
      */
     public void populateScores(String json) throws Exception {
-        List<LeaderboardScore> LB = this.parseJSON(json);
+        this.LB = this.parseJSON(json);
         LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, (ArrayList<LeaderboardScore>) LB);
+        leaderboard = findViewById(R.id.list);
+        leaderboard.setAdapter(adapter);
+    }
+
+    public void filterPrompt(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Filter by name");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("Filter", (dialog, which) -> {
+            filterScores(input.getText().toString());
+
+
+        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> {
+            dialog.cancel();
+        });
+
+        builder.create().show();
+    }
+
+    public void filterScores(String filter){
+        List<LeaderboardScore> temp = this.LB;
+        for(LeaderboardScore item : temp){
+            if(item.name.equalsIgnoreCase(filter)){
+                temp.remove(item);
+            }
+        }
+        leaderboard.invalidateViews();
+        LeaderboardListAdapter adapter = new LeaderboardListAdapter(this, (ArrayList<LeaderboardScore>) temp);
         leaderboard = findViewById(R.id.list);
         leaderboard.setAdapter(adapter);
     }
