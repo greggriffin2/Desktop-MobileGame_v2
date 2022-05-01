@@ -183,7 +183,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         Iterator<LeaderboardScore> iterator = temp.iterator();
         while (iterator.hasNext()) {
             LeaderboardScore item = iterator.next();
-
             if (!item.name.equalsIgnoreCase(filter))
                 iterator.remove();
         }

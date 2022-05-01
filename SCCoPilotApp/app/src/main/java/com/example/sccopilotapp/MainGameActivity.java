@@ -2,6 +2,7 @@ package com.example.sccopilotapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 public class MainGameActivity extends AppCompatActivity {
 
     String TAG = "MainGameActivity";
@@ -29,7 +33,7 @@ public class MainGameActivity extends AppCompatActivity {
     ImageView shipClick;
     static int background_1 = R.drawable.space_background1;
     static int background_2 = R.drawable.space_background2;
-    static int selectedBackground = background_1;
+    static int selectedBackground = background_2;
 
     /**
      * Creates the ActionBar at the top of the screen
@@ -47,20 +51,25 @@ public class MainGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        // TODO: change this to be a listener for when the game disconnects
-//        SynchronizationFacade.addUserDisconnectedEvent(new PropertyChangeListener() {
-//            @Override
-//            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-//                // add actions to be performed on event here
-//                disconnectedDialogPopup();
-//            }
-//        });
+        // TODO: change this to be a listener for when the game disconnects
+        SynchronizationFacade.addUserDisconnectedEvent(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                // add actions to be performed on event here
+                Handler mainHandler = new Handler(getApplicationContext().getMainLooper());
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        disconnectedDialogPopup();
+                    }
+                });
+            }
+        });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
         loadBackground();
 
-//        shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
         upgradesButton.setVisibility(View.INVISIBLE); // not using this, leaves room for Toast
         leaderboardButton = findViewById(R.id.leaderboardButton);
@@ -205,6 +214,8 @@ public class MainGameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 

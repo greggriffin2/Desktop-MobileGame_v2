@@ -76,11 +76,11 @@ public class SynchronizationFacade {
     }
 
     public static void addUserConnectedEvent(PropertyChangeListener listener) {
-        GameSyncSingleton.addListener("UserConnected", listener);
+        GameSyncSingleton.addListener("UserJoined", listener);
     }
 
     public static void addUserDisconnectedEvent(PropertyChangeListener listener) {
-        GameSyncSingleton.addListener("UserDisconnected", listener);
+        GameSyncSingleton.addListener("UserLeft", listener);
     }
 
     /**
