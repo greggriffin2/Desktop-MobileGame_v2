@@ -20,7 +20,6 @@ import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 public class MainGameActivity extends AppCompatActivity {
 
     String TAG = "MainGameActivity";
-    //    Button shipButton;
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;

@@ -2,6 +2,7 @@ package com.example.sccopilotapp;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -32,6 +33,20 @@ public class LeaderboardActivity extends AppCompatActivity {
     ListView leaderboard;
     TextView jsonTestBox;
     String url = "https://coolspacegame.ddns.net/retrieve";
+
+    /**
+     * Creates the ActionBar at the top of the screen
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
+        // If you don't have res/menu, just create a directory named "menu" inside res
+        getMenuInflater().inflate(R.menu.leaderboard_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +106,13 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
             this.finish();
             return true;
+        }
+        if (id == R.id.leaderboard_reload){
+            reloadActivity();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -141,4 +160,11 @@ public class LeaderboardActivity extends AppCompatActivity {
         return SynchronizationFacade.getScores(0, 5);
     }
     //TODO: send user to MainActivity when game session ends
+
+    public void reloadActivity(){
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
+    }
 }
