@@ -3,8 +3,10 @@ package com.example.sccopilotapp;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
-
+import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -27,23 +29,23 @@ public class MainGameActivityTests {
             new ActivityScenarioRule<>(MainGameActivity.class);
 
     @Test
-    public void shipIsClickable(){
+    public void shipIsClickable() {
         onView(withId(R.id.shipClick)).check(matches(isClickable()));
     }
 
     @Test
-    public void helpButtonIsClickable(){
+    public void helpButtonIsClickable() {
         onView(withId(R.id.help_button)).check(matches(isClickable()));
     }
 
     @Test
-    public void exitDialogShowsWhenClicked(){
+    public void exitDialogShowsWhenClicked() {
         onView(withId(R.id.exitButton)).perform(ViewActions.click());
         onView(withText(R.string.exit_confirmation)).inRoot(isDialog()).check(matches(isDisplayed()));
     }
 
     @Test
-    public void leaderboardButtonIsClickable(){
+    public void leaderboardButtonIsClickable() {
         onView(withId(R.id.leaderboardButton)).check(matches(isClickable()));
     }
 

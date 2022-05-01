@@ -17,9 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 public class MainGameActivity extends AppCompatActivity {
 
     String TAG = "MainGameActivity";
