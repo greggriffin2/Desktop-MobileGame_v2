@@ -2,6 +2,9 @@ package com.example.sccopilotapp.gamesync;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+import java.util.Objects;
+
 public class UserLeft extends DataObject {
     String ip;
 
@@ -14,4 +17,18 @@ public class UserLeft extends DataObject {
     public void setIp(String ip) {
         this.ip = ip;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserLeft userLeft = (UserLeft) o;
+        return ip.equals(userLeft.ip);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ip);
+    }
+
 }

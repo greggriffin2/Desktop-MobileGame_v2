@@ -3,6 +3,8 @@ package com.example.sccopilotapp.gamesync;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import java.util.Objects;
+
 @JsonTypeName("JoinRoom")
 public class JoinRoomEvent extends DataObject {
     /**
@@ -27,4 +29,18 @@ public class JoinRoomEvent extends DataObject {
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JoinRoomEvent that = (JoinRoomEvent) o;
+        return roomName.equals(that.roomName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomName);
+    }
+
 }

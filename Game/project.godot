@@ -140,8 +140,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="SCCP"
-run/main_scene="res://Networking/GameCodeDisplay/GameCodeDisplay.tscn"
+
+config/name="CoPilotGame"
+run/main_scene="res://MainMenu/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -155,6 +156,10 @@ PlayerSingleton="*res://GameSingletons/PlayerSingleton.gd"
 
 window/size/fullscreen=true
 window/stretch/mode="viewport"
+
+[global]
+
+export=false
 
 [input]
 

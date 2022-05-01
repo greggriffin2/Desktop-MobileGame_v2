@@ -2,6 +2,8 @@ package com.example.sccopilotapp.gamesync;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import java.util.Objects;
+
 @JsonTypeName("PowerUpStatus")
 public
 class PowerUpStatusEvent extends DataObject {
@@ -13,7 +15,7 @@ class PowerUpStatusEvent extends DataObject {
 
     }
 
-    PowerUpStatusEvent(PowerUpStatusEnum status, int duration) {
+    public PowerUpStatusEvent(PowerUpStatusEnum status, int duration) {
         this.status = status;
         this.duration = duration;
     }
@@ -34,9 +36,22 @@ class PowerUpStatusEvent extends DataObject {
         this.duration = duration;
     }
 
-    enum PowerUpStatusEnum {
+    public enum PowerUpStatusEnum {
         None,
         SpeedUp,
         LaserBoost
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PowerUpStatusEvent)) return false;
+        PowerUpStatusEvent that = (PowerUpStatusEvent) o;
+        return duration == that.duration && status == that.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, duration);
     }
 }
