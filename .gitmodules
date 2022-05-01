@@ -1,0 +1,3 @@
+[submodule "Relay"]
+	path = Relay
+	url = https://github.com/StripedMonkey/ws_relay_server.git
