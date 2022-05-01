@@ -27,7 +27,7 @@ jobs:
           java-version: 11
       - name: Make Gradle executable
         working-directory: SCCoPilotApp
-        run: chmod +x Game/gradlew
+        run: chmod +x gradlew
       - name: Build Release APK
         working-directory: SCCoPilotApp
         run: ./gradlew assembleRelease
