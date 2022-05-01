@@ -8,6 +8,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.selectedDescendant
 import static androidx.test.espresso.matcher.RootMatchers.isDialog;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isEnabled;
@@ -49,47 +50,20 @@ import org.junit.runner.RunWith;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class LeaderboardActivityTests {
+public class SettingsActivityTests {
     @Rule
-    public ActivityScenarioRule<LeaderboardActivity> activityRule =
-            new ActivityScenarioRule<>(LeaderboardActivity.class);
+    public ActivityScenarioRule<SettingsActivity> activityRule =
+            new ActivityScenarioRule<>(SettingsActivity.class);
 
     @Test
-    public void leaderBoardIsDisplayedWithDataInIt() {
-        onView(withId(R.id.list)).check(matches(isDisplayed()));
+    public void settingsButtonIsClickable(){
+        onView(withId(R.id.toggleButton))
+                .check(matches(isClickable()));
     }
 
     @Test
-    public void reloadButtonIsClickable() {
-        onView(withId(R.id.leaderboard_reload)).check(matches(isDisplayed()));
+    public void backButtonIsClickable(){
+        onView(withId(R.id.home))
+                .check(matches(isClickable()));
     }
-
-    @Test
-    public void filterButtonIsClickable(){
-        onView(withId(R.id.leaderboard_filter)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void filterCancelWorks(){
-        onView(withId(R.id.leaderboard_filter))
-                .perform(ViewActions.click());
-        onView(withText("Cancel"))
-                .inRoot(isDialog())
-                .check(matches(isDisplayed()))
-                .perform(ViewActions.click());
-    }
-
-    @Test
-    public void filterWorksWithTextEntryAndClickedThroughSuccessfully(){
-        onView(withId(R.id.leaderboard_filter))
-                .perform(ViewActions.click());
-        onView(isAssignableFrom(EditText.class))
-                .inRoot(isDialog())
-                // a filter that will always work
-                .perform(ViewActions.typeText("ktb"));
-                closeSoftKeyboard();
-        onView(withId(android.R.id.button1)) // confirm filter and close dialog
-                .perform(ViewActions.click());
-    }
-
 }
