@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,7 +38,6 @@ public class LeaderboardActivity extends AppCompatActivity {
     Vector<LeaderboardScore> LB;
     TextView jsonTestBox;
     String url = "https://coolspacegame.ddns.net/retrieve";
-    String filterText;
 
     /**
      * Creates the ActionBar at the top of the screen
@@ -71,21 +71,8 @@ public class LeaderboardActivity extends AppCompatActivity {
         Handler mainHandler = new Handler(this.getMainLooper());
         client.newCall(request).enqueue(new Callback() {
             @Override
-            // If request fails
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                // TODO: this code never runs. Find how to make it recognize a failure and run this code
-                mainHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            jsonTestBox.setText(R.string.jsonFAILED);
-                            populateScores(generateDummyData());
-                        } catch (Exception f) {
-                            f.printStackTrace();
-                        }
-                    }
-                });
             }
 
             @Override
@@ -93,15 +80,25 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String json = (Objects.requireNonNull(response.body())).string();
-                    mainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                jsonTestBox.setVisibility(View.GONE);
-                                populateScores(json);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                    mainHandler.post(() -> {
+                        try {
+                            jsonTestBox.setVisibility(View.GONE);
+                            ListView.LayoutParams customLayout = new ListView.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.MATCH_PARENT);
+                            populateScores(json);
+                            leaderboard.setLayoutParams(customLayout);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                } else { // HTTP request failed
+                    mainHandler.post(() -> {
+                        jsonTestBox.setText(R.string.jsonFAILED);
+                        try {
+                            populateScores(generateDummyData());
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     });
                 }
