@@ -56,19 +56,17 @@ public class MainGameActivity extends AppCompatActivity {
                 // change upgrades button/Image to be clickable/outline it with a color
             }
         });
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_game);
         backgroundGIF = findViewById(R.id.background);
         loadBackground();
 
-//        shipButton = findViewById(R.id.shipButton);
         upgradesButton = findViewById(R.id.upgradesButton);
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
         shipClick = findViewById(R.id.shipClick);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle("Space Cadet Co-Pilot");
         // handle button activities
     }
@@ -99,9 +97,9 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickShip(View view) {
-        SynchronizationFacade.fireButtonPressed(1);
+        SynchronizationFacade.fireButtonPressed(69);
         Log.d(TAG, "Click");
-        if (powerMax < 10) {
+        if (powerMax < 10) { // 10 corresponds with how many clicks Game takes to update health
             powerMax += 1;
             float x = shipClick.getScaleX();
             float y = shipClick.getScaleY();
@@ -109,7 +107,7 @@ public class MainGameActivity extends AppCompatActivity {
             shipClick.setScaleY((float) (y + .05));
         } else {
             //Send info to game
-            Toast.makeText(MainGameActivity.this, "Fully Powered!",
+            Toast.makeText(MainGameActivity.this, "Healed Ship 20 hitpoints!",
                     Toast.LENGTH_SHORT).show();
             float x = shipClick.getScaleX();
             float y = shipClick.getScaleY();

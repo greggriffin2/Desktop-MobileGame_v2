@@ -2,6 +2,7 @@ package com.example.sccopilotapp.gamesync;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 import java.util.Objects;
 
 public class UserJoined extends DataObject {

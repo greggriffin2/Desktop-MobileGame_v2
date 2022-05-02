@@ -11,11 +11,11 @@ import androidx.annotation.Nullable;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 import org.webrtc.DataChannel;
 import org.webrtc.PeerConnectionFactory;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -92,7 +92,7 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
                     Log.d(TAG, "onFailure: Failure " + response);
                 }
                 status = GameSyncStatus.UNKNOWN;
-                eventHelper.firePropertyChange("Error", t, response);
+                eventHelper.firePropertyChange("Error", null, response);
                 super.onFailure(webSocket, t, response);
             }
 
@@ -150,6 +150,12 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
         } else if (o instanceof EnemyKilled) {
             Log.d(TAG, "messageHandler: found " + (o.toString()));
             eventHelper.firePropertyChange("EnemyKilled", null, o);
+        } else if (o instanceof UserJoined) {
+            Log.d(TAG, "messageHandler: found " + (o.toString()));
+            eventHelper.firePropertyChange("UserJoined", null, o);
+        } else if (o instanceof UserLeft) {
+            Log.d(TAG, "messageHandler: found " + (o.toString()));
+            eventHelper.firePropertyChange("UserLeft", null, o);
         }
     }
 
@@ -197,7 +203,7 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
         }
     }
 
-    enum GameSyncStatus {
+    public enum GameSyncStatus {
         UNKNOWN,
         CONNECTING,
         CONNECTED,

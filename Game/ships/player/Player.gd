@@ -74,7 +74,7 @@ func _process(delta):
 	
 	enemies = ScoreSystem.enemies_killed
 		
-	if Input.is_action_pressed("fire_weapon") and slow_fire_timer.is_stopped():
+	if Input.is_action_pressed("fire_weapon") and (slow_fire_timer.is_stopped() and fire_timer.is_stopped()):
 		slow_fire_timer.start(slow_fire_delay)
 		if laser_up == false:
 			base_laser_audio_list[laser_audio_count].play()

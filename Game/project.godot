@@ -164,6 +164,7 @@ _global_script_class_icons={
 
 [application]
 
+
 config/name="CoPilotGame"
 run/main_scene="res://Networking/GameCodeDisplay/GameCodeDisplay.tscn"
 config/icon="res://icon.png"

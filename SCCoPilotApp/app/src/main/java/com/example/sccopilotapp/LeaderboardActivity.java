@@ -136,4 +136,5 @@ public class LeaderboardActivity extends AppCompatActivity {
     public ArrayList<LeaderboardScore> generateDummyData() throws IOException {
         return SynchronizationFacade.getScores(0, 5);
     }
+    //TODO: send user to MainActivity when game session ends
 }

@@ -4,6 +4,7 @@ class_name Meteor
 ##@Desc:
 ##	This class stores and distributes all data and methods related to the meteor.
 
+
 onready var health_label := $HealthLabel
 onready var destruction_audio := $DestructionAudio
 
