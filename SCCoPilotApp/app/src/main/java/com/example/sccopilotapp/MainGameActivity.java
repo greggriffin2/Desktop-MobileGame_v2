@@ -2,6 +2,7 @@ package com.example.sccopilotapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,10 +12,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.sccopilotapp.gamesync.PowerUpStatusEvent;
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
 
 import java.beans.PropertyChangeEvent;
@@ -23,7 +24,6 @@ import java.beans.PropertyChangeListener;
 public class MainGameActivity extends AppCompatActivity {
 
     String TAG = "MainGameActivity";
-    //    Button shipButton;
     Button upgradesButton;
     Button leaderboardButton;
     Button exitButton;
@@ -33,8 +33,14 @@ public class MainGameActivity extends AppCompatActivity {
     ImageView shipClick;
     static int background_1 = R.drawable.space_background1;
     static int background_2 = R.drawable.space_background2;
-    static int selectedBackground = background_1;
+    static int selectedBackground = background_2;
 
+    /**
+     * Creates the ActionBar at the top of the screen
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // R.menu.mymenu is a reference to an xml file named mymenu.xml which should be inside your res/menu directory.
@@ -45,15 +51,18 @@ public class MainGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // This is a listener for when an enemy is killed in game. At the moment it is not working,
-        // but we can still write code for what we want to be done in the app once an enemy is killed
-        SynchronizationFacade.addPowerUpEvent(new PropertyChangeListener() {
+        // TODO: change this to be a listener for when the game disconnects
+        SynchronizationFacade.addUserDisconnectedEvent(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 // add actions to be performed on event here
-                PowerUpStatusEvent powerUp = (PowerUpStatusEvent) propertyChangeEvent.getNewValue();
-                // check ID of powerUp to load correct image
-                // change upgrades button/Image to be clickable/outline it with a color
+                Handler mainHandler = new Handler(getApplicationContext().getMainLooper());
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        disconnectedDialogPopup();
+                    }
+                });
             }
         });
         super.onCreate(savedInstanceState);
@@ -62,10 +71,12 @@ public class MainGameActivity extends AppCompatActivity {
         loadBackground();
 
         upgradesButton = findViewById(R.id.upgradesButton);
+        upgradesButton.setVisibility(View.INVISIBLE); // not using this, leaves room for Toast
         leaderboardButton = findViewById(R.id.leaderboardButton);
         exitButton = findViewById(R.id.exitButton);
         shipClick = findViewById(R.id.shipClick);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setTitle("Space Cadet Co-Pilot");
         // handle button activities
@@ -79,6 +90,12 @@ public class MainGameActivity extends AppCompatActivity {
                 .into(backgroundGIF);
     }
 
+    /**
+     * Handles button presses for the ActionBar
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -86,13 +103,15 @@ public class MainGameActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }
+        if (id == R.id.help_button) {
+            toolTipPopup();
+        }
         return super.onOptionsItemSelected(item);
     }
 
     /**
-     * This method will listen for the clicks on the ship and add
-     * to a running total that will eventually be sent to the game
-     * to let it know when the power up bar is full.
+     * This method sends a buttonPressed signal to gamesync whenever the button is pressed.
+     * Also handles UI changes around the button press
      *
      * @param view
      */
@@ -107,8 +126,7 @@ public class MainGameActivity extends AppCompatActivity {
             shipClick.setScaleY((float) (y + .05));
         } else {
             //Send info to game
-            Toast.makeText(MainGameActivity.this, "Healed Ship 20 hitpoints!",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainGameActivity.this, R.string.toast_text, Toast.LENGTH_SHORT).show();
             float x = shipClick.getScaleX();
             float y = shipClick.getScaleY();
             shipClick.setScaleX((float) (x - .5));
@@ -148,8 +166,7 @@ public class MainGameActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickExit(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        exitConfirmationPopup();
     }
 
     public static void changeBackground() {
@@ -158,6 +175,47 @@ public class MainGameActivity extends AppCompatActivity {
         } else {
             selectedBackground = background_1;
         }
+    }
+
+    public void toolTipPopup() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.MGA_tooltip);
+        alertDialogBuilder.setTitle("Need Help?");
+        alertDialogBuilder.setPositiveButton("Got it!", (dialogInterface, i) -> {
+            Log.d("tooltip", "Closed - MainGameActivity");
+
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void exitConfirmationPopup() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.exit_confirmation);
+        alertDialogBuilder.setTitle("Are you sure you want to exit?");
+        alertDialogBuilder.setPositiveButton(R.string.MGA_yes, (dialogInterface, i) -> {
+            Log.d("tooltip", "Accepted - Exited MainGameActivity");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
+        alertDialogBuilder.setNegativeButton(R.string.MGA_no, (dialogInterface, i) -> {
+            Log.d("tooltip", "Denied - Remained in session");
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void disconnectedDialogPopup() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.disconnecteddialog);
+        alertDialogBuilder.setTitle("Disconnected from Session");
+        alertDialogBuilder.setPositiveButton("Ok", (dialogInterface, i) -> {
+            Log.d("tooltip", "Accepted - Exited MainGameActivity, DISCONNECTED");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 

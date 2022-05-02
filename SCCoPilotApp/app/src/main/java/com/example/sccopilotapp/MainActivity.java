@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sccopilotapp.gamesync.SynchronizationFacade;
@@ -28,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
     private EditText codeText;
     private Button playButton;
     private Button connectingButton;
+
+    /**
+     * Creates the action bar that includes the page title and Help button
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mymenu, menu);
+        MenuItem settingsButton = menu.findItem(R.id.mybutton);
+        settingsButton.setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +85,36 @@ public class MainActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setTitle("Space Cadet: Co-Pilot");
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#BF2B16"));
+        assert actionBar != null;
         actionBar.setBackgroundDrawable(colorDrawable);
+        actionBar.setTitle("Space Cadet Co-Pilot");
+
+    }
+
+    /**
+     * Responsible for initiating tooltip dialog box from help button press
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.help_button) {
+            toolTipPopup();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void toolTipPopup() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.MA_tooltip);
+        alertDialogBuilder.setTitle("Welcome to Space Cadet Co-Pilot");
+        alertDialogBuilder.setPositiveButton("Got it!", (dialogInterface, i) -> {
+            Log.d("tooltip", "Closed - MainActivity");
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void onStart() {
