@@ -28,4 +28,12 @@
   * To autoformat code right click on the project -> Reformat code
 * Python Project
   * Use pep8 in PyCharm or similar.
-* 
+
+
+#### Steps to run Tests
+
+* Android Studio
+    * Open and build `SCCoPilotApp` in Android Studio
+    * Navigate to the Terminal at the bottom of the screen
+    * run `./gradlew connectedAndroidTest` (requires Gradle plugin to run this command)
+    * This will output results to a text file, instructions for accessing it within the IDE will be displayed upon completion
