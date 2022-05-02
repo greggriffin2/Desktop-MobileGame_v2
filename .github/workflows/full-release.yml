@@ -32,7 +32,7 @@ jobs:
         working-directory: SCCoPilotApp
         run: ./gradlew assembleRelease
       - name: debug ls
-        run: ls /usr/lib/android-sdk/build-tools/
+        run: ls /usr/lib/android-sdk/build-tools/30.0.3/
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
