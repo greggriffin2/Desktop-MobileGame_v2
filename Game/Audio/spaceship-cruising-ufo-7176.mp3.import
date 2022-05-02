@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/spaceship-cruising-ufo-7176.mp3-3dd6e88d294d1f177be79d60cd8b59f0.mp3str"
+
+[deps]
+
+source_file="res://Audio/spaceship-cruising-ufo-7176.mp3"
+dest_files=[ "res://.import/spaceship-cruising-ufo-7176.mp3-3dd6e88d294d1f177be79d60cd8b59f0.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

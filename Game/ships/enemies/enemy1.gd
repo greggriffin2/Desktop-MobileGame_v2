@@ -9,7 +9,7 @@ class_name enemy1
 ##	Each enemy will also have a unique projectile and tactical pattern.
 
 var speed: int = 100
-var hit_points: int = 2
+var hit_points: int = 3
 
 ## Creating preloads for the enemy laser, an on-death explosion effect, and the two available powerups.
 var enemy1_laser := preload("res://projectiles/EnemyLaser.tscn")
@@ -18,9 +18,14 @@ var speed_powerup := preload("res://PowerUps/SpeedPowerUp.tscn")
 var laser_powerup := preload("res://PowerUps/LaserPowerUp.tscn")
 
 ## Creating an object from the FireTimer node.
-onready var fire_timer = $FireTimer
+onready var health_label := $HealthLabel
+onready var fire_timer := $FireTimer
+onready var laser_audio := $LaserAudio
 var move = Vector2.ZERO
 
+
+func _process(delta):
+	health_label.set_text(str(hit_points))
 
 ## Handles enemy ship movement and potential tactical patterns.
 func _physics_process(delta):
@@ -47,7 +52,7 @@ func take_damage(damage):
 			var powerup: SpeedPowerUp = speed_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)
-		elif powerup_roll > 0.05 and powerup_roll < 0.2:
+		elif powerup_roll < 0.1:
 			var powerup: LaserPowerUp = laser_powerup.instance()
 			powerup.position = position
 			get_tree().current_scene.add_child(powerup)
@@ -70,6 +75,7 @@ func _on_enemy1_area_entered(area):
 
 ## This function calls projectile to fire lasers every 1 second from enemy ships.
 func _on_FireTimer_timeout():
+	laser_audio.play()
 	projectile()
 
 ## Notifies the game to remove the enemy if it exits the screen.

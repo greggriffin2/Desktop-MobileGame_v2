@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Area2D",
+"class": "Enemy2Laser",
+"language": "GDScript",
+"path": "res://projectiles/Enemy2Laser.gd"
+}, {
+"base": "Area2D",
 "class": "EnemyLaser",
 "language": "GDScript",
 "path": "res://projectiles/EnemyLaser.gd"
@@ -18,6 +23,11 @@ _global_script_classes=[ {
 "class": "GameOver",
 "language": "GDScript",
 "path": "res://GameOver/GameOver.gd"
+}, {
+"base": "Area2D",
+"class": "GiantMeteor",
+"language": "GDScript",
+"path": "res://Meteor/GiantMeteor.gd"
 }, {
 "base": "Control",
 "class": "HUD",
@@ -84,6 +94,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://PowerUps/PowerUp.gd"
 }, {
+"base": "Area2D",
+"class": "SmallMeteor",
+"language": "GDScript",
+"path": "res://Meteor/SmallMeteor.gd"
+}, {
 "base": "PowerUp",
 "class": "SpeedPowerUp",
 "language": "GDScript",
@@ -98,6 +113,11 @@ _global_script_classes=[ {
 "class": "enemy1",
 "language": "GDScript",
 "path": "res://ships/enemies/enemy1.gd"
+}, {
+"base": "Area2D",
+"class": "enemy2",
+"language": "GDScript",
+"path": "res://ships/enemies/enemy2.gd"
 }, {
 "base": "Node2D",
 "class": "enemySpawner",
@@ -115,8 +135,10 @@ _global_script_classes=[ {
 "path": "res://GameStage/gameStage.gd"
 } ]
 _global_script_class_icons={
+"Enemy2Laser": "",
 "EnemyLaser": "",
 "GameOver": "",
+"GiantMeteor": "",
 "HUD": "",
 "LaserEffect": "",
 "LaserPowerUp": "",
@@ -130,9 +152,11 @@ _global_script_class_icons={
 "Player": "",
 "PlayerLaser": "",
 "PowerUp": "",
+"SmallMeteor": "",
 "SpeedPowerUp": "",
 "SynchronizationSingleton": "",
 "enemy1": "",
+"enemy2": "",
 "enemySpawner": "",
 "enemyUFO": "",
 "gameStage": ""
@@ -140,7 +164,8 @@ _global_script_class_icons={
 
 [application]
 
-config/name="SCCP"
+
+config/name="CoPilotGame"
 run/main_scene="res://Networking/GameCodeDisplay/GameCodeDisplay.tscn"
 config/icon="res://icon.png"
 
@@ -155,6 +180,10 @@ PlayerSingleton="*res://GameSingletons/PlayerSingleton.gd"
 
 window/size/fullscreen=true
 window/stretch/mode="viewport"
+
+[global]
+
+export=false
 
 [input]
 

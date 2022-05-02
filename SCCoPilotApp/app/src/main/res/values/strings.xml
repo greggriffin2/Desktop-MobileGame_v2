@@ -51,4 +51,9 @@
     </string>
     <string name="exit_confirmation">\n\nThis will end your current game session. You may join again with the same code
     \n\n</string>
+    <string name="lessThan18">Code must be less than 18 characters!</string>
+    <string name="emptyText">Code must not be empty!</string>
+    <string name="stringWithNumber">Code must not contain any numbers!</string>
+    <string name="stringWithSpaces">Code cannot contain spaces!</string>
+    <string name="incorrectCode">Code Incorrect</string>
 </resources>

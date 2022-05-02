@@ -92,7 +92,7 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
                     Log.d(TAG, "onFailure: Failure " + response);
                 }
                 status = GameSyncStatus.UNKNOWN;
-                eventHelper.firePropertyChange("Error", t, response);
+                eventHelper.firePropertyChange("Error", null, response);
                 super.onFailure(webSocket, t, response);
             }
 
@@ -203,7 +203,7 @@ public class GameSyncSingleton { // TODO: this should use the proper Singleton f
         }
     }
 
-    enum GameSyncStatus {
+    public enum GameSyncStatus {
         UNKNOWN,
         CONNECTING,
         CONNECTED,

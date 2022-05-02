@@ -1,7 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://ships/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/PNG/player_sheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/PNG/Effects/shield3.png" type="Texture" id=4]
+[ext_resource path="res://Audio/deepscanmp3-14662.mp3" type="AudioStream" id=5]
+[ext_resource path="res://Audio/laser-14729.mp3" type="AudioStream" id=6]
+[ext_resource path="res://Audio/big-impact-7054.mp3" type="AudioStream" id=7]
+[ext_resource path="res://Audio/slow-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Audio/stinger-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=9]
+[ext_resource path="res://Audio/fast-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
 
 [node name="Player" type="Area2D" groups=["player"]]
 scale = Vector2( 1.5, 1.5 )
@@ -21,26 +35,139 @@ polygon = PoolVector2Array( -14, -39, -16, -13, -36, -1, -40, -1, -45, -9, -52, 
 position = Vector2( -45.3333, -12 )
 
 [node name="CenterMuzzle" type="Node2D" parent="FiringPositions"]
-position = Vector2( 0, -35 )
+position = Vector2( 0, -45 )
 
 [node name="RightMuzzle" type="Node2D" parent="FiringPositions"]
 position = Vector2( 42.6667, -11.3333 )
 
-[node name="AutoFireTimer" type="Timer" parent="."]
-one_shot = true
+[node name="LaserTime" type="Timer" parent="."]
+
+[node name="SpeedTime" type="Timer" parent="."]
 
 [node name="SpeedPowerUpTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
 [node name="LaserPowerUpTimer" type="Timer" parent="."]
-wait_time = 8.0
+wait_time = 10.0
 one_shot = true
 
 [node name="SlowAutoFireTimer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="timeout" from="AutoFireTimer" to="." method="_on_AutoFireTimer_timeout"]
+[node name="LaserTimerLabel" type="Label" parent="."]
+margin_left = -20.0
+margin_top = 44.6667
+margin_right = 20.0
+margin_bottom = 77.6667
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
+
+[node name="SpeedTimerLabel" type="Label" parent="."]
+margin_left = -20.6667
+margin_top = -77.3333
+margin_right = 19.3333
+margin_bottom = -44.3333
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
+
+[node name="PowerUpLabel" type="Label" parent="."]
+margin_left = -119.333
+margin_top = 80.6667
+margin_right = 119.667
+margin_bottom = 113.667
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
+
+[node name="PowerUpLabelTimer" type="Timer" parent="."]
+
+[node name="InvincibilityFrames" type="Timer" parent="."]
+
+[node name="InvincibilityShield" type="Sprite" parent="."]
+texture = ExtResource( 4 )
+
+[node name="ShieldWoompf" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="BaseLaserAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 1.1
+
+[node name="BaseLaserAudio2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 1.1
+
+[node name="BaseLaserAudio3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 1.1
+
+[node name="BaseLaserAudio4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 1.1
+
+[node name="BaseLaserAudio5" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 1.1
+
+[node name="LaserUpAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 0.9
+
+[node name="LaserUpAudio2" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 0.9
+
+[node name="LaserUpAudio3" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 0.9
+
+[node name="LaserUpAudio4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 0.9
+
+[node name="LaserUpAudio5" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -0.5
+pitch_scale = 0.9
+
+[node name="DeathAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+
+[node name="SlowMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
+
+[node name="FastMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+
+[node name="Stinger" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+stream_paused = true
+
+[connection signal="timeout" from="LaserTime" to="." method="_on_LaserTime_timeout"]
+[connection signal="timeout" from="SpeedTime" to="." method="_on_SpeedTime_timeout"]
 [connection signal="timeout" from="SpeedPowerUpTimer" to="." method="_on_SpeedPowerUpTimer_timeout"]
 [connection signal="timeout" from="LaserPowerUpTimer" to="." method="_on_LaserPowerUpTimer_timeout"]
 [connection signal="timeout" from="SlowAutoFireTimer" to="." method="_on_SlowAutoFireTimer_timeout"]
+[connection signal="timeout" from="PowerUpLabelTimer" to="." method="_on_PowerUpLabelTimer_timeout"]
+[connection signal="timeout" from="InvincibilityFrames" to="." method="_on_InvincibilityFrames_timeout"]
+[connection signal="finished" from="ShieldWoompf" to="." method="_on_ShieldWoompf_finished"]
+[connection signal="finished" from="SlowMusic" to="." method="_on_SlowMusic_finished"]

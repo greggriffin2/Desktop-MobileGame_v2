@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Networking/GameCodeDisplay/GameCodeView.gd" type="Script" id=1]
 [ext_resource path="res://assets/Vector/ReloadTestImage.svg" type="Texture" id=2]
@@ -15,9 +15,14 @@ size = 24
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 22
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
+size = 24
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=5]
 size = 24
 font_data = ExtResource( 4 )
 
@@ -62,12 +67,12 @@ size_flags_vertical = 5
 icon = ExtResource( 2 )
 
 [node name="ContinueButton" type="Button" parent="."]
-margin_left = 736.0
-margin_top = 529.0
-margin_right = 977.0
-margin_bottom = 563.0
+margin_left = 837.0
+margin_top = 506.0
+margin_right = 954.0
+margin_bottom = 554.0
 custom_fonts/font = SubResource( 3 )
-text = "Continue Without Connecting"
+text = "Fly Solo"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 margin_left = 318.0
@@ -95,5 +100,26 @@ region_rect = Rect2( 0, 0, 1600, 900 )
 [node name="TileMap" type="TileMap" parent="ParallaxBackground"]
 format = 1
 
+[node name="ConnectedLabel" type="Label" parent="."]
+margin_left = 349.0
+margin_top = 409.0
+margin_right = 638.0
+margin_bottom = 449.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 5 )
+text = "Co-pilot Established!"
+align = 1
+valign = 1
+
+[node name="ConnectedButton" type="Button" parent="."]
+margin_left = 429.0
+margin_top = 467.0
+margin_right = 546.0
+margin_bottom = 515.0
+custom_fonts/font = SubResource( 3 )
+text = "Let's go!"
+
 [connection signal="pressed" from="Reload" to="." method="_on_Reload_pressed"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_ContinueButton_pressed"]
+[connection signal="pressed" from="ConnectedButton" to="." method="_on_ConnectedButton_pressed"]
+[connection signal="pressed" from="ConnectedButton" to="." method="_on_ContinueButton_pressed"]

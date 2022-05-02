@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://interface/LifeIcon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://interface/HUD.gd" type="Script" id=2]
-[ext_resource path="res://PowerUps/LaserPowerUpIcon.tscn" type="PackedScene" id=3]
-[ext_resource path="res://PowerUps/SpeedPowerUpIcon.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="DynamicFont" id=1]
@@ -48,9 +46,9 @@ margin_right = 408.0
 margin_bottom = 75.0
 
 [node name="Score" type="Label" parent="."]
-margin_left = 37.0
+margin_left = 33.0
 margin_top = 477.0
-margin_right = 94.0
+margin_right = 90.0
 margin_bottom = 492.0
 rect_scale = Vector2( 2, 2 )
 custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
@@ -97,44 +95,13 @@ custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "Meteors: 0"
 
-[node name="SpeedPowerUp" type="HBoxContainer" parent="."]
-visible = false
-margin_left = 893.0
-margin_top = 25.0
-margin_right = 915.0
-margin_bottom = 46.0
-rect_scale = Vector2( 2, 2 )
-
-[node name="SpeedPowerUpIcon" parent="SpeedPowerUp" instance=ExtResource( 4 )]
-margin_right = 22.0
-margin_bottom = 21.0
-
-[node name="LaserPowerUp" type="HBoxContainer" parent="."]
-visible = false
-anchor_right = 900.0
-margin_left = 955.0
-margin_top = 26.0
-margin_right = -54805.0
-margin_bottom = 66.0
-rect_scale = Vector2( 2, 2 )
-
-[node name="LaserPowerUpIcon" parent="LaserPowerUp" instance=ExtResource( 3 )]
-margin_right = 22.0
-margin_bottom = 40.0
-
 [node name="DeathTransitionTimer" type="Timer" parent="."]
 
-[node name="HealthBar" type="TextureProgress" parent="."]
-margin_left = 32.0
-margin_top = 552.0
-margin_right = 282.0
-margin_bottom = 592.0
-
 [node name="HealthLabel" type="Label" parent="."]
-margin_left = 34.0
-margin_top = 551.0
-margin_right = 205.0
-margin_bottom = 591.0
+margin_left = 30.0
+margin_top = 548.0
+margin_right = 201.0
+margin_bottom = 588.0
 custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Health:"
