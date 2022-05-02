@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/bgScroll.gd" type="Script" id=1]
 [ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=2]
@@ -16,29 +16,44 @@ font_data = ExtResource( 2 )
 [sub_resource type="DynamicFont" id=4]
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
-size = 28
+[sub_resource type="DynamicFont" id=9]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 32
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=14]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 24
 font_data = ExtResource( 2 )
 
 [node name="GameOver" type="Node2D"]
 script = ExtResource( 5 )
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-script = ExtResource( 1 )
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2( 1600, 900 )
-
-[node name="background1" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2( -1, 0 )
+[node name="StarParticles" type="CPUParticles2D" parent="."]
+position = Vector2( 524, 2 )
 scale = Vector2( 5, 5 )
-texture = ExtResource( 3 )
-centered = false
-region_enabled = true
-region_rect = Rect2( 0, 0, 1600, 900 )
-
-[node name="StarParticles" type="CPUParticles2D" parent="ParallaxBackground/ParallaxLayer/background1"]
-position = Vector2( 105, 0.4 )
 amount = 20
 lifetime = 3.0
 texture = ExtResource( 4 )
@@ -55,14 +70,28 @@ scale_amount = 0.1
 scale_amount_random = 0.24
 color_ramp = SubResource( 7 )
 
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource( 1 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 1600, 900 )
+
+[node name="background1" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( -1, 0 )
+scale = Vector2( 5, 5 )
+texture = ExtResource( 3 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 1600, 900 )
+
 [node name="TileMap" type="TileMap" parent="ParallaxBackground"]
 format = 1
 
 [node name="GameOverLabel" type="Label" parent="."]
-margin_left = 367.0
-margin_top = 95.0
-margin_right = 655.0
-margin_bottom = 176.0
+margin_left = 375.0
+margin_top = 37.0
+margin_right = 663.0
+margin_bottom = 117.0
 custom_colors/font_color = Color( 1, 0.984314, 0, 1 )
 custom_fonts/font = SubResource( 8 )
 text = "GAME OVER"
@@ -70,10 +99,10 @@ align = 1
 valign = 1
 
 [node name="Score" type="Label" parent="."]
-margin_left = 284.0
-margin_top = 195.0
-margin_right = 350.0
-margin_bottom = 212.0
+margin_left = 218.0
+margin_top = 126.0
+margin_right = 284.0
+margin_bottom = 143.0
 rect_scale = Vector2( 2, 2 )
 custom_colors/font_color = Color( 1, 0.984314, 0, 1 )
 custom_fonts/font = SubResource( 4 )
@@ -82,10 +111,10 @@ align = 1
 valign = 1
 
 [node name="HighScore" type="Label" parent="."]
-margin_left = 547.0
-margin_top = 194.0
-margin_right = 613.0
-margin_bottom = 211.0
+margin_left = 607.0
+margin_top = 126.0
+margin_right = 673.0
+margin_bottom = 143.0
 rect_scale = Vector2( 2, 2 )
 custom_colors/font_color = Color( 1, 0.984314, 0, 1 )
 custom_fonts/font = SubResource( 4 )
@@ -94,62 +123,94 @@ align = 1
 valign = 1
 
 [node name="RetryButton" type="Button" parent="."]
-margin_left = 238.0
-margin_top = 267.0
-margin_right = 425.0
-margin_bottom = 323.0
-
-[node name="Label" type="Label" parent="RetryButton"]
-margin_right = 188.0
-margin_bottom = 58.0
-custom_fonts/font = SubResource( 3 )
+margin_left = 419.0
+margin_top = 331.0
+margin_right = 608.0
+margin_bottom = 382.0
+custom_fonts/font = SubResource( 9 )
 text = "RETRY"
-align = 1
-valign = 1
-
-[node name="LeaderboardButton" type="Button" parent="."]
-margin_left = 565.0
-margin_top = 268.0
-margin_right = 795.0
-margin_bottom = 324.0
-
-[node name="Label" type="Label" parent="LeaderboardButton"]
-margin_right = 230.0
-margin_bottom = 58.0
-custom_fonts/font = SubResource( 3 )
-text = "LEADERBOARDS"
-align = 1
-valign = 1
 
 [node name="MenuButton" type="Button" parent="."]
-margin_left = 391.0
-margin_top = 358.0
-margin_right = 621.0
-margin_bottom = 414.0
-
-[node name="Label" type="Label" parent="MenuButton"]
-margin_right = 230.0
-margin_bottom = 58.0
-custom_fonts/font = SubResource( 3 )
+margin_left = 400.0
+margin_top = 404.0
+margin_right = 630.0
+margin_bottom = 460.0
+custom_fonts/font = SubResource( 10 )
 text = "MAIN MENU"
-align = 1
-valign = 1
 
 [node name="ExitButton" type="Button" parent="."]
-margin_left = 392.0
-margin_top = 445.0
-margin_right = 622.0
-margin_bottom = 501.0
+margin_left = 400.0
+margin_top = 486.0
+margin_right = 630.0
+margin_bottom = 542.0
+custom_fonts/font = SubResource( 11 )
+text = "EXIT GAME"
 
-[node name="Label" type="Label" parent="ExitButton"]
-margin_right = 230.0
-margin_bottom = 58.0
-custom_fonts/font = SubResource( 3 )
-text = "EXIT SESSION"
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 523.0
+margin_top = 219.0
+margin_right = 644.0
+margin_bottom = 262.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 12 )
+align = 1
+max_length = 3
+
+[node name="UsernameLabel" type="Label" parent="."]
+margin_left = 380.0
+margin_top = 220.0
+margin_right = 519.0
+margin_bottom = 260.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 13 )
+text = "USERNAME:"
 align = 1
 valign = 1
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+timeout = 999
+
+[node name="SubmissionConfirmation" type="Label" parent="."]
+margin_left = 414.0
+margin_top = 276.0
+margin_right = 620.0
+margin_bottom = 308.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 14 )
+text = "Score Submitted!"
+align = 1
+valign = 1
+
+[node name="ProfanityError" type="Label" parent="."]
+margin_left = 128.0
+margin_top = 279.0
+margin_right = 907.0
+margin_bottom = 304.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 15 )
+text = "These initials contain profanity - please enter a new set of initials!"
+align = 1
+valign = 1
+
+[node name="EmptyError" type="Label" parent="."]
+margin_left = 284.0
+margin_top = 279.0
+margin_right = 775.0
+margin_bottom = 304.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 16 )
+text = "You cannot submit a score with no name!"
+align = 1
+valign = 1
+
+[node name="ProfanityTimer" type="Timer" parent="."]
+
+[node name="EmptyTimer" type="Timer" parent="."]
+
 [connection signal="pressed" from="RetryButton" to="." method="_on_RetryButton_pressed"]
-[connection signal="pressed" from="LeaderboardButton" to="." method="_on_LeaderboardButton_pressed"]
 [connection signal="pressed" from="MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="text_entered" from="LineEdit" to="." method="_on_LineEdit_text_entered"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="timeout" from="ProfanityTimer" to="." method="_on_ProfanityTimer_timeout"]
+[connection signal="timeout" from="EmptyTimer" to="." method="_on_EmptyTimer_timeout"]

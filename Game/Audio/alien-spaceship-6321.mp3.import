@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/alien-spaceship-6321.mp3-7e320c481619a5fce74c75ce5cf7531f.mp3str"
+
+[deps]
+
+source_file="res://Audio/alien-spaceship-6321.mp3"
+dest_files=[ "res://.import/alien-spaceship-6321.mp3-7e320c481619a5fce74c75ce5cf7531f.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

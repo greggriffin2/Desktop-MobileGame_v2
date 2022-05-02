@@ -34,5 +34,8 @@ autostart = true
 
 [node name="shootTimer" type="Timer" parent="."]
 
+[node name="SpawnDecrementTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="spawnTimer" to="." method="_on_spawnTimer_timeout"]
 [connection signal="timeout" from="shootTimer" to="." method="_on_shootTimer_timeout"]
+[connection signal="timeout" from="SpawnDecrementTimer" to="." method="_on_SpawnDecrementTimer_timeout"]
