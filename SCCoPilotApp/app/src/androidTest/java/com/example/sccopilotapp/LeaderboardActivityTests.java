@@ -20,9 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Authored by Greg Griffin
  */
 
 @RunWith(AndroidJUnit4.class)
@@ -31,6 +29,9 @@ public class LeaderboardActivityTests {
     public ActivityScenarioRule<LeaderboardActivity> activityRule =
             new ActivityScenarioRule<>(LeaderboardActivity.class);
 
+    /**
+     * Tests user story #36
+     */
     @Test
     public void leaderBoardIsDisplayedWithDataInIt() {
         onView(withId(R.id.list)).check(matches(isDisplayed()));
@@ -41,11 +42,17 @@ public class LeaderboardActivityTests {
         onView(withId(R.id.leaderboard_reload)).check(matches(isDisplayed()));
     }
 
+    /**
+     * Tests user story #66
+     */
     @Test
     public void filterButtonIsClickable() {
         onView(withId(R.id.leaderboard_filter)).check(matches(isDisplayed()));
     }
 
+    /**
+     * Tests user story #66
+     */
     @Test
     public void filterCancelWorks() {
         onView(withId(R.id.leaderboard_filter))
@@ -56,6 +63,9 @@ public class LeaderboardActivityTests {
                 .perform(ViewActions.click());
     }
 
+    /**
+     * Tests user story #66
+     */
     @Test
     public void filterWorksWithTextEntryAndClickedThroughSuccessfully() {
         onView(withId(R.id.leaderboard_filter))

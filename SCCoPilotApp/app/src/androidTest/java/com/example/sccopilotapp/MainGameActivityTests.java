@@ -17,36 +17,52 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * Authored by Greg Griffin
  */
 
 @RunWith(AndroidJUnit4.class)
 public class MainGameActivityTests {
     @Rule
+    public ActivityScenarioRule<MainActivity> singletonRule =
+            new ActivityScenarioRule<>(MainActivity.class);
+    @Rule
     public ActivityScenarioRule<MainGameActivity> activityRule =
             new ActivityScenarioRule<>(MainGameActivity.class);
 
+    /**
+     * Tests user story #25
+     */
     @Test
     public void shipIsClickable() {
         onView(withId(R.id.shipClick)).check(matches(isClickable()));
     }
 
+    /**
+     * Tests user story #63
+     */
     @Test
     public void helpButtonIsClickable() {
         onView(withId(R.id.help_button)).check(matches(isClickable()));
     }
 
+    /**
+     * Tests user story #63
+     */
     @Test
     public void exitDialogShowsWhenClicked() {
         onView(withId(R.id.exitButton)).perform(ViewActions.click());
-        onView(withText(R.string.exit_confirmation)).inRoot(isDialog()).check(matches(isDisplayed()));
+        onView(withText(R.string.exit_confirmation))
+                .inRoot(isDialog()).check(matches(isDisplayed()));
     }
 
     @Test
     public void leaderboardButtonIsClickable() {
         onView(withId(R.id.leaderboardButton)).check(matches(isClickable()));
+    }
+
+    @Test
+    public void settingsButtonIsClickable() {
+        onView(withId(R.id.mybutton)).check(matches(isClickable()));
     }
 
     // These were throwing so many errors no matter what I tried so
