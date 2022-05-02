@@ -67,5 +67,5 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.10.0
         with:
-          artifacts: "release-apk, Game/build/*,${{ steps.sign_app }}"
+          artifacts: "Game/build/*/*,${{ steps.sign_app.outputs.signedReleaseFile }}"
           token: ${{ secrets.GITHUB_TOKEN }}
