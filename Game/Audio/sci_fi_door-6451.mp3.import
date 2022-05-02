@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/sci_fi_door-6451.mp3-e9dcbb7313570c18caedea4d43e57f42.mp3str"
+
+[deps]
+
+source_file="res://Audio/sci_fi_door-6451.mp3"
+dest_files=[ "res://.import/sci_fi_door-6451.mp3-e9dcbb7313570c18caedea4d43e57f42.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

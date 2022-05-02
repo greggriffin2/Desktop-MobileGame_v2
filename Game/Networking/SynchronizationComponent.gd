@@ -120,6 +120,7 @@ func handle_dictionary_data(data: Dictionary, mpsingleton):
 			emit_signal("user_left", info)
 		{"ip_joined": var info, ..}:
 			emit_signal("user_joined", info)
+			PlayerSingleton.connection_status = "Co-pilot Established!"
 		{"JoinRoom": var roomKey, ..}:
 			mpsingleton.set_gamecode(roomKey)
 		{"status": var status, "duration": var duration, ..}:

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/rock-destroy-6409.mp3-dceeaf1e2e4f9fab8801777db6a16978.mp3str"
+
+[deps]
+
+source_file="res://Audio/rock-destroy-6409.mp3"
+dest_files=[ "res://.import/rock-destroy-6409.mp3-dceeaf1e2e4f9fab8801777db6a16978.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

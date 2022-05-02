@@ -12,11 +12,14 @@ func _ready():
 	mp_singleton.connect("user_joined", self, "_user_joined")
 	mp_singleton.reload_connection()
 	update_gamecode(mp_singleton.game_code)
+	$ConnectedButton.visible = false
+	$ConnectedLabel.set_text("")
 	
-func _user_joined():
-	if PlayerSingleton.connection_status == "User Connected!":
-		get_tree().change_scene("res://MainMenu/MainMenu.tscn")
-		print("Connection made")
+func _process(delta):
+	$ConnectedLabel.set_text(PlayerSingleton.connection_status)
+	if PlayerSingleton.connection_status == "Co-pilot Established!":
+		$ConnectedButton.visible = true
+		$ContinueButton.visible = false
 
 
 func update_gamecode(code: String):
@@ -29,4 +32,8 @@ func _on_Reload_pressed():
 
 
 func _on_ContinueButton_pressed():
+	get_tree().change_scene("res://MainMenu/MainMenu.tscn")
+
+
+func _on_ConnectedButton_pressed():
 	get_tree().change_scene("res://MainMenu/MainMenu.tscn")

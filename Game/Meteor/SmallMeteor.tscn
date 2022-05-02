@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/PNG/Meteors/meteorBrown_big3.png" type="Texture" id=2]
+[ext_resource path="res://Meteor/SmallMeteor.gd" type="Script" id=3]
+[ext_resource path="res://Audio/rock-destroy-6409.mp3" type="AudioStream" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 1 )
+
+[node name="SmallMeteor" type="Area2D" groups=["damageable"]]
+scale = Vector2( 0.6, 0.6 )
+script = ExtResource( 3 )
+health = 10
+score_value = 1000
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -9, -39, -43, -18, -40, 15, -27, 33, 21, 40, 44, 0, 29, -28 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -1.5, 1.5 )
+scale = Vector2( 5.85, 4.45 )
+
+[node name="HealthLabel" type="Label" parent="."]
+margin_left = -20.0
+margin_top = -78.0
+margin_right = 20.0
+margin_bottom = -45.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+align = 1
+valign = 1
+
+[node name="DestructionAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+pitch_scale = 1.1
+
+[connection signal="area_entered" from="." to="." method="_on_Meteor_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_Meteor_area_exited"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

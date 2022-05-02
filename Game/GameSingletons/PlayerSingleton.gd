@@ -18,8 +18,10 @@ func update_player_position(x, y):
 func update_health(health):
 	player_health = health
 	
+	
 func _user_joined():
 	connection_status = "User Connected!"
+	$GameCodeDisplay/Control/ConnectedButton.visible = true
 	
 func _user_left():
 	connection_status = "User Disconnected"

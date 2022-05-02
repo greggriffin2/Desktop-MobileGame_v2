@@ -46,3 +46,9 @@ func add_enemy_kill():
 func add_meteor_kill():
 	meteors_killed += 1
 	update_high_score()
+	
+func reset():
+	score = 0
+	score_multiplier = 1
+	enemies_killed = 0
+	meteors_killed = 0
