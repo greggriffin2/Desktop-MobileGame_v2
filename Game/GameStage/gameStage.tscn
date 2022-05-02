@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/bgScroll.gd" type="Script" id=1]
 [ext_resource path="res://PauseMenu/Pause.tscn" type="PackedScene" id=2]
@@ -7,7 +7,10 @@
 [ext_resource path="res://interface/HUD.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/Backgrounds/blue.png" type="Texture" id=6]
 [ext_resource path="res://assets/PNG/Stars/starBig.png" type="Texture" id=7]
+[ext_resource path="res://Audio/slow-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=8]
+[ext_resource path="res://Audio/stinger-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=9]
 [ext_resource path="res://GameStage/gameStage.gd" type="Script" id=10]
+[ext_resource path="res://Audio/fast-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=11]
 
 [sub_resource type="Gradient" id=1]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
@@ -65,5 +68,15 @@ layer = 69
 [node name="Pause" parent="CanvasLayer" instance=ExtResource( 2 )]
 
 [node name="enemySpawner" parent="." instance=ExtResource( 4 )]
+
+[node name="SlowMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
+
+[node name="FastMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="Stinger" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
 
 [connection signal="area_entered" from="Player" to="Player" method="_on_Player_area_entered"]

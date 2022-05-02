@@ -6,10 +6,15 @@ var speed_powerup := preload("res://PowerUps/SpeedPowerUp.tscn")
 var laser_powerup := preload("res://PowerUps/LaserPowerUp.tscn")
 
 onready var health_label := $HealthLabel
+onready var UFO_audio := $UFOAudio
 
 export var speed: int = 200
-export var hit_points: int = 5
+export var hit_points: int = 8
 var move = Vector2.ZERO
+var spin = Vector2.ZERO
+
+func _ready():
+	UFO_audio.play()
 
 
 func _process(delta):

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://ships/enemies/enemyUFO.gd" type="Script" id=1]
 [ext_resource path="res://assets/PNG/ufoBlue.png" type="Texture" id=2]
 [ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Audio/alien-spaceship-6321.mp3" type="AudioStream" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 24
@@ -30,6 +31,9 @@ custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
 custom_fonts/font = SubResource( 1 )
 align = 1
 valign = 1
+
+[node name="UFOAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
 
 [connection signal="area_entered" from="." to="." method="_on_enemyUFO_area_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

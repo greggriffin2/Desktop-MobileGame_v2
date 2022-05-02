@@ -64,7 +64,7 @@ func _on_player_life_change(life: int):
 		set_lives(1)
 	else:
 		set_lives(0)
-		death_transition_timer.start(2)
+		death_transition_timer.start(4)
 
 
 ## Signal method used to monitor the player's current speed. 

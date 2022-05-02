@@ -5,15 +5,18 @@ class_name Meteor
 ##	This class stores and distributes all data and methods related to the meteor.
 
 onready var health_label := $HealthLabel
+onready var destruction_audio := $DestructionAudio
 
 ## Exported variable for health value.
-export var health: int = 20
+export var health: int
+export var score_value: int
 
 ## Used to tell the meteor if it is colliding with the player.
 var player_in_area: Player = null
 
 ## Creating a preload for the meteor's on-death effect.
 var meteor_effect := preload("res://Meteor/MeteorEffect.tscn")
+var small_meteor := preload("res://Meteor/SmallMeteor.tscn")
 
 ## Variables for randomizing rotation and speed.
 var speed: float = 0
@@ -32,6 +35,10 @@ func _process(delta):
 	
 ## Handles the physics processes of meteor rotation and speed.
 func _physics_process(delta):
+	if rotation_rate > 0:
+		position.x += (speed * delta) / 2
+	else:
+		position.x -= (speed * delta) / 2
 	rotation_degrees += rotation_rate * delta
 	position.y += speed * delta
 	
@@ -41,11 +48,15 @@ func _physics_process(delta):
 func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
-		ScoreSystem.add_score(500)
+		destruction_audio.play()
+		ScoreSystem.add_score(score_value)
 		ScoreSystem.add_meteor_kill()
 		var effect := meteor_effect.instance()
 		effect.position = position
 		get_parent().add_child(effect)
+		var meteor_shard := small_meteor.instance()
+		meteor_shard.position = position
+		get_parent().add_child(meteor_shard)
 		queue_free()
 
 ## Notifies the game to remove the meteor if it exits the screen.

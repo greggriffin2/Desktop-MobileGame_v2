@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/electronic-impact-hard-10018.mp3-c4f0c070b125152fbbf08c95137c4b1c.mp3str"
+
+[deps]
+
+source_file="res://Audio/electronic-impact-hard-10018.mp3"
+dest_files=[ "res://.import/electronic-impact-hard-10018.mp3-c4f0c070b125152fbbf08c95137c4b1c.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
