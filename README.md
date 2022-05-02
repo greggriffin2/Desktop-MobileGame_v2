@@ -36,5 +36,5 @@
     * Open and build `SCCoPilotApp` in Android Studio
     * Ensure that an emulator or physical device is set up with the IDE to run the tests 
     * Navigate to the Terminal at the bottom of the screen
-    * run `./gradlew connectedAndroidTest` (requires Gradle plugin to run this command)
+    * run `./gradlew connectedAndroidTest`
     * This will output results to a text file, instructions for accessing it within the IDE will be displayed upon completion
