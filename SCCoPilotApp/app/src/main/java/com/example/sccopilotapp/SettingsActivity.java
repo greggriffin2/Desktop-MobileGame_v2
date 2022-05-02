@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,16 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public void onToggleClick(View view) {
         MainGameActivity.changeBackground();
+        int currInt = MainGameActivity.selectedBackground;
+        String currString;
+        if (currInt == MainGameActivity.background_1){
+            currString = "WHIRL";
+        } else {
+            currString = "WARP";
+        }
+        Toast.makeText(this,
+                "Background changed to " + currString,
+                Toast.LENGTH_SHORT).show();
     }
 
     /**

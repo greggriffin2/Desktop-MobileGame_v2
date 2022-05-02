@@ -160,6 +160,14 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void onClickPlay(View view) {
+
+        // code to skip connection and send to MGA
+        if (codeText.getText().toString().equalsIgnoreCase("greg")){
+            Intent intent = new Intent(MainActivity.this, MainGameActivity.class);
+            startActivity(intent);
+            return;
+        }
+
         Log.d(TAG, "onClickPlay: Creating sync singleton");
         SynchronizationFacade.connect(codeText.getText().toString());
         String validatedCode = codeText.getText().toString();
