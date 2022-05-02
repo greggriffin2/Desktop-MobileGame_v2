@@ -31,6 +31,8 @@ jobs:
       - name: Build Release APK
         working-directory: SCCoPilotApp
         run: ./gradlew assembleRelease
+      - name: debug ls
+        run: ls /usr/lib/android-sdk/build-tools/
       - name: Sign app APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
