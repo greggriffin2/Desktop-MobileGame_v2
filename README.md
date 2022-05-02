@@ -32,7 +32,7 @@
 
 #### Steps to run Tests
 
-* Android Studio
+* Mobile App
     * Open and build `SCCoPilotApp` in Android Studio
     * Navigate to the Terminal at the bottom of the screen
     * run `./gradlew connectedAndroidTest` (requires Gradle plugin to run this command)
