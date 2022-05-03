@@ -1,3 +1,5 @@
+[![Godot CI](https://github.com/UNCW-CSC-450/team-project-team2/actions/workflows/godot-CI.yml/badge.svg)](https://github.com/UNCW-CSC-450/team-project-team2/actions/workflows/godot-CI.yml) [![Android CI](https://github.com/UNCW-CSC-450/team-project-team2/actions/workflows/android-ci.yml/badge.svg)](https://github.com/UNCW-CSC-450/team-project-team2/actions/workflows/android-ci.yml)
+
 #### Steps to compile and run
 
 * Mobile App
