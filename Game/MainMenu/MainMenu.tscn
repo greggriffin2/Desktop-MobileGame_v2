@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://MainMenu/StartButton.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/PNG/phoneimage.png" type="Texture" id=7]
 [ext_resource path="res://assets/Backgrounds/blue.png" type="Texture" id=8]
 [ext_resource path="res://assets/PNG/Stars/starBig.png" type="Texture" id=9]
+[ext_resource path="res://Audio/2015-09-25_-_Old_Video_Game_Music_1_-_David_Fesliyan (1).mp3" type="AudioStream" id=10]
 
 [sub_resource type="DynamicFont" id=5]
 size = 45
@@ -123,6 +124,10 @@ custom_fonts/font = SubResource( 7 )
 text = "Game Code"
 align = 1
 valign = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+autoplay = true
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_ExitButton_pressed"]

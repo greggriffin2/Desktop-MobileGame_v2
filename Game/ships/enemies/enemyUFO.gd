@@ -13,9 +13,6 @@ export var hit_points: int = 8
 var move = Vector2.ZERO
 var spin = Vector2.ZERO
 
-func _ready():
-	UFO_audio.play()
-
 
 func _process(delta):
 	health_label.set_text(str(hit_points))

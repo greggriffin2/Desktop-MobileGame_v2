@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Networking/GameCodeDisplay/GameCodeView.gd" type="Script" id=1]
 [ext_resource path="res://assets/Vector/ReloadTestImage.svg" type="Texture" id=2]
 [ext_resource path="res://scripts/bgScroll.gd" type="Script" id=3]
 [ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/Backgrounds/blue.png" type="Texture" id=5]
+[ext_resource path="res://Audio/Vine-boom-sound-effect.mp3" type="AudioStream" id=6]
 
 [sub_resource type="DynamicFont" id=4]
 size = 24
@@ -112,6 +113,7 @@ align = 1
 valign = 1
 
 [node name="ConnectedButton" type="Button" parent="."]
+visible = false
 margin_left = 429.0
 margin_top = 467.0
 margin_right = 546.0
@@ -119,7 +121,12 @@ margin_bottom = 515.0
 custom_fonts/font = SubResource( 3 )
 text = "Let's go!"
 
+[node name="VineBoom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = 5.0
+
 [connection signal="pressed" from="Reload" to="." method="_on_Reload_pressed"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_ContinueButton_pressed"]
 [connection signal="pressed" from="ConnectedButton" to="." method="_on_ConnectedButton_pressed"]
 [connection signal="pressed" from="ConnectedButton" to="." method="_on_ContinueButton_pressed"]
+[connection signal="visibility_changed" from="ConnectedButton" to="." method="_on_ConnectedButton_visibility_changed"]

@@ -12,6 +12,7 @@ var on_death_effects := [
 	preload("res://Explosions/ODELayer2.tscn"),
 	preload("res://Explosions/ODELayer3.tscn")
 ]
+var player_bomb := preload("res://projectiles/Bomb.tscn")
 #var sync_component := get_node("/root/NetworkSynchronizationSingleton")
 
 ## Exported variables for speed, health, and automatic firing delays for both weapons.
@@ -81,11 +82,11 @@ func _process(delta):
 			laser_audio_count += 1
 			if laser_audio_count == len(base_laser_audio_list):
 				laser_audio_count = 0
-			if enemies < 50:
+			if enemies < 30:
 				var laser := player_laser.instance()
 				laser.position = position
 				get_tree().current_scene.add_child(laser)
-			elif enemies < 100:
+			elif enemies < 60:
 				for child in firing_positions.get_children():
 					if child != $FiringPositions/CenterMuzzle:
 						var laser := player_laser.instance()
@@ -101,11 +102,11 @@ func _process(delta):
 			laser_audio_count += 1
 			if laser_audio_count == len(laser_up_audio_list):
 				laser_audio_count = 0
-			if enemies < 50:
+			if enemies < 30:
 				var laser := player_laser_up.instance()
 				laser.position = position
 				get_tree().current_scene.add_child(laser)
-			elif enemies < 100:
+			elif enemies < 60:
 				for child in firing_positions.get_children():
 					if child != $FiringPositions/CenterMuzzle:
 						var laser := player_laser_up.instance()
@@ -117,7 +118,7 @@ func _process(delta):
 					laser.global_position = child.global_position
 					get_tree().current_scene.add_child(laser)
 					
-		if Input.is_action_just_pressed("fire_auto"):
+		if Input.is_action_pressed("fire_auto") and slow_fire_timer.is_stopped():
 			pass
 
 
@@ -150,17 +151,21 @@ func take_damage(damage):
 		hit_points = 0
 		ScoreSystem.sessions_played = true
 		on_death()
-	invincibility_timer.start(0.5)
+	invincibility_timer.start(1)
 	invincibility_shield.visible = true
 	shield_woompf.play()
 	
 func _on_app_button_press():
 	press_counter += 1
 	if press_counter % 10 == 0:
+		PlayerSingleton.connection_status = "Co-pilot Established!"
 		if !get_tree().paused:
 			hit_points += 20
 			if hit_points >= 100:
 				hit_points = 100
+				var bomb := player_bomb.instance()
+				bomb.position = position
+				get_tree().current_scene.add_child(bomb)
 		
 func on_death():
 	$DeathAudio.play()
