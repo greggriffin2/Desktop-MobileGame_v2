@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://ships/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/PNG/player_sheet.png" type="Texture" id=2]
@@ -8,8 +8,9 @@
 [ext_resource path="res://Audio/laser-14729.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Audio/big-impact-7054.mp3" type="AudioStream" id=7]
 [ext_resource path="res://Audio/slow-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=8]
-[ext_resource path="res://Audio/stinger-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=9]
+[ext_resource path="res://Audio/8-bit-powerup-6768.mp3" type="AudioStream" id=9]
 [ext_resource path="res://Audio/fast-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=10]
+[ext_resource path="res://Audio/laserrocket2-6284.mp3" type="AudioStream" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -158,9 +159,13 @@ autoplay = true
 [node name="FastMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
 
-[node name="Stinger" type="AudioStreamPlayer2D" parent="."]
+[node name="PowerUpNotifier" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
-stream_paused = true
+volume_db = 3.0
+
+[node name="CarePackageNotifier" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = 5.0
 
 [connection signal="timeout" from="LaserTime" to="." method="_on_LaserTime_timeout"]
 [connection signal="timeout" from="SpeedTime" to="." method="_on_SpeedTime_timeout"]

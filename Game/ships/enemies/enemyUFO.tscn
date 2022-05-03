@@ -34,6 +34,8 @@ valign = 1
 
 [node name="UFOAudio" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
+volume_db = 3.0
+autoplay = true
 
 [connection signal="area_entered" from="." to="." method="_on_enemyUFO_area_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

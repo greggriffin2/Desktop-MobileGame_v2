@@ -12,6 +12,7 @@ var on_death_effects := [
 	preload("res://Explosions/ODELayer2.tscn"),
 	preload("res://Explosions/ODELayer3.tscn")
 ]
+var player_bomb := preload("res://projectiles/Bomb.tscn")
 #var sync_component := get_node("/root/NetworkSynchronizationSingleton")
 
 ## Exported variables for speed, health, and automatic firing delays for both weapons.
@@ -41,6 +42,8 @@ onready var laser_up_audio_list := [$LaserUpAudio, $LaserUpAudio2, $LaserUpAudio
 onready var base_music := $SlowMusic
 onready var fast_music := $FastMusic
 onready var stinger := $Stinger
+onready var power_up_notifier := $PowerUpNotifier
+onready var care_package_notifier := $CarePackageNotifier
 
 
 ## Initializing input vector.
@@ -81,11 +84,11 @@ func _process(delta):
 			laser_audio_count += 1
 			if laser_audio_count == len(base_laser_audio_list):
 				laser_audio_count = 0
-			if enemies < 50:
+			if enemies < 30:
 				var laser := player_laser.instance()
 				laser.position = position
 				get_tree().current_scene.add_child(laser)
-			elif enemies < 100:
+			elif enemies < 60:
 				for child in firing_positions.get_children():
 					if child != $FiringPositions/CenterMuzzle:
 						var laser := player_laser.instance()
@@ -101,11 +104,11 @@ func _process(delta):
 			laser_audio_count += 1
 			if laser_audio_count == len(laser_up_audio_list):
 				laser_audio_count = 0
-			if enemies < 50:
+			if enemies < 30:
 				var laser := player_laser_up.instance()
 				laser.position = position
 				get_tree().current_scene.add_child(laser)
-			elif enemies < 100:
+			elif enemies < 60:
 				for child in firing_positions.get_children():
 					if child != $FiringPositions/CenterMuzzle:
 						var laser := player_laser_up.instance()
@@ -117,7 +120,7 @@ func _process(delta):
 					laser.global_position = child.global_position
 					get_tree().current_scene.add_child(laser)
 					
-		if Input.is_action_just_pressed("fire_auto"):
+		if Input.is_action_pressed("fire_auto") and slow_fire_timer.is_stopped():
 			pass
 
 
@@ -150,23 +153,25 @@ func take_damage(damage):
 		hit_points = 0
 		ScoreSystem.sessions_played = true
 		on_death()
-	invincibility_timer.start(0.5)
+	invincibility_timer.start(1)
 	invincibility_shield.visible = true
 	shield_woompf.play()
 	
 func _on_app_button_press():
 	press_counter += 1
 	if press_counter % 10 == 0:
+		care_package_notifier.play()
+		PlayerSingleton.connection_status = "Co-pilot Established!"
 		if !get_tree().paused:
 			hit_points += 20
 			if hit_points >= 100:
 				hit_points = 100
+				var bomb := player_bomb.instance()
+				bomb.position = position
+				get_tree().current_scene.add_child(bomb)
 		
 func on_death():
 	$DeathAudio.play()
-	base_music.stream_paused = true
-	fast_music.stream_paused = true
-	stinger.stream_paused = false
 	for effect in on_death_effects:
 		var explosion = effect.instance()
 		explosion.global_position = global_position
@@ -181,6 +186,7 @@ func _on_Player_area_entered(area):
 	if area.is_in_group("damageable"):
 		area.take_damage(3)
 	elif area.is_in_group("speedpowerup"):
+		power_up_notifier.play()
 		speed_up_timer.start(5)
 		if speed >= 600:
 			speed = 800
@@ -194,6 +200,7 @@ func _on_Player_area_entered(area):
 		speed_timer_label.set_text(str(speed_power_up_seconds))
 		speed_time.start(1)
 	elif area.is_in_group("laserpowerup"):
+		power_up_notifier.play()
 		laser_up = true
 		laser_up_timer.start(10)
 		power_up_label.set_text("LASER UP 2X!")

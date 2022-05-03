@@ -11,6 +11,7 @@ class_name HUD
 var life_icon := preload("res://interface/LifeIcon.tscn")
 var speed_powerup_icon := preload("res://PowerUps/SpeedPowerUpIcon.tscn")
 var laser_powerup_icon := preload("res://PowerUps/LaserPowerUpIcon.tscn")
+var sync_singleton: SynchronizationSingleton
 
 ## Creating objects from the children of HUD.
 onready var life_container := $LifeContainer
@@ -74,7 +75,6 @@ func _on_speed_change(speed: float):
 		speed_powerup_container.visible = true
 	else:
 		speed_powerup_container.visible = false
-
 
 func _on_DeathTransitionTimer_timeout():
 	get_tree().change_scene("res://GameOver/GameOver.tscn")

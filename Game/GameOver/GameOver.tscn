@@ -1,10 +1,11 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://scripts/bgScroll.gd" type="Script" id=1]
 [ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/Backgrounds/blue.png" type="Texture" id=3]
 [ext_resource path="res://assets/PNG/Stars/starBig.png" type="Texture" id=4]
 [ext_resource path="res://GameOver/GameOver.gd" type="Script" id=5]
+[ext_resource path="res://Audio/stinger-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3" type="AudioStream" id=6]
 
 [sub_resource type="Gradient" id=7]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
@@ -111,9 +112,9 @@ align = 1
 valign = 1
 
 [node name="HighScore" type="Label" parent="."]
-margin_left = 607.0
+margin_left = 572.0
 margin_top = 126.0
-margin_right = 673.0
+margin_right = 638.0
 margin_bottom = 143.0
 rect_scale = Vector2( 2, 2 )
 custom_colors/font_color = Color( 1, 0.984314, 0, 1 )
@@ -167,6 +168,17 @@ text = "USERNAME:"
 align = 1
 valign = 1
 
+[node name="EnterInitials" type="Label" parent="."]
+margin_left = 293.0
+margin_top = 169.0
+margin_right = 755.0
+margin_bottom = 209.0
+custom_colors/font_color = Color( 1, 0.94902, 0, 1 )
+custom_fonts/font = SubResource( 13 )
+text = "Enter your initials to submit your score!"
+align = 1
+valign = 1
+
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 timeout = 999
 
@@ -206,6 +218,10 @@ valign = 1
 [node name="ProfanityTimer" type="Timer" parent="."]
 
 [node name="EmptyTimer" type="Timer" parent="."]
+
+[node name="Stinger" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+autoplay = true
 
 [connection signal="pressed" from="RetryButton" to="." method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="MenuButton" to="." method="_on_MenuButton_pressed"]

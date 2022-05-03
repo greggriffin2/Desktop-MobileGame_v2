@@ -12,7 +12,6 @@ func _ready():
 	mp_singleton.connect("user_joined", self, "_user_joined")
 	mp_singleton.reload_connection()
 	update_gamecode(mp_singleton.game_code)
-	$ConnectedButton.visible = false
 	$ConnectedLabel.set_text("")
 	
 func _process(delta):
@@ -37,3 +36,7 @@ func _on_ContinueButton_pressed():
 
 func _on_ConnectedButton_pressed():
 	get_tree().change_scene("res://MainMenu/MainMenu.tscn")
+
+
+func _on_ConnectedButton_visibility_changed():
+	$VineBoom.play()
