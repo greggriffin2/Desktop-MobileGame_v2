@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/cartoon-scream-1-6835.mp3-44bccf8f422925aaf0dc2227542fe126.mp3str"
+
+[deps]
+
+source_file="res://Audio/cartoon-scream-1-6835.mp3"
+dest_files=[ "res://.import/cartoon-scream-1-6835.mp3-44bccf8f422925aaf0dc2227542fe126.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

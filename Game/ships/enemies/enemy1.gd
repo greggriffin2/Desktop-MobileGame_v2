@@ -70,7 +70,7 @@ func projectile():
 ## Currently, the player ship will take 50 damage when an enemy ship makes contact.
 func _on_enemy1_area_entered(area):
 	if area is Player:
-		area.take_damage(50)
+		area.take_damage(25)
 
 
 ## This function calls projectile to fire lasers every 1 second from enemy ships.

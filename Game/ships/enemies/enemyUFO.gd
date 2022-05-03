@@ -45,8 +45,8 @@ func take_damage(damage):
 
 func _on_enemyUFO_area_entered(area):
 	if area.is_in_group("player"):
-		area.take_damage(25)
-		self.take_damage(5)
+		area.take_damage(35)
+		self.take_damage(8)
 
 
 func _on_VisibilityNotifier2D_screen_exited():

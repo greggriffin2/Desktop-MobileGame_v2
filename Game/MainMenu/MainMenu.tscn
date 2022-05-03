@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/Fonts/Gugi-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://MainMenu/StartButton.tscn" type="PackedScene" id=2]
@@ -17,6 +17,10 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="Gradient" id=6]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 26
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=7]
 size = 24
@@ -114,6 +118,22 @@ margin_top = 465.0
 margin_right = 576.0
 margin_bottom = 522.0
 
+[node name="NewCodeButton" type="Button" parent="."]
+margin_left = 35.0
+margin_top = 519.0
+margin_right = 245.0
+margin_bottom = 569.0
+custom_fonts/font = SubResource( 8 )
+text = "GET NEW CODE"
+
+[node name="CreditsButton" type="Button" parent="."]
+margin_left = 826.0
+margin_top = 519.0
+margin_right = 963.0
+margin_bottom = 569.0
+custom_fonts/font = SubResource( 8 )
+text = "CREDITS"
+
 [node name="GameCodeLabel" type="Label" parent="."]
 margin_left = 57.0
 margin_top = 18.0
@@ -131,3 +151,5 @@ autoplay = true
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="pressed" from="NewCodeButton" to="." method="_on_NewCodeButton_pressed"]
+[connection signal="pressed" from="CreditsButton" to="." method="_on_CreditsButton_pressed"]

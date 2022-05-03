@@ -19,7 +19,7 @@ func _on_EnemyLaser_area_entered(area):
 		var laser_effect := enemy1_laser_effect.instance()
 		laser_effect.position = position
 		get_parent().add_child(laser_effect)
-		area.take_damage(25)
+		area.take_damage(15)
 		queue_free()
 
 ## Notifies the game to remove the enemy laser if it exits the screen.
