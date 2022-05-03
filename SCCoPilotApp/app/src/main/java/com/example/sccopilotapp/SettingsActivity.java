@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,6 @@ public class SettingsActivity extends AppCompatActivity {
     private ToggleButton toggleButton;
     private TextView settingsText;
     private TextView titleText;
-    //private ActionBar actionBar = getActionBar();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,18 +23,23 @@ public class SettingsActivity extends AppCompatActivity {
         toggleButton = findViewById(R.id.toggleButton);
         titleText = findViewById(R.id.titleText);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Settings");
         toggleButton.setOnClickListener(view -> onToggleClick(toggleButton));
-
     }
 
+    /**
+     * Adds back button functionality
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -45,10 +50,9 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     /**
-     * Upon a click listener's call, changes the checkStatus of the
+     * Changes the checkStatus of the
      * ToggleButton, and sends the required settings status change
      * to the appropriate Activity
-     * <p>
      * preconditions: SettingsActivity page is loaded by the user
      * postconditions: ToggleButton's checkStatus is changed
      * class invariants: View is the same
@@ -57,6 +61,16 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public void onToggleClick(View view) {
         MainGameActivity.changeBackground();
+        int currInt = MainGameActivity.selectedBackground;
+        String currString;
+        if (currInt == MainGameActivity.background_1){
+            currString = "WHIRL";
+        } else {
+            currString = "WARP";
+        }
+        Toast.makeText(this,
+                "Background changed to " + currString,
+                Toast.LENGTH_SHORT).show();
     }
 
     /**

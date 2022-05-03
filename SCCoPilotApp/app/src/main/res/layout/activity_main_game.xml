@@ -23,30 +23,30 @@
         android:layout_marginTop="-50dp"
         android:onClick="onClickShip"
         tools:ignore="UsingOnClickInXml"
-        android:src="@drawable/playership1red"
-        />
+        android:src="@drawable/playership1red" />
 
-<!--    <Button-->
-<!--        android:id="@+id/shipButton"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="250dp"-->
-<!--        android:layout_marginTop="-50dp"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textSize="25sp"-->
-<!--        android:backgroundTint="@color/shipRed"-->
-<!--        android:text="CLICK!"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:onClick="onClickShip"-->
-<!--        tools:ignore="UsingOnClickInXml" />-->
+    <!--    <Button-->
+    <!--        android:id="@+id/shipButton"-->
+    <!--        android:layout_width="250dp"-->
+    <!--        android:layout_height="250dp"-->
+    <!--        android:layout_marginTop="-50dp"-->
+    <!--        android:textAlignment="center"-->
+    <!--        android:textSize="25sp"-->
+    <!--        android:backgroundTint="@color/shipRed"-->
+    <!--        android:text="CLICK!"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        android:onClick="onClickShip"-->
+    <!--        tools:ignore="UsingOnClickInXml" />-->
 
     <Button
         android:id="@+id/upgradesButton"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/shipRed"
+        android:fontFamily="@font/gugiregular"
         android:textSize="10dp"
         android:text="Upgrades"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,31 +59,38 @@
 
     <Button
         android:id="@+id/leaderboardButton"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/shipRed"
-        android:textSize="8dp"
+        android:textSize="11sp"
+        android:fontFamily="@font/gugiregular"
         android:text="Leaderboard"
         app:layout_constraintStart_toEndOf="@id/upgradesButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shipClick"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="100dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="-90dp"
         android:onClick="onClickLeaderboard"
+
         tools:ignore="UsingOnClickInXml" />
 
     <Button
         android:id="@+id/exitButton"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/shipRed"
-        android:textSize="10dp"
+        android:textSize="11sp"
+        android:fontFamily="@font/gugiregular"
         android:text="Exit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/upgradesButton"
         app:layout_constraintTop_toBottomOf="@id/shipClick"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="100dp"
+        android:layout_marginStart="-25dp"
+        android:layout_marginBottom="-90dp"
         android:onClick="onClickExit"
         tools:ignore="UsingOnClickInXml" />
 

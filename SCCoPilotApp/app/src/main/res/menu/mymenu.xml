@@ -5,4 +5,9 @@
         android:title=""
         app:showAsAction="always"
         android:icon="@drawable/mybuttonicon" />
+    <item
+        android:id="@+id/help_button"
+        android:icon="@drawable/help_button"
+        app:showAsAction="always"
+        android:title="@string/helpbutton" />
 </menu>

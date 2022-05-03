@@ -9,7 +9,7 @@
     <string name="black">Black</string>
     <string name="jsonFAILED">Failed to retrieve leaderboard scores, try again</string>
     <string name="white">White</string>
-    <string name="settings_Title">SETTINGS</string>
+    <string name="settings_Title">Appearance</string>
     <string name="ship_color">Ship Color</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="player_1">Player 1</string>
@@ -31,4 +31,29 @@
     <string name="toggleOFFTEST">Toggle is OFF</string>
     <string name="toggleButtonText">Change</string>
     <string name="jsonLoading">Loading leaderboard data…</string>
+    <string name="helpbutton">HelpButton</string>
+    <string name="MGA_no">Stay</string>
+    <string name="MGA_yes">Leave</string>
+    <string name="toast_text">Healed Ship 20 hit-points!</string>
+    <string name="disconnecteddialog">
+        You have been disconnected from the current game session. Please go back to the home screen
+        and try again.
+    </string>
+    <string name="MA_tooltip">
+        To begin, start up the desktop game to generate a game code.
+        \n\nThen type in the code here and press play!
+    </string>
+    <string name="MGA_tooltip">
+        If you have made it to this screen you are connected to the desktop game!
+        \n\nPower up your player by tapping the ship. Every 10 taps heals you by 20 hit-points.
+        Be careful not to get hit by enemies while healing!\n\nYou can also change the background via the
+        settings menu and check global scores through the leaderboard page.
+    </string>
+    <string name="exit_confirmation">\n\nThis will end your current game session. You may join again with the same code
+    \n\n</string>
+    <string name="lessThan18">Code must be less than 18 characters!</string>
+    <string name="emptyText">Code must not be empty!</string>
+    <string name="stringWithNumber">Code must not contain any numbers!</string>
+    <string name="stringWithSpaces">Code cannot contain spaces!</string>
+    <string name="incorrectCode">Code Incorrect</string>
 </resources>

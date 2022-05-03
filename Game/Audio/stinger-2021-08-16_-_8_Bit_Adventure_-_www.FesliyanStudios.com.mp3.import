@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/stinger-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3-a8e5de493b251648582ca129e2cecb02.mp3str"
+
+[deps]
+
+source_file="res://Audio/stinger-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3"
+dest_files=[ "res://.import/stinger-2021-08-16_-_8_Bit_Adventure_-_www.FesliyanStudios.com.mp3-a8e5de493b251648582ca129e2cecb02.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
